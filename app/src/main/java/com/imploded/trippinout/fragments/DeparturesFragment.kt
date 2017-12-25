@@ -10,6 +10,7 @@ import android.view.ViewGroup
 
 import com.imploded.trippinout.R
 import com.imploded.trippinout.interfaces.OnFragmentInteractionListener
+import com.imploded.trippinout.viewmodel.DeparturesViewModel
 
 /**
  * A simple [Fragment] subclass.
@@ -25,6 +26,7 @@ class DeparturesFragment : Fragment() {
     private var mParam1: String? = null
     private var mParam2: String? = null
 
+    private val viewModel: DeparturesViewModel = DeparturesViewModel()
     private var mListener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +40,9 @@ class DeparturesFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater!!.inflate(R.layout.fragment_departures, container, false)
+        val view = inflater!!.inflate(R.layout.fragment_departures, container, false)
+        viewModel.getDepartures(mParam1.toString())
+        return view
     }
 
 

@@ -40,12 +40,4 @@ class FindStopsViewModel {
         updateFun()
     }
 
-    fun getDepartures(id: String) = async(UI) {
-        val tokenTask = bg { webservice.getToken() }
-        tokenTask.await()
-        val searchTask = bg { webservice.getDepartures(id) }
-        val departures = searchTask.await()
-        val cn = departures.departureBoard.departures.count()
-        val k = 123
-    }
 }

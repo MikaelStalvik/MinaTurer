@@ -9,6 +9,7 @@ import com.github.kittinunf.result.Result
 import com.google.gson.Gson
 import com.imploded.trippinout.fragments.LandingPageFragment
 import com.imploded.trippinout.R
+import com.imploded.trippinout.fragments.DeparturesFragment
 import com.imploded.trippinout.fragments.FindStopFragment
 import com.imploded.trippinout.interfaces.OnFragmentInteractionListener
 import com.imploded.trippinout.model.LocationContainer
@@ -112,7 +113,11 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
     }
 
     override fun onStopSelected(data: UiStop) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val departureFragment = DeparturesFragment.newInstance(data.id, "")
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.root_layout, departureFragment, "departureFragment")
+                .addToBackStack(null)
+                .commit()
     }
 
 }

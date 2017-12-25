@@ -78,7 +78,7 @@ class LandingPageFragment : Fragment() {
 
     private fun createAdapter(): LandingPageAdapter {
         viewModel.getStops()
-        return LandingPageAdapter({ mListener.onFragmentInteraction()})
+        return LandingPageAdapter({ mListener?.onStopSelected(it)})
     }
 
     override fun onAttach(context: Context?) {
