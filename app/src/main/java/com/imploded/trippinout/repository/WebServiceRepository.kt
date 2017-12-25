@@ -9,6 +9,10 @@ import com.imploded.trippinout.interfaces.WebServiceInterface
 import com.imploded.trippinout.model.*
 import com.imploded.trippinout.utils.fromJson
 import java.net.URLEncoder
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.*
 
 class WebServiceRepository : WebServiceInterface{
 
@@ -53,8 +57,13 @@ class WebServiceRepository : WebServiceInterface{
 
     override fun getDepartures(id: String): DepartureContainer {
         Log.d("WS", "TOKEN: " + accessToken.accessToken + " " + id)
-        val date = "20171224"
-        val time = URLEncoder.encode("13:15", "UTF-8")
+        val calender = Calendar.getInstance()
+
+        val date = SimpleDateFormat("yyyyMMdd").format(Date())
+
+        val dateFormat = SimpleDateFormat("HH:mm")
+        var timeString = dateFormat.format(calender.time)
+        val time = URLEncoder.encode(timeString, "UTF-8")
         val endPoint = departuresById(id, date, time)
         Log.d("WS", "Departures: " + endPoint)
         val (_, _, result) = endPoint
@@ -64,7 +73,7 @@ class WebServiceRepository : WebServiceInterface{
         return when(result)
         {
             is Result.Success -> {
-                val json = result.value
+                //val json = result.value
                 var res =  Gson().fromJson<DepartureContainer>(result.value)
                 res
             }

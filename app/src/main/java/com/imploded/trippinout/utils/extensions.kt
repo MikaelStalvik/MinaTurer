@@ -1,5 +1,6 @@
 package com.imploded.trippinout.utils
 
+import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
@@ -20,4 +21,8 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
             afterTextChanged.invoke(editable.toString())
         }
     })
+}
+
+fun String.toColor(): Int {
+    return Color.parseColor(this)
 }

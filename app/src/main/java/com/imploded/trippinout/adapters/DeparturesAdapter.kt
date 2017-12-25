@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.imploded.trippinout.R
 import com.imploded.trippinout.model.UiDeparture
+import com.imploded.trippinout.utils.toColor
+import kotlinx.android.synthetic.main.row_departure.view.*
 import kotlinx.android.synthetic.main.row_stop.view.*
 
 class DeparturesAdapter(private val itemClick: (UiDeparture) -> Unit): RecyclerView.Adapter<DeparturesAdapter.DepartureHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): DeparturesAdapter.DepartureHolder {
-        val view = LayoutInflater.from(parent?.context).inflate(R.layout.row_stop, parent, false)
+        val view = LayoutInflater.from(parent?.context).inflate(R.layout.row_departure, parent, false)
         return DeparturesAdapter.DepartureHolder(view, itemClick)
     }
 
@@ -31,7 +33,15 @@ class DeparturesAdapter(private val itemClick: (UiDeparture) -> Unit): RecyclerV
 
         fun bindDeparture(departureItem: UiDeparture) {
             with(departureItem) {
-                itemView.textViewName.text = name
+                itemView.textViewLineNumber.text = departureItem.shortName
+                itemView.textViewLineNumber.setBackgroundColor(departureItem.fgColor.toColor())
+                itemView.textViewLineNumber.setTextColor(departureItem.bgColor.toColor())
+
+                itemView.textViewStopName.text = departureItem.stop
+
+                itemView.textViewDepTime.text = departureItem.time
+                itemView.textViewDepTimeEta.text = departureItem.rtTime
+
                 itemView.setOnClickListener{itemClick(this)}
             }
         }

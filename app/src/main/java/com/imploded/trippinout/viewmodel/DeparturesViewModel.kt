@@ -13,15 +13,16 @@ class DeparturesViewModel {
     private val webservice: WebServiceInterface = WebServiceRepository()
     var uiDepartures: List<UiDeparture> = listOf()
 
-    fun getDepartures(id: String) = async(UI) {
+    fun getDepartures(id: String, updateFun: (() -> Unit)) = async(UI) {
         val tokenTask = bg { webservice.getToken() }
         tokenTask.await()
         val searchTask = bg { webservice.getDepartures(id) }
         val departures = searchTask.await()
 
         uiDepartures = departures.departureBoard.departures.map { d ->
-            UiDeparture(d.name, d.time, d.date, d.fgColor, d.bgColor)
+            UiDeparture(d.name, d.sname, d.time, d.date, d.fgColor, d.bgColor, d.stop, d.rtTime)
         }
+        updateFun()
         Log.d("DEPARTURES", "COUNT:" + uiDepartures.count())
     }
 }

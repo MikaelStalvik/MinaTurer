@@ -14,6 +14,7 @@ data class Departure (
         val name: String = "",
         val sname: String = "",
         val type: String = "",
+        val stop: String = "",
         val stopid: String = "",
         val time: String = "",
         val date: String = "",
@@ -30,8 +31,11 @@ data class Departure (
 
 data class UiDeparture(
         val name: String = "",
+        val shortName: String = "",
         val time: String = "",
         val date: String = "",
         val fgColor: String = "",
-        val bgColor: String = ""
+        val bgColor: String = "",
+        val stop: String = "",
+        val rtTime: String = ""
 )
