@@ -4,16 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp">
 
     <TextView
         android:id="@+id/textViewLineNumber"
         android:layout_width="70dp"
         android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center_vertical|center_horizontal"
         android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,11 +24,9 @@
         android:id="@+id/textViewStopName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewLineNumber"
         app:layout_constraintStart_toEndOf="@+id/textViewLineNumber"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,6 +47,20 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="2dp"
         android:text="TextView"
+        android:textColor="#9a9a9a"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewDepTime" />
+
+    <TextView
+        android:id="@+id/textViewDirection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:text="TextView"
+        android:textColor="#9a9a9a"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewLineNumber"
+        app:layout_constraintTop_toBottomOf="@+id/textViewStopName" />
 </android.support.constraint.ConstraintLayout>

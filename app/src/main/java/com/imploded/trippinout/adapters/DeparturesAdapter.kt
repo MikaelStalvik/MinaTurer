@@ -8,7 +8,6 @@ import com.imploded.trippinout.R
 import com.imploded.trippinout.model.UiDeparture
 import com.imploded.trippinout.utils.toColor
 import kotlinx.android.synthetic.main.row_departure.view.*
-import kotlinx.android.synthetic.main.row_stop.view.*
 
 class DeparturesAdapter(private val itemClick: (UiDeparture) -> Unit): RecyclerView.Adapter<DeparturesAdapter.DepartureHolder>() {
 
@@ -41,6 +40,7 @@ class DeparturesAdapter(private val itemClick: (UiDeparture) -> Unit): RecyclerV
 
                 itemView.textViewDepTime.text = departureItem.time
                 itemView.textViewDepTimeEta.text = departureItem.rtTime
+                itemView.textViewDirection.text = departureItem.direction
 
                 itemView.setOnClickListener{itemClick(this)}
             }

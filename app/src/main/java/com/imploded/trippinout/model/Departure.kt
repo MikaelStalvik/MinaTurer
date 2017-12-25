@@ -37,5 +37,6 @@ data class UiDeparture(
         val fgColor: String = "",
         val bgColor: String = "",
         val stop: String = "",
-        val rtTime: String = ""
+        val rtTime: String = "",
+        val direction: String = ""
 )
