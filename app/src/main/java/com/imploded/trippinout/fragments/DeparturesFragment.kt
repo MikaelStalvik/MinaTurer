@@ -7,14 +7,19 @@ import android.support.v4.app.Fragment
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.gson.Gson
 
 import com.imploded.trippinout.R
 import com.imploded.trippinout.adapters.DeparturesAdapter
 import com.imploded.trippinout.adapters.LandingPageAdapter
 import com.imploded.trippinout.interfaces.OnFragmentInteractionListener
+import com.imploded.trippinout.model.FilteredDeparture
+import com.imploded.trippinout.utils.TrippinOutApp
+import com.imploded.trippinout.utils.fromJson
 import com.imploded.trippinout.viewmodel.DeparturesViewModel
 
 /**
@@ -45,7 +50,11 @@ class DeparturesFragment : Fragment() {
 
     private fun createAdapter(): DeparturesAdapter {
         viewModel.uiDepartures
-        return DeparturesAdapter({ })
+        return DeparturesAdapter({
+            var filteredDepartures = TrippinOutApp.prefs.filteredDeparturesByStopId(it.stopId)
+            filteredDepartures.add(FilteredDeparture(it.shortName, it.direction))
+            TrippinOutApp.prefs.setFilteredDeparturesByStopId(it.stopId, filteredDepartures)
+        })
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

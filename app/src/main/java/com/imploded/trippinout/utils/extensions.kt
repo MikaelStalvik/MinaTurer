@@ -26,3 +26,10 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
 fun String.toColor(): Int {
     return Color.parseColor(this)
 }
+
+fun String.filteredStops(stopId: String): List<Map<String, String>> {
+    var allFilters = Gson().fromJson<Map<String, Map<String, String>>>(this)
+    var item = allFilters.filter { p -> p.key.equals(stopId) }.map { p -> p.value }
+    return item
+    //return allFilters.filter { p -> p.key.equals(stopId) }.map { p -> p.value }
+}
