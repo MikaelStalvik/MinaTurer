@@ -10,7 +10,8 @@ class LandingViewModel {
 
     fun getStops() {
         val settings = TrippinOutApp.prefs.loadSettings()
-        selectedStops = Gson().fromJson<List<UiStop>>(settings.StopsList)
-
+        if (settings.StopsList.isNotEmpty()) {
+            selectedStops = Gson().fromJson<List<UiStop>>(settings.StopsList)
+        }
     }
 }

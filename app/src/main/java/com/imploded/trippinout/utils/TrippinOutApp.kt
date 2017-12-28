@@ -2,6 +2,7 @@ package com.imploded.trippinout.utils
 
 import android.app.Application
 import com.imploded.trippinout.interfaces.SettingsInterface
+import com.imploded.trippinout.model.FilteredDepartures
 import com.imploded.trippinout.repository.SettingsRepository
 
 class TrippinOutApp : Application() {
@@ -12,6 +13,9 @@ class TrippinOutApp : Application() {
 
     override fun onCreate() {
         prefs = SettingsRepository(applicationContext)
+
+        FilteredDepartures.loadData(prefs)
+
         super.onCreate()
     }
 }

@@ -18,6 +18,7 @@ import com.imploded.trippinout.adapters.DeparturesAdapter
 import com.imploded.trippinout.adapters.LandingPageAdapter
 import com.imploded.trippinout.interfaces.OnFragmentInteractionListener
 import com.imploded.trippinout.model.FilteredDeparture
+import com.imploded.trippinout.model.FilteredDepartures
 import com.imploded.trippinout.utils.TrippinOutApp
 import com.imploded.trippinout.utils.fromJson
 import com.imploded.trippinout.viewmodel.DeparturesViewModel
@@ -51,9 +52,9 @@ class DeparturesFragment : Fragment() {
     private fun createAdapter(): DeparturesAdapter {
         viewModel.uiDepartures
         return DeparturesAdapter({
-            var filteredDepartures = TrippinOutApp.prefs.filteredDeparturesByStopId(it.stopId)
-            filteredDepartures.add(FilteredDeparture(it.shortName, it.direction))
-            TrippinOutApp.prefs.setFilteredDeparturesByStopId(it.stopId, filteredDepartures)
+            FilteredDepartures.addFilteredTrip(mParam1.toString(), it.shortName, it.direction)
+            FilteredDepartures.saveData(TrippinOutApp.prefs)
+            viewModel.getDepartures(mParam1.toString(), ::updateAdapter)
         })
     }
     override fun onCreate(savedInstanceState: Bundle?) {
