@@ -76,6 +76,7 @@ class FindStopFragment : Fragment() {
     private fun createAdapter(): StopsAdapter {
         return StopsAdapter({
             viewModel.addStop(it)
+            activity.supportFragmentManager.popBackStack()
         })
     }
 
