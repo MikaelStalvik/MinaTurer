@@ -3,9 +3,11 @@ package com.imploded.trippinout.fragments
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.*
 import com.imploded.trippinout.R
 import com.imploded.trippinout.adapters.DeparturesAdapter
@@ -25,6 +27,7 @@ class DeparturesFragment : Fragment() {
     private var mListener: OnFragmentInteractionListener? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: DeparturesAdapter
+    private lateinit var swipeRefresh: SwipeRefreshLayout
 
     private fun updateAdapter() {
         adapter.updateItems { viewModel.uiDepartures }
@@ -52,6 +55,12 @@ class DeparturesFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater!!.inflate(R.layout.fragment_departures, container, false)
+
+        swipeRefresh = view.findViewById<SwipeRefreshLayout>(R.id.simpleSwipeRefreshLayout)
+        swipeRefresh.setOnRefreshListener {
+            viewModel.getDepartures(stopId, ::updateAdapter)
+            swipeRefresh.isRefreshing = false
+        }
 
         adapter = createAdapter()
         recyclerView = view.findViewById(R.id.departuresList)
