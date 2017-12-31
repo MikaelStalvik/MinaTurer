@@ -3,6 +3,7 @@ package com.imploded.trippinout.fragments
 import android.content.Context
 import android.graphics.*
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -53,8 +54,14 @@ class LandingPageFragment : Fragment() {
         // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar!!.title = getString(R.string.my_stops)
         var view = inflater!!.inflate(R.layout.fragment_landing_page, container, false)
+        /*
         var button = view.findViewById<Button>(R.id.addStopsButton)
         button.setOnClickListener {
+            if (mListener != null) {
+                mListener!!.onFindStopsSelected(ArgChangeToFindStopsView)
+            }
+        }*/
+        view.findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
             if (mListener != null) {
                 mListener!!.onFindStopsSelected(ArgChangeToFindStopsView)
             }
