@@ -6,5 +6,6 @@
     <string name="find_stop">Find stop</string>
     <string name="type_to_filter">Type to filter...</string>
     <string name="my_stops">My stops</string>
+    <string name="delete">DELETE</string>
 
 </resources>

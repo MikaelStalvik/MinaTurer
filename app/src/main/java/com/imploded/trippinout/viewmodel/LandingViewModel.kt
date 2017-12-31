@@ -6,12 +6,12 @@ import com.imploded.trippinout.utils.TrippinOutApp
 import com.imploded.trippinout.utils.fromJson
 
 class LandingViewModel {
-    var selectedStops: List<UiStop> = listOf()
+    var selectedStops: ArrayList<UiStop> = arrayListOf()
 
     fun getStops() {
         val settings = TrippinOutApp.prefs.loadSettings()
         if (settings.StopsList.isNotEmpty()) {
-            selectedStops = Gson().fromJson<List<UiStop>>(settings.StopsList)
+            selectedStops = Gson().fromJson<ArrayList<UiStop>>(settings.StopsList)
         }
     }
 }
