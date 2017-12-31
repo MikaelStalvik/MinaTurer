@@ -44,4 +44,5 @@ class DeparturesViewModel {
         updateFun()
         Log.d("DEPARTURES", "COUNT:" + uiDepartures.count())
     }
+
 }

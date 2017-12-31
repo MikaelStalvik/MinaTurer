@@ -7,7 +7,7 @@ import com.google.gson.Gson
 import com.imploded.trippinout.interfaces.SettingsInterface
 import com.imploded.trippinout.model.FilteredDeparture
 import com.imploded.trippinout.model.SettingsModel
-import com.imploded.trippinout.ui.AppConstants
+import com.imploded.trippinout.utils.AppConstants
 import com.imploded.trippinout.utils.fromJson
 
 class SettingsRepository(context: Context) : SettingsInterface {

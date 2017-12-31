@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
         Log.d("MAIN", "GOT NAMES: " + ll.locationList.stopLocations.count())
     }*/
 
-    override fun onFragmentInteraction(data: Int) {
+    override fun onFindStopsSelected(data: Int) {
         when(data) {
             LandingPageFragment.ArgChangeToFindStopsView -> {
                 val findStopFragment = FindStopFragment.newInstance("", "")
@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
     }
 
     override fun onStopSelected(data: UiStop) {
-        val departureFragment = DeparturesFragment.newInstance(data.id, "")
+        val departureFragment = DeparturesFragment.newInstance(data)
         supportFragmentManager.beginTransaction()
                 .replace(R.id.root_layout, departureFragment, "departureFragment")
                 .addToBackStack(null)

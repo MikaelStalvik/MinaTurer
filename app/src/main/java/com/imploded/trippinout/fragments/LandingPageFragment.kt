@@ -3,22 +3,17 @@ package com.imploded.trippinout.fragments
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import com.google.gson.Gson
 import com.imploded.trippinout.R
 import com.imploded.trippinout.adapters.LandingPageAdapter
-import com.imploded.trippinout.adapters.StopsAdapter
 import com.imploded.trippinout.interfaces.OnFragmentInteractionListener
-import com.imploded.trippinout.model.UiStop
-import com.imploded.trippinout.utils.TrippinOutApp
-import com.imploded.trippinout.utils.fromJson
 import com.imploded.trippinout.viewmodel.LandingViewModel
-import java.util.ArrayList
 
 
 /**
@@ -52,11 +47,12 @@ class LandingPageFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+        (activity as AppCompatActivity).supportActionBar!!.title = getString(R.string.my_stops)
         var view = inflater!!.inflate(R.layout.fragment_landing_page, container, false)
         var button = view.findViewById<Button>(R.id.addStopsButton)
         button.setOnClickListener {
             if (mListener != null) {
-                mListener!!.onFragmentInteraction(ArgChangeToFindStopsView)
+                mListener!!.onFindStopsSelected(ArgChangeToFindStopsView)
             }
         }
 

@@ -45,5 +45,18 @@ object FilteredDepartures {
         }
     }
 
+    fun resetFilterForStop(stopId: String) {
+        if (filteredMap.containsKey(stopId)) {
+            filteredMap[stopId]!!.clear()
+        }
+    }
+
+    fun filterCountForStop(stopId: String): Int {
+        if (filteredMap.containsKey(stopId)) {
+            return filteredMap[stopId]!!.count()
+        }
+        return 0
+    }
+
 
 }

@@ -1,41 +1,25 @@
 package com.imploded.trippinout.fragments
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.google.gson.Gson
-
+import android.view.*
 import com.imploded.trippinout.R
 import com.imploded.trippinout.adapters.DeparturesAdapter
-import com.imploded.trippinout.adapters.LandingPageAdapter
 import com.imploded.trippinout.interfaces.OnFragmentInteractionListener
-import com.imploded.trippinout.model.FilteredDeparture
 import com.imploded.trippinout.model.FilteredDepartures
+import com.imploded.trippinout.model.UiStop
 import com.imploded.trippinout.utils.TrippinOutApp
-import com.imploded.trippinout.utils.fromJson
 import com.imploded.trippinout.viewmodel.DeparturesViewModel
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [DeparturesFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [DeparturesFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class DeparturesFragment : Fragment() {
 
-    // TODO: Rename and change types of parameters
-    private var mParam1: String? = null
-    private var mParam2: String? = null
+    private lateinit var stopId: String
+    private lateinit var stopName: String
 
     private val viewModel: DeparturesViewModel = DeparturesViewModel()
     private var mListener: OnFragmentInteractionListener? = null
@@ -46,23 +30,22 @@ class DeparturesFragment : Fragment() {
         adapter.updateItems { viewModel.uiDepartures }
         adapter.notifyDataSetChanged()
         recyclerView.scrollToPosition(0)
+        (activity as AppCompatActivity).supportActionBar!!.title = stopName + " (" + FilteredDepartures.filterCountForStop(stopId).toString() + ")"
     }
 
 
     private fun createAdapter(): DeparturesAdapter {
         viewModel.uiDepartures
         return DeparturesAdapter({
-            FilteredDepartures.addFilteredTrip(mParam1.toString(), it.shortName, it.direction)
+            FilteredDepartures.addFilteredTrip(stopId, it.shortName, it.direction)
             FilteredDepartures.saveData(TrippinOutApp.prefs)
-            viewModel.getDepartures(mParam1.toString(), ::updateAdapter)
+            viewModel.getDepartures(stopId, ::updateAdapter)
         })
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            mParam1 = arguments.getString(ARG_PARAM1)
-            mParam2 = arguments.getString(ARG_PARAM2)
-        }
+        stopId = arguments.getString(ARG_PARAM1)
+        stopName = arguments.getString(ARG_PARAM2)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -74,10 +57,27 @@ class DeparturesFragment : Fragment() {
         recyclerView = view.findViewById(R.id.departuresList)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.adapter = adapter
-        viewModel.getDepartures(mParam1.toString(), ::updateAdapter)
-        //updateAdapter()
+        viewModel.getDepartures(stopId, ::updateAdapter)
+        setHasOptionsMenu(true)
 
         return view
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.departure_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item == null) return super.onOptionsItemSelected(item)
+        when(item.itemId) {
+            R.id.action_reset -> {
+                FilteredDepartures.resetFilterForStop(stopId)
+                viewModel.getDepartures(stopId, ::updateAdapter)
+                return false
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 
 
@@ -95,38 +95,17 @@ class DeparturesFragment : Fragment() {
         mListener = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html) for more information.
-     */
-
     companion object {
-        // TODO: Rename parameter arguments, choose names that match
-        // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-        private val ARG_PARAM1 = "param1"
-        private val ARG_PARAM2 = "param2"
+        private val ARG_PARAM1 = "stopId"
+        private val ARG_PARAM2 = "stopName"
 
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DeparturesFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        fun newInstance(param1: String, param2: String): DeparturesFragment {
+        fun newInstance(stop: UiStop): DeparturesFragment {
             val fragment = DeparturesFragment()
             val args = Bundle()
-            args.putString(ARG_PARAM1, param1)
-            args.putString(ARG_PARAM2, param2)
+            args.putString(ARG_PARAM1, stop.id)
+            args.putString(ARG_PARAM2, stop.name)
             fragment.arguments = args
             return fragment
         }
     }
-}// Required empty public constructor
+}

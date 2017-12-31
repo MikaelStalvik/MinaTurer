@@ -13,6 +13,6 @@ import com.imploded.trippinout.model.UiStop
  */
 
 interface OnFragmentInteractionListener {
-    fun onFragmentInteraction(data: Int)
+    fun onFindStopsSelected(data: Int)
     fun onStopSelected(data: UiStop)
 }
