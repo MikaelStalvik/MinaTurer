@@ -16,14 +16,6 @@ import com.imploded.trippinout.interfaces.OnFragmentInteractionListener
 import com.imploded.trippinout.viewmodel.LandingViewModel
 
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [LandingPageFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [LandingPageFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class LandingPageFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView

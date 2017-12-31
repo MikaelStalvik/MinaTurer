@@ -1,25 +1,13 @@
 package com.imploded.trippinout.ui
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import com.github.kittinunf.fuel.httpGet
-import com.github.kittinunf.fuel.httpPost
-import com.github.kittinunf.result.Result
-import com.google.gson.Gson
-import com.imploded.trippinout.fragments.LandingPageFragment
+import android.support.v7.app.AppCompatActivity
 import com.imploded.trippinout.R
 import com.imploded.trippinout.fragments.DeparturesFragment
 import com.imploded.trippinout.fragments.FindStopFragment
+import com.imploded.trippinout.fragments.LandingPageFragment
 import com.imploded.trippinout.interfaces.OnFragmentInteractionListener
-import com.imploded.trippinout.model.LocationContainer
-import com.imploded.trippinout.model.LocationList
-import com.imploded.trippinout.model.Token
 import com.imploded.trippinout.model.UiStop
-import com.imploded.trippinout.utils.fromJson
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
 
 class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
 

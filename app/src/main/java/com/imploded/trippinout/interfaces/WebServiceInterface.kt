@@ -1,6 +1,5 @@
 package com.imploded.trippinout.interfaces
 
-import com.imploded.trippinout.model.DepartureBoard
 import com.imploded.trippinout.model.DepartureContainer
 import com.imploded.trippinout.model.LocationContainer
 import com.imploded.trippinout.model.Token

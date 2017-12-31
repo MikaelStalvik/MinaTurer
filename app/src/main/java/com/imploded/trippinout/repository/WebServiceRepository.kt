@@ -10,8 +10,6 @@ import com.imploded.trippinout.model.*
 import com.imploded.trippinout.utils.fromJson
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.*
 
 class WebServiceRepository : WebServiceInterface{

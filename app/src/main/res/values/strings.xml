@@ -2,7 +2,6 @@
     <string name="app_name">TrippinOut</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_stop">Add stop</string>
     <string name="find_stop">Find stop</string>
     <string name="type_to_filter">Type to filter...</string>

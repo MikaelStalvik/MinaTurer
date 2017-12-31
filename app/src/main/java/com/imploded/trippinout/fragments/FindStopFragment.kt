@@ -13,20 +13,11 @@ import android.widget.EditText
 import com.imploded.trippinout.R
 import com.imploded.trippinout.adapters.StopsAdapter
 import com.imploded.trippinout.interfaces.OnFragmentInteractionListener
-import com.imploded.trippinout.model.FilteredDepartures
 import com.imploded.trippinout.utils.afterTextChanged
 import com.imploded.trippinout.viewmodel.FindStopsViewModel
 import org.jetbrains.anko.runOnUiThread
 import kotlin.concurrent.fixedRateTimer
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [FindStopFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [FindStopFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FindStopFragment : Fragment() {
 
     private val viewModel: FindStopsViewModel = FindStopsViewModel()

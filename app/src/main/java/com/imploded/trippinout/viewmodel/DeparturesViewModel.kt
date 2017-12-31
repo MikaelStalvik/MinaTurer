@@ -1,13 +1,11 @@
 package com.imploded.trippinout.viewmodel
 
-import android.util.Log
 import com.imploded.trippinout.interfaces.WebServiceInterface
 import com.imploded.trippinout.model.Departure
 import com.imploded.trippinout.model.FilteredDeparture
 import com.imploded.trippinout.model.FilteredDepartures
 import com.imploded.trippinout.model.UiDeparture
 import com.imploded.trippinout.repository.WebServiceRepository
-import com.imploded.trippinout.utils.TrippinOutApp
 import com.imploded.trippinout.utils.etaTime
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -44,7 +42,6 @@ class DeparturesViewModel {
                     }
         }
         updateFun()
-        Log.d("DEPARTURES", "COUNT:" + uiDepartures.count())
     }
 
 }
