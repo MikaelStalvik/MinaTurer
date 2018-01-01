@@ -64,7 +64,7 @@ class LandingPageFragment : Fragment() {
                 when(direction) {
                     ItemTouchHelper.LEFT -> {
                         adapter.removeItem(position)
-                        viewModel.storeStops(adapter.activeStops())
+                        viewModel.removeStop(position)
                     }
                 }
             }

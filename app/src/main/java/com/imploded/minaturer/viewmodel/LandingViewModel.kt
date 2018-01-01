@@ -11,17 +11,18 @@ class LandingViewModel(val settings: SettingsInterface) {
     var selectedStops: ArrayList<UiStop> = arrayListOf()
 
     fun getStops() {
-        //val settings = MinaTurerApp.prefs.loadSettings()
         val activeSettings = settings.loadSettings()
         if (activeSettings.StopsList.isNotEmpty()) {
             selectedStops = Gson().fromJson<ArrayList<UiStop>>(activeSettings.StopsList)
         }
     }
 
-    fun storeStops(stops: List<UiStop>) {
+    fun removeStop(index: Int) {
+        selectedStops.removeAt(index)
         val activeSettings = settings.loadSettings()
-        var json = Gson().toJson(stops)
+        var json = Gson().toJson(selectedStops)
         activeSettings.StopsList = json
         settings.saveSettings(activeSettings)
     }
+
 }
