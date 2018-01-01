@@ -47,13 +47,13 @@ class FindStopsViewModel {
     }
 
     fun addStop(stop: StopLocation) {
-        var settings = MinaTurerApp.prefs.loadSettings()
+        val settings = MinaTurerApp.prefs.loadSettings()
         if (settings.StopsList.isEmpty()) {
             val stops = listOf(UiStop(stop.name, stop.id))
             settings.StopsList = Gson().toJson(stops)
         }
         else {
-            var stops = Gson().fromJson<ArrayList<UiStop>>(settings.StopsList)
+            val stops = Gson().fromJson<ArrayList<UiStop>>(settings.StopsList)
             if (!stops.any { s -> s.id.equals(stop.id, true) }) {
                 stops.add(UiStop(stop.name, stop.id))
                 settings.StopsList = Gson().toJson(stops)

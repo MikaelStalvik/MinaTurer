@@ -21,13 +21,13 @@ class ChooseFilterTypeDialog : DialogFragment() {
         val dialog = AlertDialog.Builder(activity)
 
         dialog.setTitle(getString(R.string.select_filtering))
-        dialog.setPositiveButton(getString(R.string.ok), { dialog, _ ->
+        dialog.setPositiveButton(getString(R.string.ok), { sender, _ ->
             dialogInteraction.onPositiveClick(selectedIndex)
-            dialog.dismiss()
+            sender.dismiss()
         })
-        dialog.setNegativeButton(getString(R.string.cancel), { dialog, _ ->
+        dialog.setNegativeButton(getString(R.string.cancel), { sender, _ ->
             dialogInteraction.onNegativeClick()
-            dialog.cancel()
+            sender.cancel()
         })
 
         val list = listOf(getString(R.string.line), getString(R.string.line_direction))

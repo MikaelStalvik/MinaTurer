@@ -39,13 +39,13 @@ class DeparturesViewModel {
             uiDepartures = departureResult
                     .filter { d -> !itemIsFiltered(d, filtered) }
                     .map { d ->
-                        UiDeparture(d.name, d.sname, d.time, d.date, d.fgColor, d.bgColor, d.stop, d.rtTime.etaTime(), d.direction, d.stopid)
+                        UiDeparture(d.name, d.sname, d.time, d.date, d.fgColor, d.bgColor, d.stop, d.rtTime.etaTime(d.time), d.direction, d.stopid)
                     }
         }
         else {
             uiDepartures = departureResult
                     .map { d ->
-                        UiDeparture(d.name, d.sname, d.time, d.date, d.fgColor, d.bgColor, d.stop, d.rtTime.etaTime(), d.direction, d.stopid)
+                        UiDeparture(d.name, d.sname, d.time, d.date, d.fgColor, d.bgColor, d.stop, d.rtTime.etaTime(d.time), d.direction, d.stopid)
                     }
         }
 
@@ -54,4 +54,8 @@ class DeparturesViewModel {
 
     fun filtersActive(stopId: String): Boolean = FilteredDepartures.filterCountForStop(stopId)> 0 || FilteredLines.filterCountForStop(stopId) > 0
 
+    fun resetFilterForStop(stopId: String) {
+        FilteredDepartures.resetFilterForStop(stopId)
+        FilteredLines.resetFilterForStop(stopId)
+    }
 }

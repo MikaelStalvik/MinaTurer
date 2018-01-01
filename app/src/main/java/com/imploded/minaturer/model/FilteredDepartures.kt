@@ -11,7 +11,6 @@ object FilteredDepartures {
     fun loadData(settings: SettingsInterface) {
         val activeSettings = settings.loadSettings()
         if (activeSettings.FilteredTripsByStopId.isNotEmpty()) {
-            val kk = activeSettings.FilteredTripsByStopId
             filteredMap = Gson().fromJson<HashMap<String, ArrayList<FilteredDeparture>>>(activeSettings.FilteredTripsByStopId)
         }
     }

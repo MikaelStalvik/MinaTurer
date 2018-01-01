@@ -32,6 +32,7 @@ fun String.filteredStops(stopId: String): List<Map<String, String>> {
     return allFilters.filter { p -> p.key.equals(stopId) }.map { p -> p.value }
 }
 
-fun String.etaTime() : String {
+fun String.etaTime(originalTime: String) : String {
+    if (this.equals(originalTime, true)) return ""
     return if (this.isEmpty()) "" else "eta: $this"
 }

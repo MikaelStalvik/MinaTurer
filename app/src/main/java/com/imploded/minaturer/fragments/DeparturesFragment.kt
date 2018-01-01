@@ -11,6 +11,7 @@ import android.view.*
 import com.imploded.minaturer.R
 import com.imploded.minaturer.adapters.DeparturesAdapter
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
+import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.model.FilteredDepartures
 import com.imploded.minaturer.model.FilteredLines
 import com.imploded.minaturer.model.UiDeparture
@@ -19,9 +20,25 @@ import com.imploded.minaturer.ui.ChooseFilterTypeDialog
 import com.imploded.minaturer.ui.OnDialogInteraction
 import com.imploded.minaturer.utils.MinaTurerApp
 import com.imploded.minaturer.viewmodel.DeparturesViewModel
+import org.jetbrains.anko.support.v4.alert
 
 
 class DeparturesFragment : Fragment(), OnDialogInteraction {
+
+    private val appSettings: SettingsInterface by lazy {
+        MinaTurerApp.prefs
+    }
+
+    private val viewModel: DeparturesViewModel = DeparturesViewModel()
+    private var mListener: OnFragmentInteractionListener? = null
+
+    private lateinit var selectedItem: UiDeparture
+    private lateinit var stopId: String
+    private lateinit var stopName: String
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: DeparturesAdapter
+    private lateinit var swipeRefresh: SwipeRefreshLayout
 
     override fun onPositiveClick(selectedIndex: Int) {
         when(selectedIndex) {
@@ -41,16 +58,6 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
     override fun onNegativeClick() {
     }
 
-    private lateinit var selectedItem: UiDeparture
-    private lateinit var stopId: String
-    private lateinit var stopName: String
-
-    private val viewModel: DeparturesViewModel = DeparturesViewModel()
-    private var mListener: OnFragmentInteractionListener? = null
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: DeparturesAdapter
-    private lateinit var swipeRefresh: SwipeRefreshLayout
-
     private fun updateAdapter() {
         adapter.updateItems { viewModel.uiDepartures }
         adapter.notifyDataSetChanged()
@@ -65,12 +72,10 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
     private fun createAdapter(): DeparturesAdapter {
         viewModel.uiDepartures
         return DeparturesAdapter({
-
-           selectedItem = it
-            val manager = fragmentManager
+            selectedItem = it
             val dialog = ChooseFilterTypeDialog()
             dialog.setInteraction(this)
-            dialog.show(manager, "Dialog")
+            dialog.show(fragmentManager, "Dialog")
         })
     }
 
@@ -85,7 +90,7 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_departures, container, false)
 
-        swipeRefresh = view.findViewById<SwipeRefreshLayout>(R.id.simpleSwipeRefreshLayout)
+        swipeRefresh = view.findViewById(R.id.simpleSwipeRefreshLayout)
         swipeRefresh.setOnRefreshListener {
             viewModel.getDepartures(stopId, ::updateAdapter)
             swipeRefresh.isRefreshing = false
@@ -97,6 +102,7 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
         recyclerView.adapter = adapter
         viewModel.getDepartures(stopId, ::updateAdapter)
         setHasOptionsMenu(true)
+        showHint()
 
         return view
     }
@@ -108,14 +114,13 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item == null) return super.onOptionsItemSelected(item)
-        when(item.itemId) {
+        return when(item.itemId) {
             R.id.action_reset -> {
-                FilteredDepartures.resetFilterForStop(stopId)
-                FilteredLines.resetFilterForStop(stopId)
+                viewModel.resetFilterForStop(stopId)
                 viewModel.getDepartures(stopId, ::updateAdapter)
-                return false
+                false
             }
-            else -> return super.onOptionsItemSelected(item)
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -132,6 +137,17 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
     override fun onDetach() {
         super.onDetach()
         mListener = null
+    }
+
+    private fun showHint() {
+        val settings = appSettings.loadSettings()
+        if (settings.DeparturesHintShown) return
+        alert(getString(R.string.departure_page_hint), getString(R.string.tip)) {
+            positiveButton(getString(R.string.got_it)) {
+                settings.DeparturesHintShown = true
+                appSettings.saveSettings(settings)
+            }
+        }.show()
     }
 
     companion object {

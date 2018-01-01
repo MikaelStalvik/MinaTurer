@@ -13,7 +13,10 @@ class SettingsRepository(context: Context) : SettingsInterface {
         return SettingsModel(
                 prefs.getString(attrStops, ""),
                 prefs.getString(attrFilteredStops, ""),
-                prefs.getString(attrFilteredLines, "")
+                prefs.getString(attrFilteredLines, ""),
+                prefs.getBoolean(attrLandingPageHintShown, false),
+                prefs.getBoolean(attrFindStopHintShown, false),
+                prefs.getBoolean(attrDeparturesHintShown, false)
         )
     }
 
@@ -21,12 +24,18 @@ class SettingsRepository(context: Context) : SettingsInterface {
         prefs.edit().putString(attrStops, settings.StopsList).apply()
         prefs.edit().putString(attrFilteredStops, settings.FilteredTripsByStopId).apply()
         prefs.edit().putString(attrFilteredLines, settings.FilteredLinesByStopId).apply()
+        prefs.edit().putBoolean(attrLandingPageHintShown, settings.LandingHintPageShown).apply()
+        prefs.edit().putBoolean(attrFindStopHintShown, settings.FindStopHintShown).apply()
+        prefs.edit().putBoolean(attrDeparturesHintShown, settings.DeparturesHintShown).apply()
     }
 
     companion object {
         val attrStops = "stops"
         val attrFilteredStops = "filteredStops"
         val attrFilteredLines = "filteredLines"
+        val attrLandingPageHintShown = "attrLandingPageHintShown"
+        val attrFindStopHintShown = "attrFindStopHintShown"
+        val attrDeparturesHintShown = "attrDeparturesHintShown"
     }
     private val prefs: SharedPreferences = context.getSharedPreferences(AppConstants.settingsFilename, 0)
 
