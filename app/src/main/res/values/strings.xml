@@ -8,9 +8,11 @@
     <string name="delete">DELETE</string>
     <string name="stop_added">Stop added:</string>
     <string name="line">Line</string>
-    <string name="line_direction">Line and direction</string>
+    <string name="line_direction">Line + direction</string>
     <string name="select_filtering">Select filtering</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="filtered">Filtered</string>
+    <string name="reset">Reset</string>
 
 </resources>

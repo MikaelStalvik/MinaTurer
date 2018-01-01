@@ -15,24 +15,22 @@ import com.imploded.minaturer.model.FilteredDepartures
 import com.imploded.minaturer.model.FilteredLines
 import com.imploded.minaturer.model.UiDeparture
 import com.imploded.minaturer.model.UiStop
+import com.imploded.minaturer.ui.ChooseFilterTypeDialog
 import com.imploded.minaturer.ui.OnDialogInteraction
-import com.imploded.minaturer.ui.SingleChoiceDialogFragment
 import com.imploded.minaturer.utils.MinaTurerApp
 import com.imploded.minaturer.viewmodel.DeparturesViewModel
 
 
 class DeparturesFragment : Fragment(), OnDialogInteraction {
 
-    // TODO: Move to vm
-    // TODO: Prefs inject
     override fun onPositiveClick(selectedIndex: Int) {
         when(selectedIndex) {
-            SingleChoiceDialogFragment.FilterByLine -> {
+            ChooseFilterTypeDialog.FilterByLine -> {
                 FilteredLines.addFilteredLine(stopId, selectedItem.shortName)
                 FilteredLines.saveData(MinaTurerApp.prefs)
                 viewModel.getDepartures(stopId, ::updateAdapter)
             }
-            SingleChoiceDialogFragment.FilterByLineAndDirection -> {
+            ChooseFilterTypeDialog.FilterByLineAndDirection -> {
                 FilteredDepartures.addFilteredTrip(stopId, selectedItem.shortName, selectedItem.direction)
                 FilteredDepartures.saveData(MinaTurerApp.prefs)
                 viewModel.getDepartures(stopId, ::updateAdapter)
@@ -57,7 +55,11 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
         adapter.updateItems { viewModel.uiDepartures }
         adapter.notifyDataSetChanged()
         recyclerView.scrollToPosition(0)
-        (activity as AppCompatActivity).supportActionBar!!.title = stopName + " (" + FilteredDepartures.filterCountForStop(stopId).toString() + ")"
+        if (viewModel.filtersActive(stopId)) {
+            (activity as AppCompatActivity).supportActionBar!!.title = stopName + " (" + getString(R.string.filtered) + ")"
+        } else {
+            (activity as AppCompatActivity).supportActionBar!!.title = stopName
+        }
     }
 
     private fun createAdapter(): DeparturesAdapter {
@@ -66,7 +68,7 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
 
            selectedItem = it
             val manager = fragmentManager
-            val dialog = SingleChoiceDialogFragment()
+            val dialog = ChooseFilterTypeDialog()
             dialog.setInteraction(this)
             dialog.show(manager, "Dialog")
         })
@@ -109,6 +111,7 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
         when(item.itemId) {
             R.id.action_reset -> {
                 FilteredDepartures.resetFilterForStop(stopId)
+                FilteredLines.resetFilterForStop(stopId)
                 viewModel.getDepartures(stopId, ::updateAdapter)
                 return false
             }

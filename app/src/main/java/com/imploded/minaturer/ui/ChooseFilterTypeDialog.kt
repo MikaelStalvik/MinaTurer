@@ -11,7 +11,7 @@ interface OnDialogInteraction {
     fun onNegativeClick()
 }
 
-class SingleChoiceDialogFragment : DialogFragment() {
+class ChooseFilterTypeDialog : DialogFragment() {
 
     private var selectedIndex = FilterByLine
     private lateinit var dialogInteraction: OnDialogInteraction
