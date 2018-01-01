@@ -27,11 +27,6 @@ fun String.toColor(): Int {
     return Color.parseColor(this)
 }
 
-fun String.filteredStops(stopId: String): List<Map<String, String>> {
-    var allFilters = Gson().fromJson<Map<String, Map<String, String>>>(this)
-    return allFilters.filter { p -> p.key.equals(stopId) }.map { p -> p.value }
-}
-
 fun String.etaTime(originalTime: String) : String {
     if (this.equals(originalTime, true)) return ""
     return if (this.isEmpty()) "" else "eta: $this"

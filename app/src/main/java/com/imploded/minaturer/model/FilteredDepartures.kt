@@ -6,7 +6,7 @@ import com.imploded.minaturer.utils.fromJson
 
 object FilteredDepartures {
 
-    var filteredMap: HashMap<String, ArrayList<FilteredDeparture>> = hashMapOf()
+    private var filteredMap: HashMap<String, ArrayList<FilteredDeparture>> = hashMapOf()
 
     fun loadData(settings: SettingsInterface) {
         val activeSettings = settings.loadSettings()
@@ -24,7 +24,7 @@ object FilteredDepartures {
 
     fun addFilteredTrip(stopId: String, shortName: String, direction: String) {
         if (filteredMap.containsKey(stopId)) {
-            var filteredItemsByStop = filteredMap[stopId] as ArrayList<FilteredDeparture>
+            val filteredItemsByStop = filteredMap[stopId] as ArrayList<FilteredDeparture>
             val item = filteredItemsByStop.filter { p -> p.shortName.equals(shortName, true) && p.direction.equals(direction, true) }.any()
             if (!item) {
                 filteredMap[stopId]!!.add(FilteredDeparture(shortName, direction))
@@ -36,12 +36,12 @@ object FilteredDepartures {
     }
 
     fun filterlistForStop(stopId: String) : List<FilteredDeparture> {
-        if (filteredMap.containsKey(stopId))
+        return if (filteredMap.containsKey(stopId))
         {
-            return filteredMap[stopId] as List<FilteredDeparture>
+            filteredMap[stopId] as List<FilteredDeparture>
         }
         else {
-            return listOf()
+            listOf()
         }
     }
 

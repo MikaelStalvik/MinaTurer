@@ -28,7 +28,7 @@
             android:layout_toLeftOf="@id/delete_icon"
             android:text="@string/delete"
             android:textColor="#fff"
-            android:textSize="13dp" />
+            android:textSize="13sp" />
 
     </RelativeLayout>
 
@@ -44,7 +44,6 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_margin="8dp"
-            android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="TextView" />
 

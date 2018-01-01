@@ -33,6 +33,7 @@ class LandingPageAdapter(private val itemClick: (UiStop) -> Unit): RecyclerView.
     }
 
     private var stopItems: ArrayList<UiStop> = arrayListOf()
+    fun activeStops(): List<UiStop> = stopItems
 
     class UiStopHolder(view: View, private val itemClick: (UiStop) -> Unit) : RecyclerView.ViewHolder(view) {
 

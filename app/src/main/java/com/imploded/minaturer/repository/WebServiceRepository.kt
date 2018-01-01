@@ -60,7 +60,7 @@ class WebServiceRepository : WebServiceInterface{
         val date = SimpleDateFormat("yyyyMMdd").format(Date())
 
         val dateFormat = SimpleDateFormat("HH:mm")
-        var timeString = dateFormat.format(calender.time)
+        val timeString = dateFormat.format(calender.time)
         val time = URLEncoder.encode(timeString, "UTF-8")
         val endPoint = departuresById(id, date, time)
         Log.d("WS", "Departures: " + endPoint)
@@ -71,8 +71,7 @@ class WebServiceRepository : WebServiceInterface{
         return when(result)
         {
             is Result.Success -> {
-                //val json = result.value
-                var res =  Gson().fromJson<DepartureContainer>(result.value)
+                val res =  Gson().fromJson<DepartureContainer>(result.value)
                 res
             }
             is Result.Failure -> {

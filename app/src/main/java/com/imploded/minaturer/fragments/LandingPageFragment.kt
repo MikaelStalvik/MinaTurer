@@ -29,7 +29,7 @@ class LandingPageFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: LandingPageAdapter
-    private val viewModel: LandingViewModel = LandingViewModel()
+    private val viewModel: LandingViewModel = LandingViewModel(appSettings)
 
     private var mListener: OnFragmentInteractionListener? = null
 
@@ -64,6 +64,7 @@ class LandingPageFragment : Fragment() {
                 when(direction) {
                     ItemTouchHelper.LEFT -> {
                         adapter.removeItem(position)
+                        viewModel.storeStops(adapter.activeStops())
                     }
                 }
             }

@@ -17,7 +17,6 @@ import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.utils.MinaTurerApp
 import com.imploded.minaturer.utils.afterTextChanged
 import com.imploded.minaturer.viewmodel.FindStopsViewModel
-import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.support.v4.alert
 import kotlin.concurrent.fixedRateTimer
 
@@ -41,12 +40,15 @@ class FindStopFragment : Fragment() {
                 this.cancel()
                 val filter = editText.text.toString()
                 if (viewModel.updateFiltering(filter)) {
-                    context.runOnUiThread {
+                    activity.runOnUiThread{
                         if (!viewModel.isSearching) {
                             viewModel.isSearching = true
                             viewModel.getStops(::updateAdapter)
                         }
                     }
+                    /*
+                    context.runOnUiThread {
+                    }*/
                 }
             })
         }
