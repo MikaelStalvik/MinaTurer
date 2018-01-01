@@ -1,20 +1,20 @@
 package com.imploded.minaturer.viewmodel
 
 import com.google.gson.Gson
+import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.interfaces.WebServiceInterface
 import com.imploded.minaturer.model.LocationContainer
 import com.imploded.minaturer.model.LocationList
 import com.imploded.minaturer.model.StopLocation
 import com.imploded.minaturer.model.UiStop
 import com.imploded.minaturer.repository.WebServiceRepository
-import com.imploded.minaturer.utils.MinaTurerApp
 import com.imploded.minaturer.utils.fromJson
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import java.util.ArrayList
 
-class FindStopsViewModel {
+class FindStopsViewModel(val settings: SettingsInterface) {
 
     var isSearching = false
     private val webservice: WebServiceInterface = WebServiceRepository()
@@ -47,19 +47,19 @@ class FindStopsViewModel {
     }
 
     fun addStop(stop: StopLocation) {
-        val settings = MinaTurerApp.prefs.loadSettings()
-        if (settings.StopsList.isEmpty()) {
+        val activeSettings = settings.loadSettings()
+        if (activeSettings.StopsList.isEmpty()) {
             val stops = listOf(UiStop(stop.name, stop.id))
-            settings.StopsList = Gson().toJson(stops)
+            activeSettings.StopsList = Gson().toJson(stops)
         }
         else {
-            val stops = Gson().fromJson<ArrayList<UiStop>>(settings.StopsList)
+            val stops = Gson().fromJson<ArrayList<UiStop>>(activeSettings.StopsList)
             if (!stops.any { s -> s.id.equals(stop.id, true) }) {
                 stops.add(UiStop(stop.name, stop.id))
-                settings.StopsList = Gson().toJson(stops)
+                activeSettings.StopsList = Gson().toJson(stops)
             }
         }
-        MinaTurerApp.prefs.saveSettings(settings)
+        settings.saveSettings(activeSettings)
     }
 
 }

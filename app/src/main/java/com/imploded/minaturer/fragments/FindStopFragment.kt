@@ -25,7 +25,7 @@ class FindStopFragment : Fragment() {
     private val appSettings: SettingsInterface by lazy {
         MinaTurerApp.prefs
     }
-    private val viewModel: FindStopsViewModel = FindStopsViewModel()
+    private val viewModel: FindStopsViewModel = FindStopsViewModel(appSettings)
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: StopsAdapter
     private var mListener: OnFragmentInteractionListener? = null
