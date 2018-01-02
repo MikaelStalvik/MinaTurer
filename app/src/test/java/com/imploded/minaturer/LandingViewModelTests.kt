@@ -7,7 +7,6 @@ import com.imploded.minaturer.model.UiStop
 import com.imploded.minaturer.viewmodel.LandingViewModel
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertTrue
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito

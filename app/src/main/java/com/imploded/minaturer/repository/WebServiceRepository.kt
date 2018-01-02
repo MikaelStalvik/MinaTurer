@@ -7,6 +7,7 @@ import com.github.kittinunf.result.Result
 import com.google.gson.Gson
 import com.imploded.minaturer.interfaces.WebServiceInterface
 import com.imploded.minaturer.model.*
+import com.imploded.minaturer.utils.WebApiKeys
 import com.imploded.minaturer.utils.fromJson
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
@@ -20,8 +21,8 @@ class WebServiceRepository : WebServiceInterface{
         val endpoint = tokenUrl
         val(_, _, result) = endpoint.httpPost(listOf(
                 "grant_type" to "client_credentials",
-                "client_id" to clientId,
-                "client_secret" to clientSecret))
+                "client_id" to WebApiKeys.clientId,
+                "client_secret" to WebApiKeys.clientSecret))
                 .responseString()
 
         return when(result) {
@@ -86,8 +87,6 @@ class WebServiceRepository : WebServiceInterface{
         private fun departuresById(id: String, date: String, time: String) = "https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard?id=$id&date=$date&time=$time&format=json"
 
         private val tokenType = "Bearer"
-        private val clientId ="LwpVrKg1hZaijQ2eVPX_ueufz8Ia"
-        private val clientSecret = "yLhi2ovU7z6kUlpvbm0sXtQxKHka"
     }
 
 }

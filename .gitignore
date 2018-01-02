@@ -40,3 +40,4 @@ build
 *~
 *.swp
 app/release/
+app/src/main/java/com/imploded/minaturer/utils/WebApiKeys.kt
