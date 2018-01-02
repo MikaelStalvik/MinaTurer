@@ -18,7 +18,7 @@ class LandingViewModel(val settings: SettingsInterface) {
     }
 
     fun removeStop(index: Int) {
-        selectedStops.removeAt(index)
+        //selectedStops.removeAt(index)
         val activeSettings = settings.loadSettings()
         var json = Gson().toJson(selectedStops)
         activeSettings.StopsList = json

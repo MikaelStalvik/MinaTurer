@@ -41,7 +41,7 @@ class LandingPageAdapter(private val itemClick: (UiStop) -> Unit): RecyclerView.
 
         fun bindStop(stopItem: UiStop) {
             with(stopItem) {
-                itemView.textViewStopName.text = name
+                itemView.textViewDirection.text = name
                 itemView.setOnClickListener{itemClick(this)}
             }
         }

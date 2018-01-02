@@ -2,12 +2,16 @@ package com.imploded.minaturer.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
+import android.support.transition.TransitionManager
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.*
+import android.widget.Button
 import com.imploded.minaturer.R
 import com.imploded.minaturer.adapters.DeparturesAdapter
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
@@ -29,7 +33,9 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
         MinaTurerApp.prefs
     }
 
-    private val viewModel: DeparturesViewModel = DeparturesViewModel()
+    private val viewModel: DeparturesViewModel by lazy {
+        DeparturesViewModel(stopId, appSettings)
+    }
     private var mListener: OnFragmentInteractionListener? = null
 
     private lateinit var selectedItem: UiDeparture
@@ -39,6 +45,9 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: DeparturesAdapter
     private lateinit var swipeRefresh: SwipeRefreshLayout
+    private lateinit var bottomToolbar: ConstraintLayout
+    private lateinit var rootLayout: ConstraintLayout
+
 
     override fun onPositiveClick(selectedIndex: Int) {
         when(selectedIndex) {
@@ -62,7 +71,7 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
         adapter.updateItems { viewModel.uiDepartures }
         adapter.notifyDataSetChanged()
         recyclerView.scrollToPosition(0)
-        if (viewModel.filtersActive(stopId)) {
+        if (viewModel.filtersActive()) {
             (activity as AppCompatActivity).supportActionBar!!.title = stopName + " (" + getString(R.string.filtered) + ")"
         } else {
             (activity as AppCompatActivity).supportActionBar!!.title = stopName
@@ -71,11 +80,16 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
 
     private fun createAdapter(): DeparturesAdapter {
         viewModel.uiDepartures
-        return DeparturesAdapter({
+        return DeparturesAdapter({ item, position ->
+            viewModel.uiDepartures[position].checked = !viewModel.uiDepartures[position].checked
+            Log.d("CHECK", "pos: " + position.toString() + " " + viewModel.uiDepartures[position].checked )
+            //item.checked = !item.checked
+            adapter.notifyDataSetChanged()
+            /*
             selectedItem = it
             val dialog = ChooseFilterTypeDialog()
             dialog.setInteraction(this)
-            dialog.show(fragmentManager, "Dialog")
+            dialog.show(fragmentManager, "Dialog")*/
         })
     }
 
@@ -94,6 +108,33 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
         swipeRefresh.setOnRefreshListener {
             viewModel.getDepartures(stopId, ::updateAdapter)
             swipeRefresh.isRefreshing = false
+        }
+        rootLayout = view.findViewById(R.id.rootLayout)
+        bottomToolbar = view.findViewById(R.id.bottomToolbarLayout)
+        bottomToolbar.visibility = View.GONE
+
+        val allButton = view.findViewById<Button>(R.id.buttonAll)
+        allButton.setOnClickListener {
+            viewModel.selectAll()
+            adapter.updateItems { viewModel.uiDepartures }
+            adapter.notifyDataSetChanged()
+        }
+        val noneButton = view.findViewById<Button>(R.id.buttonNone)
+        noneButton.setOnClickListener{
+            viewModel.selectNone()
+            adapter.updateItems { viewModel.uiDepartures }
+            adapter.notifyDataSetChanged()
+        }
+        val applyButton = view.findViewById<Button>(R.id.buttonApply)
+        applyButton.setOnClickListener{
+            viewModel.applyFilters()
+
+            viewModel.toggleFilterMode()
+            TransitionManager.beginDelayedTransition(rootLayout)
+            if (viewModel.filterMode) bottomToolbar.visibility = View.VISIBLE else bottomToolbar.visibility = View.GONE
+            adapter.showFilter = viewModel.filterMode
+
+            viewModel.getDepartures(stopId, ::updateAdapter)
         }
 
         adapter = createAdapter()
@@ -116,8 +157,16 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
         if (item == null) return super.onOptionsItemSelected(item)
         return when(item.itemId) {
             R.id.action_reset -> {
-                viewModel.resetFilterForStop(stopId)
+                viewModel.resetFilterForStop()
                 viewModel.getDepartures(stopId, ::updateAdapter)
+                false
+            }
+            R.id.action_filter_mode -> {
+                viewModel.toggleFilterMode()
+                TransitionManager.beginDelayedTransition(rootLayout)
+                if (viewModel.filterMode) bottomToolbar.visibility = View.VISIBLE else bottomToolbar.visibility = View.GONE
+                adapter.showFilter = viewModel.filterMode
+                adapter.notifyDataSetChanged()
                 false
             }
             else -> super.onOptionsItemSelected(item)
@@ -162,5 +211,6 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
             fragment.arguments = args
             return fragment
         }
+
     }
 }

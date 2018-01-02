@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:compat="http://schemas.android.com/apk/res-auto">
 
+    <item
+        android:id="@+id/action_filter_mode"
+        android:title="@string/filter"
+        android:visible="true"
+        android:orderInCategory="100"
+        compat:showAsAction="always"
+        android:textColorPrimary ="#ffffff"
+        android:iconTint="#ffffff"
+        android:tint="#ffffff"
+        android:icon="@drawable/ic_filter_list_black_24dp">
+
+    </item>
     <item
         android:id="@+id/action_reset"
         android:title="@string/reset">

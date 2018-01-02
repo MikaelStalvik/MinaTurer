@@ -1,5 +1,6 @@
 package com.imploded.minaturer.viewmodel
 
+import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.interfaces.WebServiceInterface
 import com.imploded.minaturer.model.*
 import com.imploded.minaturer.repository.WebServiceRepository
@@ -8,8 +9,12 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 
-class DeparturesViewModel {
+class DeparturesViewModel(private val stopId: String, val settings: SettingsInterface) {
 
+    var filterMode = false
+    fun toggleFilterMode() {
+        filterMode = !filterMode
+    }
     private val webservice: WebServiceInterface = WebServiceRepository()
     var uiDepartures: List<UiDeparture> = listOf()
 
@@ -27,12 +32,14 @@ class DeparturesViewModel {
         val searchTask = bg { webservice.getDepartures(stopId) }
         val departures = searchTask.await()
 
+        val uniqueDepartures = departures.departureBoard.departures.distinctBy { Pair(it.sname, it.direction) }
+
         val filteredLines = FilteredLines.filterlistForStop(stopId)
         val departureResult = if (filteredLines.count() > 0) {
-            departures.departureBoard.departures
+            uniqueDepartures
                     .filter { d -> !lineIsFiltered(d, filteredLines) }
         } else {
-            departures.departureBoard.departures
+            uniqueDepartures
         }
         val filtered = FilteredDepartures.filterlistForStop(stopId)
         uiDepartures = if (filtered.count() > 0) {
@@ -52,10 +59,24 @@ class DeparturesViewModel {
         updateFun()
     }
 
-    fun filtersActive(stopId: String): Boolean = FilteredDepartures.filterCountForStop(stopId)> 0 || FilteredLines.filterCountForStop(stopId) > 0
+    fun selectAll() {
+        for(item in uiDepartures) item.checked = true
+    }
+    fun selectNone() {
+        for(item in uiDepartures) item.checked = false
+    }
 
-    fun resetFilterForStop(stopId: String) {
+    fun filtersActive(): Boolean = FilteredDepartures.filterCountForStop(stopId)> 0 || FilteredLines.filterCountForStop(stopId) > 0
+
+    fun resetFilterForStop() {
         FilteredDepartures.resetFilterForStop(stopId)
         FilteredLines.resetFilterForStop(stopId)
+    }
+
+    fun applyFilters() {
+        uiDepartures
+                .filter { it.checked }
+                .forEach { FilteredDepartures.addFilteredTrip(stopId, it.shortName, it.direction) }
+        FilteredDepartures.saveData(settings)
     }
 }

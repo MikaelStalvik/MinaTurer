@@ -40,7 +40,7 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/textViewStopName"
+            android:id="@+id/textViewDirection"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_margin="8dp"

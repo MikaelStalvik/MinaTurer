@@ -39,5 +39,6 @@ data class UiDeparture(
         val stop: String = "",
         val rtTime: String = "",
         val direction: String = "",
-        val stopId: String = ""
+        val stopId: String = "",
+        var checked: Boolean = false
 )
