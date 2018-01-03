@@ -16,7 +16,10 @@ import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
 import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.utils.MinaTurerApp
 import com.imploded.minaturer.utils.afterTextChanged
+import com.imploded.minaturer.utils.hideKeyboard
+import com.imploded.minaturer.utils.inputMethodManager
 import com.imploded.minaturer.viewmodel.FindStopsViewModel
+import org.jetbrains.anko.sdk15.coroutines.onFocusChange
 import org.jetbrains.anko.support.v4.alert
 import kotlin.concurrent.fixedRateTimer
 
@@ -29,16 +32,17 @@ class FindStopFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: StopsAdapter
     private var mListener: OnFragmentInteractionListener? = null
+    private lateinit var searchEditText: EditText
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         (activity as AppCompatActivity).supportActionBar!!.title = getString(R.string.find_stop)
         val view = inflater!!.inflate(R.layout.fragment_find_stop, container, false)
-        val editText = view.findViewById<EditText>(R.id.editTextSearch)
-        editText.afterTextChanged {
+        searchEditText = view.findViewById<EditText>(R.id.editTextSearch)
+        searchEditText.afterTextChanged {
             fixedRateTimer("timer", false, 0, 750, {
                 this.cancel()
-                val filter = editText.text.toString()
+                val filter = searchEditText.text.toString()
                 if (viewModel.updateFiltering(filter)) {
                     activity.runOnUiThread{
                         if (!viewModel.isSearching) {
@@ -46,12 +50,10 @@ class FindStopFragment : Fragment() {
                             viewModel.getStops(::updateAdapter)
                         }
                     }
-                    /*
-                    context.runOnUiThread {
-                    }*/
                 }
             })
         }
+        searchEditText.setOnFocusChangeListener { _, hasFocus -> if (!hasFocus) searchEditText.hideKeyboard(activity.inputMethodManager()) }
         adapter = createAdapter()
         recyclerView = view.findViewById(R.id.recyclerViewStops)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
@@ -71,6 +73,7 @@ class FindStopFragment : Fragment() {
 
     private fun createAdapter(): StopsAdapter {
         return StopsAdapter({
+            searchEditText.hideKeyboard(activity.inputMethodManager())
             viewModel.addStop(it)
             mListener?.onStopAdded(it.name)
             activity.supportFragmentManager.popBackStack()

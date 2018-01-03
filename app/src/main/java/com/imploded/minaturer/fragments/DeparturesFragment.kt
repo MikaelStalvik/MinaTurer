@@ -25,6 +25,9 @@ import com.imploded.minaturer.ui.OnDialogInteraction
 import com.imploded.minaturer.utils.MinaTurerApp
 import com.imploded.minaturer.viewmodel.DeparturesViewModel
 import org.jetbrains.anko.support.v4.alert
+import android.support.v4.graphics.drawable.DrawableCompat
+import android.support.annotation.ColorRes
+import com.imploded.minaturer.utils.tintMenuIcon
 
 
 class DeparturesFragment : Fragment(), OnDialogInteraction {
@@ -130,10 +133,9 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
             viewModel.applyFilters()
 
             viewModel.toggleFilterMode()
-            TransitionManager.beginDelayedTransition(rootLayout)
+            //##TransitionManager.beginDelayedTransition(rootLayout)
             if (viewModel.filterMode) bottomToolbar.visibility = View.VISIBLE else bottomToolbar.visibility = View.GONE
             adapter.showFilter = viewModel.filterMode
-
             viewModel.getDepartures(stopId, ::updateAdapter)
         }
 
@@ -151,6 +153,8 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.departure_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
+        val item = menu?.findItem(R.id.action_filter_mode)
+        if (item != null) item.tintMenuIcon(context, android.R.color.white)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -163,9 +167,9 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
             }
             R.id.action_filter_mode -> {
                 viewModel.toggleFilterMode()
-                TransitionManager.beginDelayedTransition(rootLayout)
-                if (viewModel.filterMode) bottomToolbar.visibility = View.VISIBLE else bottomToolbar.visibility = View.GONE
                 adapter.showFilter = viewModel.filterMode
+                //##TransitionManager.beginDelayedTransition(rootLayout)
+                if (viewModel.filterMode) bottomToolbar.visibility = View.VISIBLE else bottomToolbar.visibility = View.GONE
                 adapter.notifyDataSetChanged()
                 false
             }
