@@ -72,6 +72,7 @@ class WebServiceRepository : WebServiceInterface{
         return when(result)
         {
             is Result.Success -> {
+                Log.d("HEJ", result.value)
                 val res =  Gson().fromJson<DepartureContainer>(result.value)
                 res
             }

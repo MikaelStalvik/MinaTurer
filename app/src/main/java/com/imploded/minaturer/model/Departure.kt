@@ -10,6 +10,10 @@ data class DepartureBoard (
         @SerializedName("Departure") val departures: List<Departure> = listOf()
 )
 
+data class JourneyRef (
+    @SerializedName("ref")val ref: String = ""
+)
+
 data class Departure (
         val name: String = "",
         val sname: String = "",
@@ -26,7 +30,9 @@ data class Departure (
         val fgColor: String = "",
         val bgColor: String = "",
         val stroke: String = "",
-        val accessibility: String = ""
+        val accessibility: String = "",
+        @SerializedName("JourneyDetailRef")
+        val journeyRefIds: JourneyRef
 )
 
 data class UiDeparture(
@@ -40,5 +46,6 @@ data class UiDeparture(
         val rtTime: String = "",
         val direction: String = "",
         val stopId: String = "",
-        var checked: Boolean = false
+        var checked: Boolean = false,
+        val journeyRefIds: JourneyRef
 )
