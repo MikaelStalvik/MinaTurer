@@ -81,21 +81,4 @@ class DeparturesViewModel(private val stopId: String, private val stopLat: Strin
         FilteredDepartures.saveData(settings)
     }
 
-    fun getJourneyDetails(departure: UiDeparture) = async(UI) {
-        val tokenTask = bg { webservice.getToken() }
-        tokenTask.await()
-        val searchTask = bg { webservice.getJourneyDetails(departure.journeyRefIds.ref) }
-        val jdet = searchTask.await()
-
-        val index = jdet.journeyDetail.stops.indexOfFirst { s -> s.lat == stopLat && s.lon == stopLon }
-        var validStops = jdet.journeyDetail.stops.subList(index, jdet.journeyDetail.stops.size)
-
-        for(stop in validStops) Log.d("STOP", stop.name + " " + stop.depTime + " arrTime:" + stop.arrTime)
-        /*
-        var thisStopFound = false
-        for(stop in jdet.journeyDetail.stops) {
-            if (!thisStopFound) thisStopFound = stop.lat == stopLat && stop.lon == stopLon
-            Log.d("STOP", stop.name + " " + stop.depTime + " " + thisStopFound)
-        }*/
-    }
 }

@@ -93,7 +93,8 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
             dialog.setInteraction(this)
             dialog.show(fragmentManager, "Dialog")*/
         }, {item, position ->
-            viewModel.getJourneyDetails(item)
+            mListener!!.onJourneyDetailsSelected(item.journeyRefIds.ref, stopLat, stopLon)
+            //viewModel.getJourneyDetails(item)
         })
     }
 
