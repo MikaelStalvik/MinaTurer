@@ -46,6 +46,7 @@ class WebServiceRepository : WebServiceInterface{
         return when(result)
         {
             is Result.Success -> {
+                Log.d("HEJ", result.value)
                 Gson().fromJson<LocationContainer>(result.value)
             }
             is Result.Failure -> {
@@ -82,10 +83,31 @@ class WebServiceRepository : WebServiceInterface{
         }
     }
 
+    override fun getJourneyDetails(ref: String) : JourneyDetailsContainer {
+        var endPoint = ref; //journeyDetailsByRef(ref)
+        val (_, _, result) = endPoint
+                .httpGet()
+                .header(Pair("Authorization", "$tokenType ${accessToken.accessToken}"))
+                .responseString()
+        return when(result)
+        {
+            is Result.Success -> {
+                Log.d("JDET", result.value)
+                val res =  Gson().fromJson<JourneyDetailsContainer>(result.value)
+                res
+            }
+            is Result.Failure -> {
+                Log.d("JDET", "FAIL!!!")
+                JourneyDetailsContainer(JourneyDetail())
+            }
+        }
+    }
+
     companion object {
         private val tokenUrl = "https://api.vasttrafik.se:443/token"
         private fun locationsByNameUrl(arg: String) = "https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=$arg&format=json"
         private fun departuresById(id: String, date: String, time: String) = "https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard?id=$id&date=$date&time=$time&format=json"
+        private fun journeyDetailsByRef(ref: String) = "https://api.vasttrafik.se/bin/rest.exe/v2/journeyDetail?ref=$ref"
 
         private val tokenType = "Bearer"
     }

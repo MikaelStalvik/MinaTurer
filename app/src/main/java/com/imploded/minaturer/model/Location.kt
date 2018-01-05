@@ -12,4 +12,4 @@ data class LocationList(
 
 data class StopLocation(val name: String, val idx: Int, val lon: String, val lat: String, val id: String = "")
 
-data class UiStop(val name: String, val id: String)
+data class UiStop(val name: String, val id: String, val lat: String, val lon: String)

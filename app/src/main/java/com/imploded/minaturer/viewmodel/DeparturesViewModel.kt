@@ -1,5 +1,6 @@
 package com.imploded.minaturer.viewmodel
 
+import android.util.Log
 import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.interfaces.WebServiceInterface
 import com.imploded.minaturer.model.*
@@ -9,7 +10,7 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 
-class DeparturesViewModel(private val stopId: String, val settings: SettingsInterface) {
+class DeparturesViewModel(private val stopId: String, private val stopLat: String, private val stopLon: String, val settings: SettingsInterface) {
 
     var filterMode = false
     fun toggleFilterMode() {
@@ -78,5 +79,23 @@ class DeparturesViewModel(private val stopId: String, val settings: SettingsInte
                 .filter { !it.checked }
                 .forEach { FilteredDepartures.addFilteredTrip(stopId, it.shortName, it.direction) }
         FilteredDepartures.saveData(settings)
+    }
+
+    fun getJourneyDetails(departure: UiDeparture) = async(UI) {
+        val tokenTask = bg { webservice.getToken() }
+        tokenTask.await()
+        val searchTask = bg { webservice.getJourneyDetails(departure.journeyRefIds.ref) }
+        val jdet = searchTask.await()
+
+        val index = jdet.journeyDetail.stops.indexOfFirst { s -> s.lat == stopLat && s.lon == stopLon }
+        var validStops = jdet.journeyDetail.stops.subList(index, jdet.journeyDetail.stops.size)
+
+        for(stop in validStops) Log.d("STOP", stop.name + " " + stop.depTime + " arrTime:" + stop.arrTime)
+        /*
+        var thisStopFound = false
+        for(stop in jdet.journeyDetail.stops) {
+            if (!thisStopFound) thisStopFound = stop.lat == stopLat && stop.lon == stopLon
+            Log.d("STOP", stop.name + " " + stop.depTime + " " + thisStopFound)
+        }*/
     }
 }

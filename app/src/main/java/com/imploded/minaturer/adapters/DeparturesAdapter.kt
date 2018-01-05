@@ -9,7 +9,7 @@ import com.imploded.minaturer.model.UiDeparture
 import com.imploded.minaturer.utils.toColor
 import kotlinx.android.synthetic.main.row_departure.view.*
 
-class DeparturesAdapter(private val itemClick: (UiDeparture, Int) -> Unit): RecyclerView.Adapter<DeparturesAdapter.DepartureHolder>() {
+class DeparturesAdapter(private val itemChecked: (UiDeparture, Int) -> Unit, private val itemClicked: (UiDeparture, Int) -> Unit): RecyclerView.Adapter<DeparturesAdapter.DepartureHolder>() {
 
     var showFilter: Boolean = false
 
@@ -17,7 +17,7 @@ class DeparturesAdapter(private val itemClick: (UiDeparture, Int) -> Unit): Recy
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): DeparturesAdapter.DepartureHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.row_departure, parent, false)
-        return DeparturesAdapter.DepartureHolder(view, itemClick)
+        return DeparturesAdapter.DepartureHolder(view, itemChecked, itemClicked)
     }
 
     override fun onBindViewHolder(holder: DeparturesAdapter.DepartureHolder, position: Int) {
@@ -39,14 +39,14 @@ class DeparturesAdapter(private val itemClick: (UiDeparture, Int) -> Unit): Recy
         notifyDataSetChanged()
     }
 
-    class DepartureHolder(view: View, private val itemClick: (UiDeparture, Int) -> Unit) : RecyclerView.ViewHolder(view) {
+    class DepartureHolder(view: View, private val itemChecked: (UiDeparture, Int) -> Unit, private val itemClicked: (UiDeparture, Int) -> Unit) : RecyclerView.ViewHolder(view) {
 
         fun bindDeparture(departureItem: UiDeparture, showFilter: Boolean) {
             with(departureItem) {
 
                 if (showFilter) itemView.checkBox.visibility = View.VISIBLE else itemView.checkBox.visibility = View.GONE
                 itemView.checkBox.isChecked = departureItem.checked
-                itemView.checkBox.setOnClickListener{itemClick(this, adapterPosition)}
+                itemView.checkBox.setOnClickListener{itemChecked(this, adapterPosition)}
 
                 itemView.textViewLineNumber.text = departureItem.shortName
                 itemView.textViewLineNumber.setBackgroundColor(departureItem.fgColor.toColor())
@@ -56,7 +56,7 @@ class DeparturesAdapter(private val itemClick: (UiDeparture, Int) -> Unit): Recy
                 itemView.textViewDepTimeEta.text = departureItem.rtTime
                 itemView.textViewDirection.text = departureItem.direction
 
-                //itemView.setOnClickListener{itemClick(this)}
+                itemView.setOnClickListener{itemClicked(this, adapterPosition)}
             }
         }
     }
