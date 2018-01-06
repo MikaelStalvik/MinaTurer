@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -19,7 +20,6 @@ import com.imploded.minaturer.utils.afterTextChanged
 import com.imploded.minaturer.utils.hideKeyboard
 import com.imploded.minaturer.utils.inputMethodManager
 import com.imploded.minaturer.viewmodel.FindStopsViewModel
-import org.jetbrains.anko.sdk15.coroutines.onFocusChange
 import org.jetbrains.anko.support.v4.alert
 import kotlin.concurrent.fixedRateTimer
 
@@ -37,8 +37,9 @@ class FindStopFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         (activity as AppCompatActivity).supportActionBar!!.title = getString(R.string.find_stop)
+        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         val view = inflater!!.inflate(R.layout.fragment_find_stop, container, false)
-        searchEditText = view.findViewById<EditText>(R.id.editTextSearch)
+        searchEditText = view.findViewById(R.id.editTextSearch)
         searchEditText.afterTextChanged {
             fixedRateTimer("timer", false, 0, 750, {
                 this.cancel()
@@ -59,6 +60,7 @@ class FindStopFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.adapter = adapter
         showHint()
+        setHasOptionsMenu(true)
 
         return view
     }
@@ -78,6 +80,17 @@ class FindStopFragment : Fragment() {
             mListener?.onStopAdded(it.name)
             activity.supportFragmentManager.popBackStack()
         })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item == null) return super.onOptionsItemSelected(item)
+        return when(item.itemId) {
+            android.R.id.home -> {
+                activity.supportFragmentManager.popBackStack()
+                false
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onAttach(context: Context?) {

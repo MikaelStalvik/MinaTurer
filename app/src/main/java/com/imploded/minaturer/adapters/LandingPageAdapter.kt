@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.imploded.minaturer.R
 import com.imploded.minaturer.model.UiStop
+import com.imploded.minaturer.utils.AppConstants
+import com.imploded.minaturer.utils.toColor
 import kotlinx.android.synthetic.main.row_draggable_stop.view.*
 
 class LandingPageAdapter(private val itemClick: (UiStop) -> Unit): RecyclerView.Adapter<LandingPageAdapter.UiStopHolder>() {
@@ -33,7 +35,6 @@ class LandingPageAdapter(private val itemClick: (UiStop) -> Unit): RecyclerView.
     }
 
     private var stopItems: ArrayList<UiStop> = arrayListOf()
-    fun activeStops(): List<UiStop> = stopItems
 
     class UiStopHolder(view: View, private val itemClick: (UiStop) -> Unit) : RecyclerView.ViewHolder(view) {
 
@@ -44,6 +45,9 @@ class LandingPageAdapter(private val itemClick: (UiStop) -> Unit): RecyclerView.
                 itemView.textViewDirection.text = name
                 itemView.setOnClickListener{itemClick(this)}
             }
+            var bgColor = AppConstants.fragmentBgColor
+            if (adapterPosition % 2 == 1) bgColor = AppConstants.oddRowColor
+            itemView.view_foreground.setBackgroundColor(bgColor.toColor())
         }
     }
 }

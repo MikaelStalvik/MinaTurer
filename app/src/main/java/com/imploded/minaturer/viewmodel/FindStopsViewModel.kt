@@ -49,13 +49,13 @@ class FindStopsViewModel(val settings: SettingsInterface) {
     fun addStop(stop: StopLocation) {
         val activeSettings = settings.loadSettings()
         if (activeSettings.StopsList.isEmpty()) {
-            val stops = listOf(UiStop(stop.name, stop.id))
+            val stops = listOf(UiStop(stop.name, stop.id, stop.lat, stop.lon))
             activeSettings.StopsList = Gson().toJson(stops)
         }
         else {
             val stops = Gson().fromJson<ArrayList<UiStop>>(activeSettings.StopsList)
             if (!stops.any { s -> s.id.equals(stop.id, true) }) {
-                stops.add(UiStop(stop.name, stop.id))
+                stops.add(UiStop(stop.name, stop.id, stop.lat, stop.lon))
                 activeSettings.StopsList = Gson().toJson(stops)
             }
         }

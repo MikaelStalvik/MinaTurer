@@ -46,6 +46,7 @@ class WebServiceRepository : WebServiceInterface{
         return when(result)
         {
             is Result.Success -> {
+                Log.d("HEJ", result.value)
                 Gson().fromJson<LocationContainer>(result.value)
             }
             is Result.Failure -> {
@@ -64,7 +65,7 @@ class WebServiceRepository : WebServiceInterface{
         val timeString = dateFormat.format(calender.time)
         val time = URLEncoder.encode(timeString, "UTF-8")
         val endPoint = departuresById(id, date, time)
-        //Log.d("WS", "Departures: " + endPoint)
+        Log.d("WS", "Departures: " + endPoint)
         val (_, _, result) = endPoint
                 .httpGet()
                 .header(Pair("Authorization", "$tokenType ${accessToken.accessToken}"))
@@ -72,11 +73,32 @@ class WebServiceRepository : WebServiceInterface{
         return when(result)
         {
             is Result.Success -> {
+                Log.d("HEJ", result.value)
                 val res =  Gson().fromJson<DepartureContainer>(result.value)
                 res
             }
             is Result.Failure -> {
                 DepartureContainer(DepartureBoard())
+            }
+        }
+    }
+
+    override fun getJourneyDetails(ref: String) : JourneyDetailsContainer {
+        val endPoint = ref
+        val (_, _, result) = endPoint
+                .httpGet()
+                .header(Pair("Authorization", "$tokenType ${accessToken.accessToken}"))
+                .responseString()
+        return when(result)
+        {
+            is Result.Success -> {
+                Log.d("JDET", result.value)
+                val res =  Gson().fromJson<JourneyDetailsContainer>(result.value)
+                res
+            }
+            is Result.Failure -> {
+                Log.d("JDET", "FAIL!!!")
+                JourneyDetailsContainer(JourneyDetail())
             }
         }
     }

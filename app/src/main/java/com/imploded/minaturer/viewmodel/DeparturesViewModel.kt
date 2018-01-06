@@ -46,15 +46,15 @@ class DeparturesViewModel(private val stopId: String, val settings: SettingsInte
             departureResult
                     .filter { d -> !itemIsFiltered(d, filtered) }
                     .map { d ->
-                        UiDeparture(d.name, d.sname, d.time, d.date, d.fgColor, d.bgColor, d.stop, d.rtTime.etaTime(d.time), d.direction, d.stopid)
+                        UiDeparture(d.name, d.sname, d.time, d.date, d.fgColor, d.bgColor, d.stop, d.rtTime?.etaTime(d.time), d.direction, d.stopid, true, JourneyRef(d.journeyRefIds.ref))
                     }
-        }
-        else {
+        } else {
             departureResult
                     .map { d ->
-                        UiDeparture(d.name, d.sname, d.time, d.date, d.fgColor, d.bgColor, d.stop, d.rtTime.etaTime(d.time), d.direction, d.stopid)
+                        UiDeparture(d.name, d.sname, d.time, d.date, d.fgColor, d.bgColor, d.stop, d.rtTime?.etaTime(d.time), d.direction, d.stopid, true, JourneyRef(d.journeyRefIds.ref))
                     }
         }
+        for((index, departure) in uiDepartures.withIndex()) departure.index = index
 
         updateFun()
     }
@@ -75,8 +75,9 @@ class DeparturesViewModel(private val stopId: String, val settings: SettingsInte
 
     fun applyFilters() {
         uiDepartures
-                .filter { it.checked }
+                .filter { !it.checked }
                 .forEach { FilteredDepartures.addFilteredTrip(stopId, it.shortName, it.direction) }
         FilteredDepartures.saveData(settings)
     }
+
 }

@@ -3,7 +3,6 @@ package com.imploded.minaturer.fragments
 import android.content.Context
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
-import android.support.transition.TransitionManager
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
@@ -23,11 +22,9 @@ import com.imploded.minaturer.model.UiStop
 import com.imploded.minaturer.ui.ChooseFilterTypeDialog
 import com.imploded.minaturer.ui.OnDialogInteraction
 import com.imploded.minaturer.utils.MinaTurerApp
+import com.imploded.minaturer.utils.tintMenuIcon
 import com.imploded.minaturer.viewmodel.DeparturesViewModel
 import org.jetbrains.anko.support.v4.alert
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.annotation.ColorRes
-import com.imploded.minaturer.utils.tintMenuIcon
 
 
 class DeparturesFragment : Fragment(), OnDialogInteraction {
@@ -83,16 +80,11 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
 
     private fun createAdapter(): DeparturesAdapter {
         viewModel.uiDepartures
-        return DeparturesAdapter({ item, position ->
+        return DeparturesAdapter({ _, position ->
             viewModel.uiDepartures[position].checked = !viewModel.uiDepartures[position].checked
-            Log.d("CHECK", "pos: " + position.toString() + " " + viewModel.uiDepartures[position].checked )
-            //item.checked = !item.checked
             adapter.notifyDataSetChanged()
-            /*
-            selectedItem = it
-            val dialog = ChooseFilterTypeDialog()
-            dialog.setInteraction(this)
-            dialog.show(fragmentManager, "Dialog")*/
+        }, {item, _ ->
+            mListener!!.onJourneyDetailsSelected(item.journeyRefIds.ref, item.stopId)
         })
     }
 
@@ -106,6 +98,8 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_departures, container, false)
+
+        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         swipeRefresh = view.findViewById(R.id.simpleSwipeRefreshLayout)
         swipeRefresh.setOnRefreshListener {
@@ -153,8 +147,7 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.departure_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
-        val item = menu?.findItem(R.id.action_filter_mode)
-        if (item != null) item.tintMenuIcon(context, android.R.color.white)
+        menu?.findItem(R.id.action_filter_mode)?.tintMenuIcon(context, android.R.color.white)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -173,10 +166,13 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
                 adapter.notifyDataSetChanged()
                 false
             }
+            android.R.id.home -> {
+                activity.supportFragmentManager.popBackStack()
+                false
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
-
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)

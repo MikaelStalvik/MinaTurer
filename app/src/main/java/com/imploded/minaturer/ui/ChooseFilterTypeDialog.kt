@@ -41,8 +41,6 @@ class ChooseFilterTypeDialog : DialogFragment() {
         return dialog.create()
     }
 
-    fun setInteraction(instance: OnDialogInteraction) { dialogInteraction = instance }
-
     companion object {
         val FilterByLine = 0
         val FilterByLineAndDirection = 1

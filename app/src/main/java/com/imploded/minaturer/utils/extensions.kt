@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.text.SimpleDateFormat
 
 inline fun <reified T> Gson.fromJson(json: String) = this.fromJson<T>(json, object: TypeToken<T>() {}.type)
 
@@ -52,4 +53,17 @@ fun Activity.inputMethodManager() : InputMethodManager {
 }
 fun View.hideKeyboard(inputMethodManager: InputMethodManager) {
     inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+}
+
+fun timeDifference(sourceDate: String, sourceTime: String, destDate: String, destTime: String) : Int {
+    return try {
+        val sourceDateTime = sourceDate + " " + sourceTime + ":00"
+        val destDatetime = destDate + " " + destTime + ":00"
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        val parsedSource = dateFormat.parse(sourceDateTime)
+        val parsedDest = dateFormat.parse(destDatetime)
+        (parsedDest.time - parsedSource.time).toInt() / 1000
+    } catch(e: Exception) {
+        0
+    }
 }

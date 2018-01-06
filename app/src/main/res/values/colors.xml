@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--
+
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#ff4081</color>-->
+    <color name="colorAccent">#ff4081</color>
 
+    <!--
     <color name="colorPrimary">#546e7a</color>
     <color name="colorPrimaryDark">#29434e</color>
     <color name="colorAccent">#ff4081</color>
+    -->
     <color name="bg_row_background">#fa315b</color>
     <color name="fragment_bg">#fafafa</color>
+    <color name="button_tint">#66f1f1f1</color>
+    <color name="button_bg">#819ca9</color>
+    <color name="text_dim">#9a9a9a</color>
+    <color name="odd_row_color">#44dedede</color>
 </resources>
