@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.imploded.minaturer.R
 import com.imploded.minaturer.model.Stop
+import com.imploded.minaturer.utils.AppConstants
+import com.imploded.minaturer.utils.toColor
 import kotlinx.android.synthetic.main.row_journey_detail.view.*
 
 
-class JourneyDetailsAdapter(private val trackText: String, private val itemClick: (Stop) -> Unit): RecyclerView.Adapter<JourneyDetailsAdapter.JourneyDetailsHolder>() {
+class JourneyDetailsAdapter(private val trackText: String, private val travelTimeString: String, private val itemClick: (Stop) -> Unit): RecyclerView.Adapter<JourneyDetailsAdapter.JourneyDetailsHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): JourneyDetailsHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.row_journey_detail, parent, false)
@@ -17,7 +19,7 @@ class JourneyDetailsAdapter(private val trackText: String, private val itemClick
     }
 
     override fun onBindViewHolder(holder: JourneyDetailsHolder, position: Int) {
-        holder.bindStop(trackText, stopItems[position])
+        holder.bindStop(trackText, travelTimeString, stopItems[position])
     }
     override fun getItemCount(): Int {
         return stopItems.count()
@@ -30,17 +32,23 @@ class JourneyDetailsAdapter(private val trackText: String, private val itemClick
 
     class JourneyDetailsHolder(view: View, private val itemClick: (Stop) -> Unit) : RecyclerView.ViewHolder(view) {
 
-        fun bindStop(trackText: String, stopItem: Stop) {
+        fun bindStop(trackText: String, travelTimeString: String, stopItem: Stop) {
+            if (adapterPosition % 2 == 1) itemView.rootLayout.setBackgroundColor(AppConstants.oddRowColor.toColor())
             with(stopItem) {
-                if (stopItem.depTime.isEmpty()) {
-                    itemView.textViewDepTime.text = stopItem.arrTime
+                if (depTime.isEmpty()) {
+                    itemView.textViewDepTime.text = arrTime
                 }
                 else {
-                    itemView.textViewDepTime.text = stopItem.depTime
+                    itemView.textViewDepTime.text = depTime
                 }
-                if (stopItem.depDate != stopItem.rtDepDate) itemView.textViewDepTimeRt.text = stopItem.rtDepTime else itemView.textViewDepTimeRt.text = ""
-                itemView.textViewStopName.text = stopItem.name
-                if (stopItem.track.isEmpty()) itemView.textViewTrack.text = "" else itemView.textViewTrack.text = trackText + ": " + stopItem.track
+                if (depDate != rtDepDate) itemView.textViewDepTimeRt.text = rtDepTime else itemView.textViewDepTimeRt.text = ""
+                itemView.textViewStopName.text = name
+
+                if (track.isEmpty()) itemView.textViewTrack.text = "" else itemView.textViewTrack.text = trackText + ": " + track
+
+                val sb = StringBuilder()
+                if (timeDiff > 0) sb.append(" ").append(timeDiff/60).append(" ").append(travelTimeString) else sb.append("-")
+                itemView.textViewInfo.text = sb
             }
         }
     }

@@ -84,7 +84,7 @@ class WebServiceRepository : WebServiceInterface{
     }
 
     override fun getJourneyDetails(ref: String) : JourneyDetailsContainer {
-        var endPoint = ref; //journeyDetailsByRef(ref)
+        var endPoint = ref
         val (_, _, result) = endPoint
                 .httpGet()
                 .header(Pair("Authorization", "$tokenType ${accessToken.accessToken}"))

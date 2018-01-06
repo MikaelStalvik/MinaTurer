@@ -13,4 +13,5 @@
     <color name="button_tint">#66f1f1f1</color>
     <color name="button_bg">#819ca9</color>
     <color name="text_dim">#9a9a9a</color>
+    <color name="odd_row_color">#44dedede</color>
 </resources>

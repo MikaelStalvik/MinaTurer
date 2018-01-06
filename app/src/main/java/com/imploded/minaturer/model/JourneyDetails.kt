@@ -22,5 +22,6 @@ data class Stop (
     val rtDepTime: String = "",
     val track: String = "",
     val arrTime: String = "",
-    val arrDate: String = ""
+    val arrDate: String = "",
+    var timeDiff: Int = 0
 )

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.imploded.minaturer.R
 import com.imploded.minaturer.model.UiDeparture
+import com.imploded.minaturer.utils.AppConstants
 import com.imploded.minaturer.utils.toColor
 import kotlinx.android.synthetic.main.row_departure.view.*
 
@@ -43,6 +44,7 @@ class DeparturesAdapter(private val itemChecked: (UiDeparture, Int) -> Unit, pri
 
         fun bindDeparture(departureItem: UiDeparture, showFilter: Boolean) {
             with(departureItem) {
+                if (adapterPosition % 2 == 1) itemView.departureRootLayout.setBackgroundColor(AppConstants.oddRowColor.toColor())
 
                 if (showFilter) itemView.checkBox.visibility = View.VISIBLE else itemView.checkBox.visibility = View.GONE
                 itemView.checkBox.isChecked = departureItem.checked

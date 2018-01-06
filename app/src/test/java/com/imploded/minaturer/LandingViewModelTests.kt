@@ -20,11 +20,11 @@ class LandingViewModelTests {
     @Before
     fun init() {
         val stops = listOf(
-                UiStop("Nordstan", "1"),
-                UiStop("Heden", "2"),
-                UiStop("Kärra", "3"),
-                UiStop("Torslanda", "4"),
-                UiStop("Frölunda", "5"))
+                UiStop("Nordstan", "1", "", ""),
+                UiStop("Heden", "2", "", ""),
+                UiStop("Kärra", "3", "", ""),
+                UiStop("Torslanda", "4", "", ""),
+                UiStop("Frölunda", "5", "", ""))
         val json = Gson().toJson(stops)
         mockSettings = Mockito.mock(SettingsInterface::class.java)
         `when`(mockSettings.loadSettings()).thenReturn(

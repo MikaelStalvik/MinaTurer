@@ -49,7 +49,7 @@ class JourneyDetailsFragment : Fragment() {
     }
 
     private fun createAdapter(): JourneyDetailsAdapter {
-        return JourneyDetailsAdapter(getString(R.string.track), {})
+        return JourneyDetailsAdapter(getString(R.string.track), getString(R.string.travel_time), {})
     }
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
