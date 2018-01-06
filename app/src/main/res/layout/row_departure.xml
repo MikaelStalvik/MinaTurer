@@ -53,11 +53,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginTop="2dp"
-        android:textSize="10sp"
         android:text="TextView"
-        android:textColor="#9a9a9a"
+        android:textColor="@color/text_dim"
+        android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewDepTime" />
 

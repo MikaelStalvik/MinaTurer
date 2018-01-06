@@ -34,15 +34,13 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
     }
 
     private val viewModel: DeparturesViewModel by lazy {
-        DeparturesViewModel(stopId, stopLat, stopLon, appSettings)
+        DeparturesViewModel(stopId, appSettings)
     }
     private var mListener: OnFragmentInteractionListener? = null
 
     private lateinit var selectedItem: UiDeparture
     private lateinit var stopId: String
     private lateinit var stopName: String
-    private lateinit var stopLat: String
-    private lateinit var stopLon: String
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: DeparturesAdapter
@@ -93,7 +91,7 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
             dialog.setInteraction(this)
             dialog.show(fragmentManager, "Dialog")*/
         }, {item, position ->
-            mListener!!.onJourneyDetailsSelected(item.journeyRefIds.ref, stopLat, stopLon)
+            mListener!!.onJourneyDetailsSelected(item.journeyRefIds.ref, item.stopId)
             //viewModel.getJourneyDetails(item)
         })
     }
@@ -103,8 +101,6 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
         super.onCreate(savedInstanceState)
         stopId = arguments.getString(ARG_PARAM1)
         stopName = arguments.getString(ARG_PARAM2)
-        stopLat = arguments.getString(ARG_PARAM3)
-        stopLon = arguments.getString(ARG_PARAM4)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -210,16 +206,12 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
     companion object {
         private val ARG_PARAM1 = "stopId"
         private val ARG_PARAM2 = "stopName"
-        private val ARG_PARAM3 = "lat"
-        private val ARG_PARAM4 = "lon"
 
         fun newInstance(stop: UiStop): DeparturesFragment {
             val fragment = DeparturesFragment()
             val args = Bundle()
             args.putString(ARG_PARAM1, stop.id)
             args.putString(ARG_PARAM2, stop.name)
-            args.putString(ARG_PARAM3, stop.lat)
-            args.putString(ARG_PARAM4, stop.lon)
             fragment.arguments = args
             return fragment
         }

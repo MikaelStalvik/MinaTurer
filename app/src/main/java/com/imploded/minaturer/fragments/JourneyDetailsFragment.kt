@@ -4,25 +4,32 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.imploded.minaturer.R
+import com.imploded.minaturer.adapters.JourneyDetailsAdapter
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
-import com.imploded.minaturer.model.UiDeparture
-import com.imploded.minaturer.model.UiStop
+import com.imploded.minaturer.interfaces.SettingsInterface
+import com.imploded.minaturer.utils.MinaTurerApp
 import com.imploded.minaturer.viewmodel.JourneyDetailViewModel
 
 class JourneyDetailsFragment : Fragment() {
 
     private val viewModel: JourneyDetailViewModel by lazy {
-        JourneyDetailViewModel(sourceRef, sourceLat, sourceLon)
+        JourneyDetailViewModel(sourceRef, sourceStopId)
     }
     private lateinit var sourceRef: String
-    private lateinit var sourceLat: String
-    private lateinit var sourceLon: String
+    private lateinit var sourceStopId: String
+
+    private val appSettings: SettingsInterface by lazy {
+        MinaTurerApp.prefs
+    }
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: JourneyDetailsAdapter
 
 
     private var mListener: OnFragmentInteractionListener? = null
@@ -31,30 +38,29 @@ class JourneyDetailsFragment : Fragment() {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
             sourceRef = arguments.getString(ARG_PARAM1)
-            sourceLat = arguments.getString(ARG_PARAM2)
-            sourceLon = arguments.getString(ARG_PARAM3)
+            sourceStopId = arguments.getString(ARG_PARAM2)
         }
     }
 
     private fun updateAdapter() {
-        for(stop in viewModel.stops) Log.d("STOP", stop.name + " " + stop.depTime + " arrTime:" + stop.arrTime)
-        /*
-        adapter.updateItems { viewModel.uiDepartures }
+        adapter.updateItems { viewModel.stops }
         adapter.notifyDataSetChanged()
         recyclerView.scrollToPosition(0)
-        if (viewModel.filtersActive()) {
-            (activity as AppCompatActivity).supportActionBar!!.title = stopName + " (" + getString(R.string.filtered) + ")"
-        } else {
-            (activity as AppCompatActivity).supportActionBar!!.title = stopName
-        }*/
     }
 
+    private fun createAdapter(): JourneyDetailsAdapter {
+        return JourneyDetailsAdapter(getString(R.string.track), {})
+    }
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+
         (activity as AppCompatActivity).supportActionBar!!.title = getString(R.string.journey_details)
         val view =  inflater!!.inflate(R.layout.fragment_journey_details, container, false)
 
+        adapter = createAdapter()
+        recyclerView = view.findViewById(R.id.journeyRecycleView)
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
+        recyclerView.adapter = adapter
         viewModel.getJourneyDetails(::updateAdapter)
 
         return view
@@ -77,15 +83,13 @@ class JourneyDetailsFragment : Fragment() {
 
     companion object {
         private val ARG_PARAM1 = "ref"
-        private val ARG_PARAM2 = "lat"
-        private val ARG_PARAM3 = "lon"
+        private val ARG_PARAM2 = "stopid"
 
-        fun newInstance(ref: String, lat: String, lon: String): JourneyDetailsFragment {
+        fun newInstance(ref: String, stopId: String): JourneyDetailsFragment {
             val fragment = JourneyDetailsFragment()
             val args = Bundle()
             args.putString(ARG_PARAM1, ref)
-            args.putString(ARG_PARAM2, lat)
-            args.putString(ARG_PARAM3, lon)
+            args.putString(ARG_PARAM2, stopId)
             fragment.arguments = args
             return fragment
         }

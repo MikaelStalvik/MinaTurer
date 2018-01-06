@@ -1,6 +1,5 @@
 package com.imploded.minaturer.viewmodel
 
-import android.util.Log
 import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.interfaces.WebServiceInterface
 import com.imploded.minaturer.model.*
@@ -10,7 +9,7 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 
-class DeparturesViewModel(private val stopId: String, private val stopLat: String, private val stopLon: String, val settings: SettingsInterface) {
+class DeparturesViewModel(private val stopId: String, val settings: SettingsInterface) {
 
     var filterMode = false
     fun toggleFilterMode() {

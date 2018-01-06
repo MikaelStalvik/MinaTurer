@@ -65,7 +65,7 @@ class WebServiceRepository : WebServiceInterface{
         val timeString = dateFormat.format(calender.time)
         val time = URLEncoder.encode(timeString, "UTF-8")
         val endPoint = departuresById(id, date, time)
-        //Log.d("WS", "Departures: " + endPoint)
+        Log.d("WS", "Departures: " + endPoint)
         val (_, _, result) = endPoint
                 .httpGet()
                 .header(Pair("Authorization", "$tokenType ${accessToken.accessToken}"))

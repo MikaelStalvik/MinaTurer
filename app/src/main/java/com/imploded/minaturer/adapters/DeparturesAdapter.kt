@@ -54,6 +54,7 @@ class DeparturesAdapter(private val itemChecked: (UiDeparture, Int) -> Unit, pri
 
                 itemView.textViewDepTime.text = departureItem.time
                 itemView.textViewDepTimeEta.text = departureItem.rtTime
+                if (departureItem.rtTime.isEmpty()) itemView.textViewDepTimeEta.visibility = View.GONE else itemView.textViewDepTimeEta.visibility = View.VISIBLE
                 itemView.textViewDirection.text = departureItem.direction
 
                 itemView.setOnClickListener{itemClicked(this, adapterPosition)}

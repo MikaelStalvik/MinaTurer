@@ -14,8 +14,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
 
-    override fun onJourneyDetailsSelected(ref: String, lat: String, lon: String) {
-        val journeyDetailsFragment = JourneyDetailsFragment.newInstance(ref, lat, lon)
+    override fun onJourneyDetailsSelected(ref: String, stopId: String) {
+        val journeyDetailsFragment = JourneyDetailsFragment.newInstance(ref, stopId)
         supportFragmentManager.beginTransaction()
                 .replace(R.id.root_layout, journeyDetailsFragment, "journeyDetailsFragment")
                 .addToBackStack(null)
