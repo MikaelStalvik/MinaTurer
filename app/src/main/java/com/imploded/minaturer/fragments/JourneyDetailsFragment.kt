@@ -12,8 +12,6 @@ import android.view.ViewGroup
 import com.imploded.minaturer.R
 import com.imploded.minaturer.adapters.JourneyDetailsAdapter
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
-import com.imploded.minaturer.interfaces.SettingsInterface
-import com.imploded.minaturer.utils.MinaTurerApp
 import com.imploded.minaturer.viewmodel.JourneyDetailViewModel
 
 class JourneyDetailsFragment : Fragment() {
@@ -24,9 +22,10 @@ class JourneyDetailsFragment : Fragment() {
     private lateinit var sourceRef: String
     private lateinit var sourceStopId: String
 
+    /*
     private val appSettings: SettingsInterface by lazy {
         MinaTurerApp.prefs
-    }
+    }*/
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: JourneyDetailsAdapter

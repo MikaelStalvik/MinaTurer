@@ -55,6 +55,7 @@ class DeparturesViewModel(private val stopId: String, val settings: SettingsInte
                         UiDeparture(d.name, d.sname, d.time, d.date, d.fgColor, d.bgColor, d.stop, d.rtTime.etaTime(d.time), d.direction, d.stopid, true, JourneyRef(d.journeyRefIds.ref))
                     }
         }
+        for((index, departure) in uiDepartures.withIndex()) departure.index = index
 
         updateFun()
     }

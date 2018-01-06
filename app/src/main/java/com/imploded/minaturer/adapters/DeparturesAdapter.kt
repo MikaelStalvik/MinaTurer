@@ -1,6 +1,7 @@
 package com.imploded.minaturer.adapters
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,7 @@ class DeparturesAdapter(private val itemChecked: (UiDeparture, Int) -> Unit, pri
         departureItems = f()
     }
 
+    /*
     fun selectAll() {
         for(item in departureItems) item.checked = true
         notifyDataSetChanged()
@@ -38,13 +40,13 @@ class DeparturesAdapter(private val itemChecked: (UiDeparture, Int) -> Unit, pri
     fun selectNone() {
         for(item in departureItems) item.checked = false
         notifyDataSetChanged()
-    }
+    }*/
 
     class DepartureHolder(view: View, private val itemChecked: (UiDeparture, Int) -> Unit, private val itemClicked: (UiDeparture, Int) -> Unit) : RecyclerView.ViewHolder(view) {
 
         fun bindDeparture(departureItem: UiDeparture, showFilter: Boolean) {
             with(departureItem) {
-                if (adapterPosition % 2 == 1) itemView.departureRootLayout.setBackgroundColor(AppConstants.oddRowColor.toColor())
+                if (departureItem.index % 2 == 1) itemView.departureRootLayout.setBackgroundColor(AppConstants.oddRowColor.toColor()) else itemView.departureRootLayout.setBackgroundColor(AppConstants.fragmentBgColor.toColor())
 
                 if (showFilter) itemView.checkBox.visibility = View.VISIBLE else itemView.checkBox.visibility = View.GONE
                 itemView.checkBox.isChecked = departureItem.checked

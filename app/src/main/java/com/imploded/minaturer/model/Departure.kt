@@ -47,5 +47,6 @@ data class UiDeparture(
         val direction: String = "",
         val stopId: String = "",
         var checked: Boolean = false,
-        val journeyRefIds: JourneyRef
+        val journeyRefIds: JourneyRef,
+        var index : Int = 0
 )
