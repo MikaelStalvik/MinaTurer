@@ -38,9 +38,9 @@ class LandingViewModelTests {
         viewModel.getStops()
         viewModel.removeStop(2)
         assertEquals(viewModel.selectedStops.count(), 4)
-        assertTrue(viewModel.selectedStops[0].id.equals("1") )
-        assertTrue(viewModel.selectedStops[1].id.equals("2") )
-        assertTrue(viewModel.selectedStops[2].id.equals("4") )
-        assertTrue(viewModel.selectedStops[3].id.equals("5") )
+        assertTrue(viewModel.selectedStops[0].id == "1")
+        assertTrue(viewModel.selectedStops[1].id == "2")
+        assertTrue(viewModel.selectedStops[2].id == "4")
+        assertTrue(viewModel.selectedStops[3].id == "5")
     }
 }

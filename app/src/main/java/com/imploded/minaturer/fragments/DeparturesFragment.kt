@@ -80,19 +80,11 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
 
     private fun createAdapter(): DeparturesAdapter {
         viewModel.uiDepartures
-        return DeparturesAdapter({ item, position ->
+        return DeparturesAdapter({ _, position ->
             viewModel.uiDepartures[position].checked = !viewModel.uiDepartures[position].checked
-            Log.d("CHECK", "pos: " + position.toString() + " " + viewModel.uiDepartures[position].checked )
-            //item.checked = !item.checked
             adapter.notifyDataSetChanged()
-            /*
-            selectedItem = it
-            val dialog = ChooseFilterTypeDialog()
-            dialog.setInteraction(this)
-            dialog.show(fragmentManager, "Dialog")*/
-        }, {item, position ->
+        }, {item, _ ->
             mListener!!.onJourneyDetailsSelected(item.journeyRefIds.ref, item.stopId)
-            //viewModel.getJourneyDetails(item)
         })
     }
 
@@ -106,6 +98,8 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_departures, container, false)
+
+        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         swipeRefresh = view.findViewById(R.id.simpleSwipeRefreshLayout)
         swipeRefresh.setOnRefreshListener {
@@ -153,8 +147,7 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.departure_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
-        val item = menu?.findItem(R.id.action_filter_mode)
-        if (item != null) item.tintMenuIcon(context, android.R.color.white)
+        menu?.findItem(R.id.action_filter_mode)?.tintMenuIcon(context, android.R.color.white)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -173,10 +166,13 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
                 adapter.notifyDataSetChanged()
                 false
             }
+            android.R.id.home -> {
+                activity.supportFragmentManager.popBackStack()
+                false
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
-
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)

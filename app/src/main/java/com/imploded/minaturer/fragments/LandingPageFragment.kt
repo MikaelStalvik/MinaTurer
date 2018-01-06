@@ -37,6 +37,7 @@ class LandingPageFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         (activity as AppCompatActivity).supportActionBar!!.title = getString(R.string.my_stops)
+        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
         val view = inflater!!.inflate(R.layout.fragment_landing_page, container, false)
 
         view.findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
@@ -64,9 +65,8 @@ class LandingPageFragment : Fragment() {
                 val position = viewHolder.adapterPosition
                 when(direction) {
                     ItemTouchHelper.LEFT -> {
-                        Log.d("SWIPE", "REMOVE " + position.toString())
                         adapter.removeItem(position)
-                        viewModel.removeStop(position)
+                        viewModel.removeStop()
                     }
                 }
             }

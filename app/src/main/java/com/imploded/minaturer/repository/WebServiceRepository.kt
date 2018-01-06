@@ -84,7 +84,7 @@ class WebServiceRepository : WebServiceInterface{
     }
 
     override fun getJourneyDetails(ref: String) : JourneyDetailsContainer {
-        var endPoint = ref
+        val endPoint = ref
         val (_, _, result) = endPoint
                 .httpGet()
                 .header(Pair("Authorization", "$tokenType ${accessToken.accessToken}"))
@@ -107,7 +107,6 @@ class WebServiceRepository : WebServiceInterface{
         private val tokenUrl = "https://api.vasttrafik.se:443/token"
         private fun locationsByNameUrl(arg: String) = "https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=$arg&format=json"
         private fun departuresById(id: String, date: String, time: String) = "https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard?id=$id&date=$date&time=$time&format=json"
-        private fun journeyDetailsByRef(ref: String) = "https://api.vasttrafik.se/bin/rest.exe/v2/journeyDetail?ref=$ref"
 
         private val tokenType = "Bearer"
     }

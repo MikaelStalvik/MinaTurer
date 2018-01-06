@@ -17,10 +17,13 @@
     <string name="got_it">Jag fattar</string>
     <string name="landing_page_hint">På denna sida kommer du snabbt åt dina sparade hållplatser.\n\nSwipa vänster för att ta bort en hållplats, tryck på plusknappen för att lägga till en hållplats.</string>
     <string name="find_stop_page_hint">Sök efter ett specifikt stopp genom att skriva in en del eller hela namnet på hållplatsen.\n\nTappa på en hållplats för att lägga till den till listan på startsidan.</string>
-    <string name="departure_page_hint">Tappa på en specifik avgång för att filtera bort antingen genom hela linjen eller en kombination av linje och destination.\n\nVälj återställ från verktygsfältet för att ta bort alla filter för den aktiva hållplatsen.\n\nDra nedåt i listan för att uppdatera alla avgångar.</string>
+    <string name="departure_page_hint">Klicka på filterknappen för att välja vilka specifika avgångar du vill se.\n\nDra ned listan för att uppdatera.\n\nTappa på en avgång för att få delajerad reseinformation.</string>
     <string name="filter">Filter</string>
     <string name="all">Alla</string>
     <string name="none">Ingen</string>
     <string name="apply">Spara</string>
+    <string name="journey_details">Reseinformation</string>
+    <string name="track">Spår</string>
+    <string name="travel_time">minuters restid från start</string>
 
 </resources>

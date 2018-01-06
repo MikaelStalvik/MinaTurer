@@ -35,7 +35,6 @@ class LandingPageAdapter(private val itemClick: (UiStop) -> Unit): RecyclerView.
     }
 
     private var stopItems: ArrayList<UiStop> = arrayListOf()
-    //fun activeStops(): List<UiStop> = stopItems
 
     class UiStopHolder(view: View, private val itemClick: (UiStop) -> Unit) : RecyclerView.ViewHolder(view) {
 
@@ -46,7 +45,9 @@ class LandingPageAdapter(private val itemClick: (UiStop) -> Unit): RecyclerView.
                 itemView.textViewDirection.text = name
                 itemView.setOnClickListener{itemClick(this)}
             }
-            if (adapterPosition % 2 == 1) itemView.view_foreground.setBackgroundColor(AppConstants.oddRowColor.toColor())
+            var bgColor = AppConstants.fragmentBgColor
+            if (adapterPosition % 2 == 1) bgColor = AppConstants.oddRowColor
+            itemView.view_foreground.setBackgroundColor(bgColor.toColor())
         }
     }
 }

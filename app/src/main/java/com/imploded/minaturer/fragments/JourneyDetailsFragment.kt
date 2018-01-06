@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.imploded.minaturer.R
@@ -48,12 +49,13 @@ class JourneyDetailsFragment : Fragment() {
     }
 
     private fun createAdapter(): JourneyDetailsAdapter {
-        return JourneyDetailsAdapter(getString(R.string.track), getString(R.string.travel_time), {})
+        return JourneyDetailsAdapter(getString(R.string.track), getString(R.string.travel_time))
     }
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
         (activity as AppCompatActivity).supportActionBar!!.title = getString(R.string.journey_details)
+        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         val view =  inflater!!.inflate(R.layout.fragment_journey_details, container, false)
 
         adapter = createAdapter()
@@ -61,6 +63,7 @@ class JourneyDetailsFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.adapter = adapter
         viewModel.getJourneyDetails(::updateAdapter)
+        setHasOptionsMenu(true)
 
         return view
     }
@@ -78,6 +81,17 @@ class JourneyDetailsFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         mListener = null
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item == null) return super.onOptionsItemSelected(item)
+        return when(item.itemId) {
+            android.R.id.home -> {
+                activity.supportFragmentManager.popBackStack()
+                false
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     companion object {

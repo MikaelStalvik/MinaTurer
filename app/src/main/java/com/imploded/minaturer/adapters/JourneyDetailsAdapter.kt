@@ -11,11 +11,11 @@ import com.imploded.minaturer.utils.toColor
 import kotlinx.android.synthetic.main.row_journey_detail.view.*
 
 
-class JourneyDetailsAdapter(private val trackText: String, private val travelTimeString: String, private val itemClick: (Stop) -> Unit): RecyclerView.Adapter<JourneyDetailsAdapter.JourneyDetailsHolder>() {
+class JourneyDetailsAdapter(private val trackText: String, private val travelTimeString: String): RecyclerView.Adapter<JourneyDetailsAdapter.JourneyDetailsHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): JourneyDetailsHolder {
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.row_journey_detail, parent, false)
-        return JourneyDetailsHolder(view, itemClick)
+        return JourneyDetailsHolder(view)
     }
 
     override fun onBindViewHolder(holder: JourneyDetailsHolder, position: Int) {
@@ -30,10 +30,12 @@ class JourneyDetailsAdapter(private val trackText: String, private val travelTim
 
     private var stopItems: List<Stop> = listOf()
 
-    class JourneyDetailsHolder(view: View, private val itemClick: (Stop) -> Unit) : RecyclerView.ViewHolder(view) {
+    class JourneyDetailsHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun bindStop(trackText: String, travelTimeString: String, stopItem: Stop) {
-            if (adapterPosition % 2 == 1) itemView.rootLayout.setBackgroundColor(AppConstants.oddRowColor.toColor())
+            var bgColor = AppConstants.fragmentBgColor
+            if (adapterPosition % 2 == 1) bgColor = AppConstants.oddRowColor
+            itemView.rootLayout.setBackgroundColor(bgColor.toColor())
             with(stopItem) {
                 if (depTime.isEmpty()) {
                     itemView.textViewDepTime.text = arrTime

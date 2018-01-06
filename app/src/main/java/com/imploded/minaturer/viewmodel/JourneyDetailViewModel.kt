@@ -23,14 +23,13 @@ class JourneyDetailViewModel(private val sourceRef: String, private val sourceSt
         val index = jdet.journeyDetail.stops.indexOfFirst { s -> s.id == sourceStopId }
         stops = jdet.journeyDetail.stops.subList(index, jdet.journeyDetail.stops.size)
         var leapTime = 0
-        for((index, stop) in stops.withIndex()) {
-            if (index > 0) {
-                val previous = stops[index-1]
-                if (index < stops.size-1) {
-                    leapTime += timeDifference(previous.depDate, previous.depTime, stop.depDate, stop.depTime)
-                }
-                else {
-                    leapTime += timeDifference(previous.depDate, previous.depTime, stop.arrDate, stop.arrTime)
+        for((stopIndex, stop) in stops.withIndex()) {
+            if (stopIndex > 0) {
+                val previous = stops[stopIndex-1]
+                leapTime += if (stopIndex < stops.size-1) {
+                    timeDifference(previous.depDate, previous.depTime, stop.depDate, stop.depTime)
+                } else {
+                    timeDifference(previous.depDate, previous.depTime, stop.arrDate, stop.arrTime)
                 }
                 stop.timeDiff = leapTime
             }

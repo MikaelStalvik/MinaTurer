@@ -1,7 +1,6 @@
 package com.imploded.minaturer.adapters
 
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,7 +57,7 @@ class DeparturesAdapter(private val itemChecked: (UiDeparture, Int) -> Unit, pri
 
                 itemView.textViewDepTime.text = departureItem.time
                 itemView.textViewDepTimeEta.text = departureItem.rtTime
-                if (departureItem.rtTime.isEmpty()) itemView.textViewDepTimeEta.visibility = View.GONE else itemView.textViewDepTimeEta.visibility = View.VISIBLE
+                if (departureItem.rtTime.isNullOrEmpty()) itemView.textViewDepTimeEta.visibility = View.GONE else itemView.textViewDepTimeEta.visibility = View.VISIBLE
                 itemView.textViewDirection.text = departureItem.direction
 
                 itemView.setOnClickListener{itemClicked(this, adapterPosition)}
