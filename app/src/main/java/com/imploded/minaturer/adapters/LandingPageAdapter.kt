@@ -29,7 +29,7 @@ class LandingPageAdapter(private val itemClick: (UiStop) -> Unit): RecyclerView.
     }
 
     fun removeItem(position: Int) {
-        stopItems.removeAt(position)
+        //stopItems.removeAt(position)
         notifyItemRemoved(position)
         notifyItemRangeChanged(position, stopItems.size)
     }

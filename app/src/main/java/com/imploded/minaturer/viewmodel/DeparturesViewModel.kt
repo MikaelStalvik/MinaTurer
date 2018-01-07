@@ -1,5 +1,6 @@
 package com.imploded.minaturer.viewmodel
 
+import android.util.Log
 import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.interfaces.WebServiceInterface
 import com.imploded.minaturer.model.*
@@ -9,13 +10,13 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 
-class DeparturesViewModel(private val stopId: String, val settings: SettingsInterface) {
+class DeparturesViewModel(private val stopId: String, val settings: SettingsInterface, val webservice: WebServiceInterface) {
 
     var filterMode = false
     fun toggleFilterMode() {
         filterMode = !filterMode
     }
-    private val webservice: WebServiceInterface = WebServiceRepository()
+    //private val webservice: WebServiceInterface = WebServiceRepository()
     var uiDepartures: List<UiDeparture> = listOf()
 
     private fun itemIsFiltered(departure: Departure, filterList: List<FilteredDeparture>) : Boolean {
@@ -26,12 +27,7 @@ class DeparturesViewModel(private val stopId: String, val settings: SettingsInte
         return filterList.any { f -> f.equals(departure.sname, true) }
     }
 
-    fun getDepartures(stopId: String, updateFun: (() -> Unit)) = async(UI) {
-        val tokenTask = bg { webservice.getToken() }
-        tokenTask.await()
-        val searchTask = bg { webservice.getDepartures(stopId) }
-        val departures = searchTask.await()
-
+    fun generateFilteredDepartures(departures: DepartureContainer) {
         val uniqueDepartures = departures.departureBoard.departures.distinctBy { Pair(it.sname, it.direction) }
 
         val filteredLines = FilteredLines.filterlistForStop(stopId)
@@ -55,6 +51,15 @@ class DeparturesViewModel(private val stopId: String, val settings: SettingsInte
                     }
         }
         for((index, departure) in uiDepartures.withIndex()) departure.index = index
+    }
+
+    fun getDepartures(stopId: String, updateFun: (() -> Unit)) = async(UI) {
+        val tokenTask = bg { webservice.getToken() }
+        tokenTask.await()
+        val searchTask = bg { webservice.getDepartures(stopId) }
+        val departures = searchTask.await()
+
+        generateFilteredDepartures(departures)
 
         updateFun()
     }

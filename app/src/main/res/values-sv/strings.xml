@@ -23,7 +23,7 @@
     <string name="none">Ingen</string>
     <string name="apply">Spara</string>
     <string name="journey_details">Reseinformation</string>
-    <string name="track">Spår</string>
+    <string name="track">Läge</string>
     <string name="travel_time">minuters restid från start</string>
 
 </resources>

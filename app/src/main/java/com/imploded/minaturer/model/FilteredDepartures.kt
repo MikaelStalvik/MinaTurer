@@ -22,6 +22,10 @@ object FilteredDepartures {
         settings.saveSettings(activeSettings)
     }
 
+    fun setTestData(data: HashMap<String, ArrayList<FilteredDeparture>>) {
+        filteredMap = data
+    }
+
     fun addFilteredTrip(stopId: String, shortName: String, direction: String) {
         if (filteredMap.containsKey(stopId)) {
             val filteredItemsByStop = filteredMap[stopId] as ArrayList<FilteredDeparture>

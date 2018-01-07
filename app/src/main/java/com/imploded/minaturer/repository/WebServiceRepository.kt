@@ -27,7 +27,6 @@ class WebServiceRepository : WebServiceInterface{
 
         return when(result) {
             is Result.Success -> {
-                Log.d("WS", "GOT TOKEN")
                 accessToken = Gson().fromJson<Token>(result.value)
                 accessToken
             }

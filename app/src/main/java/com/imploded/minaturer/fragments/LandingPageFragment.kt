@@ -65,8 +65,10 @@ class LandingPageFragment : Fragment() {
                 val position = viewHolder.adapterPosition
                 when(direction) {
                     ItemTouchHelper.LEFT -> {
+                        viewModel.removeStop(position)
                         adapter.removeItem(position)
-                        viewModel.removeStop()
+                        //adapter.removeItem(position)
+                        //viewModel.removeStop()
                     }
                 }
             }

@@ -19,6 +19,7 @@ import com.imploded.minaturer.model.FilteredDepartures
 import com.imploded.minaturer.model.FilteredLines
 import com.imploded.minaturer.model.UiDeparture
 import com.imploded.minaturer.model.UiStop
+import com.imploded.minaturer.repository.WebServiceRepository
 import com.imploded.minaturer.ui.ChooseFilterTypeDialog
 import com.imploded.minaturer.ui.OnDialogInteraction
 import com.imploded.minaturer.utils.MinaTurerApp
@@ -34,7 +35,7 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
     }
 
     private val viewModel: DeparturesViewModel by lazy {
-        DeparturesViewModel(stopId, appSettings)
+        DeparturesViewModel(stopId, appSettings, WebServiceRepository())
     }
     private var mListener: OnFragmentInteractionListener? = null
 
