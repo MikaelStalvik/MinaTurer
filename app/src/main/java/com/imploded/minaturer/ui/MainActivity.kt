@@ -9,13 +9,14 @@ import com.imploded.minaturer.fragments.FindStopFragment
 import com.imploded.minaturer.fragments.JourneyDetailsFragment
 import com.imploded.minaturer.fragments.LandingPageFragment
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
+import com.imploded.minaturer.model.UiDeparture
 import com.imploded.minaturer.model.UiStop
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
 
-    override fun onJourneyDetailsSelected(ref: String, stopId: String) {
-        val journeyDetailsFragment = JourneyDetailsFragment.newInstance(ref, stopId)
+    override fun onJourneyDetailsSelected(ref: String, stopId: String, departure: UiDeparture) {
+        val journeyDetailsFragment = JourneyDetailsFragment.newInstance(ref, stopId, departure)
         supportFragmentManager.beginTransaction()
                 .replace(R.id.root_layout, journeyDetailsFragment, "journeyDetailsFragment")
                 .addToBackStack(null)

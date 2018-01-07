@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -39,13 +40,24 @@
         android:background="@color/fragment_bg"
         android:padding="10dp">
 
+        <ImageView
+            android:id="@+id/imageViewStop"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/textViewDirection"
+            app:srcCompat="@drawable/stop_circle" />
+
         <TextView
             android:id="@+id/textViewDirection"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_margin="8dp"
+            android:layout_toRightOf="@id/imageViewStop"
             android:gravity="center_vertical"
             android:text="TextView" />
+
 
     </RelativeLayout>
 </FrameLayout>

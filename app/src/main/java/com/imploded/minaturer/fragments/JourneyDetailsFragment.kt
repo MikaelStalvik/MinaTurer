@@ -10,9 +10,14 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import com.google.gson.Gson
 import com.imploded.minaturer.R
 import com.imploded.minaturer.adapters.JourneyDetailsAdapter
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
+import com.imploded.minaturer.model.UiDeparture
+import com.imploded.minaturer.utils.fromJson
+import com.imploded.minaturer.utils.toColor
 import com.imploded.minaturer.viewmodel.JourneyDetailViewModel
 
 class JourneyDetailsFragment : Fragment() {
@@ -22,15 +27,10 @@ class JourneyDetailsFragment : Fragment() {
     }
     private lateinit var sourceRef: String
     private lateinit var sourceStopId: String
-
-    /*
-    private val appSettings: SettingsInterface by lazy {
-        MinaTurerApp.prefs
-    }*/
+    private lateinit var departure: UiDeparture
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: JourneyDetailsAdapter
-
 
     private var mListener: OnFragmentInteractionListener? = null
 
@@ -39,6 +39,8 @@ class JourneyDetailsFragment : Fragment() {
         if (arguments != null) {
             sourceRef = arguments.getString(ARG_PARAM1)
             sourceStopId = arguments.getString(ARG_PARAM2)
+            val json = arguments.getString(ARG_PARAM3)
+            departure = Gson().fromJson<UiDeparture>(json)
         }
     }
 
@@ -48,6 +50,16 @@ class JourneyDetailsFragment : Fragment() {
         recyclerView.scrollToPosition(0)
     }
 
+    private fun setHeader(view: View) {
+        val textView = view.findViewById<TextView>(R.id.textViewLineNumber)
+        textView.text = departure.shortName
+        textView.setBackgroundColor(departure.fgColor.toColor())
+        textView.setTextColor(departure.bgColor.toColor())
+        view.findViewById<TextView>(R.id.textViewFrom).text = departure.stop
+        view.findViewById<TextView>(R.id.textViewTo).text = departure.direction
+        val timeTextView = view.findViewById<TextView>(R.id.textViewDepTime)
+        if (departure.rtTime.isNullOrEmpty()) timeTextView.text = departure.time else timeTextView.text = departure.rtTime
+    }
     private fun createAdapter(): JourneyDetailsAdapter {
         return JourneyDetailsAdapter(getString(R.string.track), getString(R.string.travel_time))
     }
@@ -57,6 +69,8 @@ class JourneyDetailsFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar!!.title = getString(R.string.journey_details)
         (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         val view =  inflater!!.inflate(R.layout.fragment_journey_details, container, false)
+
+        setHeader(view)
 
         adapter = createAdapter()
         recyclerView = view.findViewById(R.id.journeyRecycleView)
@@ -97,12 +111,15 @@ class JourneyDetailsFragment : Fragment() {
     companion object {
         private val ARG_PARAM1 = "ref"
         private val ARG_PARAM2 = "stopid"
+        private val ARG_PARAM3 = "departure"
 
-        fun newInstance(ref: String, stopId: String): JourneyDetailsFragment {
+        fun newInstance(ref: String, stopId: String, departure: UiDeparture): JourneyDetailsFragment {
             val fragment = JourneyDetailsFragment()
             val args = Bundle()
             args.putString(ARG_PARAM1, ref)
             args.putString(ARG_PARAM2, stopId)
+            val json = Gson().toJson(departure)
+            args.putString(ARG_PARAM3, json)
             fragment.arguments = args
             return fragment
         }

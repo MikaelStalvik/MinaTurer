@@ -81,7 +81,7 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
             viewModel.uiDepartures[position].checked = !viewModel.uiDepartures[position].checked
             adapter.notifyDataSetChanged()
         }, {item, _ ->
-            mListener!!.onJourneyDetailsSelected(item.journeyRefIds.ref, item.stopId)
+            mListener!!.onJourneyDetailsSelected(item.journeyRefIds.ref, item.stopId, item)
         })
     }
 
