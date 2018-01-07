@@ -8,7 +8,6 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.*
 import android.widget.Button
 import com.imploded.minaturer.R
@@ -16,7 +15,6 @@ import com.imploded.minaturer.adapters.DeparturesAdapter
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
 import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.model.FilteredDepartures
-import com.imploded.minaturer.model.FilteredLines
 import com.imploded.minaturer.model.UiDeparture
 import com.imploded.minaturer.model.UiStop
 import com.imploded.minaturer.repository.WebServiceRepository
@@ -53,8 +51,6 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
     override fun onPositiveClick(selectedIndex: Int) {
         when(selectedIndex) {
             ChooseFilterTypeDialog.FilterByLine -> {
-                FilteredLines.addFilteredLine(stopId, selectedItem.shortName)
-                FilteredLines.saveData(MinaTurerApp.prefs)
                 viewModel.getDepartures(stopId, ::updateAdapter)
             }
             ChooseFilterTypeDialog.FilterByLineAndDirection -> {

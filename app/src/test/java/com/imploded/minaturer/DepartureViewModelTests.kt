@@ -4,16 +4,12 @@ import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.interfaces.WebServiceInterface
 import com.imploded.minaturer.model.*
 import com.imploded.minaturer.viewmodel.DeparturesViewModel
-import com.imploded.minaturer.viewmodel.LandingViewModel
 import junit.framework.Assert.assertTrue
-import kotlinx.coroutines.experimental.runBlocking
 import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
-import org.mockito.Mockito.anyString
-import java.util.logging.Filter
 
 class DepartureViewModelTests {
 
@@ -43,13 +39,13 @@ class DepartureViewModelTests {
     }
 
     @Test
-    fun givenFetchingDepartures_whenNoFiltersAreApplied_thenThreeDeparturesShallBeReturned(){
+    fun givenFetchingDeparturesWhenNoFiltersAreAppliedThenThreeDeparturesShallBeReturned(){
         viewModel.generateFilteredDepartures(departures)
         assertTrue(viewModel.uiDepartures.size == 3)
     }
 
     @Test
-    fun givenFetchingDepartures_whenFiltersAreApplied_thenOneDepartureShallBeReturned(){
+    fun givenFetchingDeparturesWhenFiltersAreAppliedThenOneDepartureShallBeReturned(){
         // Cannot mock a final class properly therefore use test method
         var filterData: HashMap<String, ArrayList<FilteredDeparture>> = hashMapOf(
                 "12345" to arrayListOf(

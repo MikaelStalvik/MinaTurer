@@ -34,7 +34,7 @@ class LandingViewModelTests {
     }
 
     @Test
-    fun givenFiveItemsInList_whenDeletingItemThree_thenCountShouldBeFour() {
+    fun givenFiveItemsInListWhenDeletingItemThreeThenCountShouldBeFour() {
         viewModel.getStops()
         viewModel.removeStop(2)
         assertEquals(viewModel.selectedStops.count(), 4)

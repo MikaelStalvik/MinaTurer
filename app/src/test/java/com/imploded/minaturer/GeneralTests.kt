@@ -8,7 +8,7 @@ import org.junit.Test
 class GeneralTests {
 
     @Test
-    fun givenTwoDates_whenItDiffersOneHour_thenResultShallBe3600seconds() {
+    fun givenTwoDatesWhenItDiffersOneHourThenResultShallBe3600seconds() {
         val sourceDate = "2018-01-06"
         val sourceTime = "16:05"
         val destDate = "2018-01-06"
@@ -18,7 +18,7 @@ class GeneralTests {
     }
 
     @Test
-    fun givenTwoDates_whenItDiffersOneTwoHoursAndDateSpansOverNewDate_thenResultShallBe7200seconds() {
+    fun givenTwoDatesWhenItDiffersOneTwoHoursAndDateSpansOverNewDateThenResultShallBe7200seconds() {
         val sourceDate = "2018-01-06"
         val sourceTime = "23:00"
         val destDate = "2018-01-07"
