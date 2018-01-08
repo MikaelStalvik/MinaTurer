@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Mina Turer</string>
     <string name="find_stop">Hitta hållplats</string>
-    <string name="type_to_filter">Skriv för att filtera...</string>
+    <string name="type_to_filter">Skriv för att filtrera...</string>
     <string name="my_stops">Mina hållplatser</string>
     <string name="delete">TA BORT</string>
     <string name="stop_added">Hållplats tillagd:</string>

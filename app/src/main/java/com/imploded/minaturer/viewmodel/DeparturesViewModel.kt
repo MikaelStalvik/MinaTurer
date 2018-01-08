@@ -4,25 +4,41 @@ import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.interfaces.WebServiceInterface
 import com.imploded.minaturer.model.*
 import com.imploded.minaturer.utils.etaTime
+import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 
-class DeparturesViewModel(private val stopId: String, val settings: SettingsInterface, private val webservice: WebServiceInterface) {
+interface DeparturesViewModelInterface {
+    var uiDepartures: List<UiDeparture>
+    val filterActive: Boolean
+    fun toggleFilterMode()
+    fun generateFilteredDepartures(departures: DepartureContainer)
+    fun getDepartures(stopId: String, updateFun: (() -> Unit)): Deferred<Unit>
+    fun selectAll()
+    fun selectNone()
+    fun filtersActive(): Boolean
+    fun resetFilterForStop()
+    fun applyFilters()
+}
 
-    var filterMode = false
-    fun toggleFilterMode() {
-        filterMode = !filterMode
-    }
+class DeparturesViewModel(private val stopId: String, val settings: SettingsInterface, private val webservice: WebServiceInterface) : DeparturesViewModelInterface {
 
-    var uiDepartures: List<UiDeparture> = listOf()
-
+    private var filterMode = false
     private fun itemIsFiltered(departure: Departure, filterList: List<FilteredDeparture>) : Boolean {
         return filterList
                 .any { f -> f.shortName.equals(departure.sname, true) && f.direction.equals(departure.direction, true) }
     }
 
-    fun generateFilteredDepartures(departures: DepartureContainer) {
+    override val filterActive: Boolean
+        get() = filterMode
+    override fun toggleFilterMode() {
+        filterMode = !filterMode
+    }
+
+    override var uiDepartures: List<UiDeparture> = listOf()
+
+    override fun generateFilteredDepartures(departures: DepartureContainer) {
         val uniqueDepartures = departures.departureBoard.departures.distinctBy { Pair(it.sname, it.direction) }
         val filtered = FilteredDepartures.filterlistForStop(stopId)
         uiDepartures = if (filtered.count() > 0) {
@@ -40,7 +56,7 @@ class DeparturesViewModel(private val stopId: String, val settings: SettingsInte
         for((index, departure) in uiDepartures.withIndex()) departure.index = index
     }
 
-    fun getDepartures(stopId: String, updateFun: (() -> Unit)) = async(UI) {
+    override fun getDepartures(stopId: String, updateFun: (() -> Unit)) = async(UI) {
         val tokenTask = bg { webservice.getToken() }
         tokenTask.await()
         val searchTask = bg { webservice.getDepartures(stopId) }
@@ -51,20 +67,20 @@ class DeparturesViewModel(private val stopId: String, val settings: SettingsInte
         updateFun()
     }
 
-    fun selectAll() {
+    override fun selectAll() {
         for(item in uiDepartures) item.checked = true
     }
-    fun selectNone() {
+    override fun selectNone() {
         for(item in uiDepartures) item.checked = false
     }
 
-    fun filtersActive(): Boolean = FilteredDepartures.filterCountForStop(stopId)> 0
+    override fun filtersActive(): Boolean = FilteredDepartures.filterCountForStop(stopId)> 0
 
-    fun resetFilterForStop() {
+    override fun resetFilterForStop() {
         FilteredDepartures.resetFilterForStop(stopId)
     }
 
-    fun applyFilters() {
+    override fun applyFilters() {
         uiDepartures
                 .filter { !it.checked }
                 .forEach { FilteredDepartures.addFilteredTrip(stopId, it.shortName, it.direction) }

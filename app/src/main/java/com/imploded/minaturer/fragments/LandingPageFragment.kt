@@ -16,8 +16,9 @@ import com.imploded.minaturer.R
 import com.imploded.minaturer.adapters.LandingPageAdapter
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
 import com.imploded.minaturer.interfaces.SettingsInterface
-import com.imploded.minaturer.utils.MinaTurerApp
+import com.imploded.minaturer.application.MinaTurerApp
 import com.imploded.minaturer.viewmodel.LandingViewModel
+import com.imploded.minaturer.viewmodel.LandingViewModelInterface
 import org.jetbrains.anko.support.v4.alert
 
 
@@ -29,7 +30,7 @@ class LandingPageFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: LandingPageAdapter
-    private val viewModel: LandingViewModel = LandingViewModel(appSettings)
+    private val viewModel: LandingViewModelInterface = LandingViewModel(appSettings)
 
     private var mListener: OnFragmentInteractionListener? = null
 

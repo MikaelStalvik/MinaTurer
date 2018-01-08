@@ -9,7 +9,7 @@
 
 
     <application
-        android:name=".utils.MinaTurerApp"
+        android:name=".application.MinaTurerApp"
         android:allowBackup="true"
         android:icon="@mipmap/appicon"
         android:label="@string/app_name"
