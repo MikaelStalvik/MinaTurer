@@ -5,18 +5,24 @@ import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.model.UiStop
 import com.imploded.minaturer.utils.fromJson
 
-class LandingViewModel(val settings: SettingsInterface) {
+interface LandingViewModelInterface {
+    var selectedStops: ArrayList<UiStop>
+    fun getStops()
+    fun removeStop(position: Int)
+}
 
-    var selectedStops: ArrayList<UiStop> = arrayListOf()
+class LandingViewModel(val settings: SettingsInterface) : LandingViewModelInterface {
 
-    fun getStops() {
+    override var selectedStops: ArrayList<UiStop> = arrayListOf()
+
+    override fun getStops() {
         val activeSettings = settings.loadSettings()
         if (activeSettings.StopsList.isNotEmpty()) {
             selectedStops = Gson().fromJson<ArrayList<UiStop>>(activeSettings.StopsList)
         }
     }
 
-    fun removeStop(position: Int) {
+    override fun removeStop(position: Int) {
         selectedStops.removeAt(position)
         val activeSettings = settings.loadSettings()
         val json = Gson().toJson(selectedStops)

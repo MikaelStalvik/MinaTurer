@@ -1,4 +1,4 @@
-package com.imploded.minaturer.utils
+package com.imploded.minaturer.application
 
 import android.app.Application
 import com.imploded.minaturer.interfaces.SettingsInterface

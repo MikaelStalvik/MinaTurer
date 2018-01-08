@@ -15,11 +15,12 @@ import com.imploded.minaturer.R
 import com.imploded.minaturer.adapters.StopsAdapter
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
 import com.imploded.minaturer.interfaces.SettingsInterface
-import com.imploded.minaturer.utils.MinaTurerApp
+import com.imploded.minaturer.application.MinaTurerApp
 import com.imploded.minaturer.utils.afterTextChanged
 import com.imploded.minaturer.utils.hideKeyboard
 import com.imploded.minaturer.utils.inputMethodManager
 import com.imploded.minaturer.viewmodel.FindStopsViewModel
+import com.imploded.minaturer.viewmodel.FindStopsViewModelInterface
 import org.jetbrains.anko.support.v4.alert
 import kotlin.concurrent.fixedRateTimer
 
@@ -28,7 +29,8 @@ class FindStopFragment : Fragment() {
     private val appSettings: SettingsInterface by lazy {
         MinaTurerApp.prefs
     }
-    private val viewModel: FindStopsViewModel = FindStopsViewModel(appSettings)
+
+    private val viewModel: FindStopsViewModelInterface = FindStopsViewModel(appSettings)
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: StopsAdapter
     private var mListener: OnFragmentInteractionListener? = null

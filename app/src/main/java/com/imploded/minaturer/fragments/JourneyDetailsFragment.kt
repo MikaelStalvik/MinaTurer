@@ -19,10 +19,11 @@ import com.imploded.minaturer.model.UiDeparture
 import com.imploded.minaturer.utils.fromJson
 import com.imploded.minaturer.utils.toColor
 import com.imploded.minaturer.viewmodel.JourneyDetailViewModel
+import com.imploded.minaturer.viewmodel.JourneyDetailViewModelInterface
 
 class JourneyDetailsFragment : Fragment() {
 
-    private val viewModel: JourneyDetailViewModel by lazy {
+    private val viewModel: JourneyDetailViewModelInterface by lazy {
         JourneyDetailViewModel(sourceRef, sourceStopId)
     }
     private lateinit var sourceRef: String

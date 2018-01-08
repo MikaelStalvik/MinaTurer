@@ -20,9 +20,10 @@ import com.imploded.minaturer.model.UiStop
 import com.imploded.minaturer.repository.WebServiceRepository
 import com.imploded.minaturer.ui.ChooseFilterTypeDialog
 import com.imploded.minaturer.ui.OnDialogInteraction
-import com.imploded.minaturer.utils.MinaTurerApp
+import com.imploded.minaturer.application.MinaTurerApp
 import com.imploded.minaturer.utils.tintMenuIcon
 import com.imploded.minaturer.viewmodel.DeparturesViewModel
+import com.imploded.minaturer.viewmodel.DeparturesViewModelInterface
 import org.jetbrains.anko.support.v4.alert
 
 
@@ -32,7 +33,7 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
         MinaTurerApp.prefs
     }
 
-    private val viewModel: DeparturesViewModel by lazy {
+    private val viewModel: DeparturesViewModelInterface by lazy {
         DeparturesViewModel(stopId, appSettings, WebServiceRepository())
     }
     private var mListener: OnFragmentInteractionListener? = null
@@ -125,8 +126,8 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
 
             viewModel.toggleFilterMode()
             //##TransitionManager.beginDelayedTransition(rootLayout)
-            if (viewModel.filterMode) bottomToolbar.visibility = View.VISIBLE else bottomToolbar.visibility = View.GONE
-            adapter.showFilter = viewModel.filterMode
+            if (viewModel.filterActive) bottomToolbar.visibility = View.VISIBLE else bottomToolbar.visibility = View.GONE
+            adapter.showFilter = viewModel.filterActive
             viewModel.getDepartures(stopId, ::updateAdapter)
         }
 
@@ -157,9 +158,9 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
             }
             R.id.action_filter_mode -> {
                 viewModel.toggleFilterMode()
-                adapter.showFilter = viewModel.filterMode
+                adapter.showFilter = viewModel.filterActive
                 //##TransitionManager.beginDelayedTransition(rootLayout)
-                if (viewModel.filterMode) bottomToolbar.visibility = View.VISIBLE else bottomToolbar.visibility = View.GONE
+                if (viewModel.filterActive) bottomToolbar.visibility = View.VISIBLE else bottomToolbar.visibility = View.GONE
                 adapter.notifyDataSetChanged()
                 false
             }

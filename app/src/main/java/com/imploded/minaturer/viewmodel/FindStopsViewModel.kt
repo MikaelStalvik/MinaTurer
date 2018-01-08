@@ -9,19 +9,29 @@ import com.imploded.minaturer.model.StopLocation
 import com.imploded.minaturer.model.UiStop
 import com.imploded.minaturer.repository.WebServiceRepository
 import com.imploded.minaturer.utils.fromJson
+import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import java.util.ArrayList
 
-class FindStopsViewModel(val settings: SettingsInterface) {
+interface FindStopsViewModelInterface {
+    var isSearching: Boolean
+    var locations: LocationContainer
+    fun updateFiltering(data: String): Boolean
+    fun getStops(updateFun: (() -> Unit)) : Deferred<Unit>
+    fun addStop(stop: StopLocation)
+}
 
-    var isSearching = false
+class FindStopsViewModel(val settings: SettingsInterface) : FindStopsViewModelInterface {
+
     private val webservice: WebServiceInterface = WebServiceRepository()
-    var locations: LocationContainer = LocationContainer(LocationList())
     private var filterString = ""
 
-    fun updateFiltering(data: String): Boolean {
+    override var isSearching = false
+    override var locations: LocationContainer = LocationContainer(LocationList())
+
+    override fun updateFiltering(data: String): Boolean {
         if (data.length >= 3) {
             if (filterString != data) {
                 filterString = data
@@ -37,7 +47,7 @@ class FindStopsViewModel(val settings: SettingsInterface) {
         return false
     }
 
-    fun getStops(updateFun: (() -> Unit)) = async(UI) {
+    override fun getStops(updateFun: (() -> Unit)) = async(UI) {
         isSearching = true
         val tokenTask = bg { webservice.getToken() }
         tokenTask.await()
@@ -46,7 +56,7 @@ class FindStopsViewModel(val settings: SettingsInterface) {
         updateFun()
     }
 
-    fun addStop(stop: StopLocation) {
+    override fun addStop(stop: StopLocation) {
         val activeSettings = settings.loadSettings()
         if (activeSettings.StopsList.isEmpty()) {
             val stops = listOf(UiStop(stop.name, stop.id, stop.lat, stop.lon))
