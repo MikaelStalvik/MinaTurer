@@ -14,6 +14,7 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 import java.util.ArrayList
+import javax.inject.Inject
 
 interface FindStopsViewModelInterface {
     var isSearching: Boolean
@@ -23,9 +24,10 @@ interface FindStopsViewModelInterface {
     fun addStop(stop: StopLocation)
 }
 
-class FindStopsViewModel(val settings: SettingsInterface) : FindStopsViewModelInterface {
+//class FindStopsViewModel(val settings: SettingsInterface) : FindStopsViewModelInterface {
+class FindStopsViewModel @Inject constructor(private val webservice: WebServiceInterface, private val settings: SettingsInterface) : FindStopsViewModelInterface {
 
-    private val webservice: WebServiceInterface = WebServiceRepository()
+    //private val webservice: WebServiceInterface = WebServiceRepository()
     private var filterString = ""
 
     override var isSearching = false

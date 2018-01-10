@@ -12,6 +12,7 @@ import com.imploded.minaturer.utils.fromJson
 import java.net.URLEncoder
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
 class WebServiceRepository : WebServiceInterface{
 

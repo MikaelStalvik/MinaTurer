@@ -17,20 +17,26 @@ import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
 import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.application.MinaTurerApp
 import com.imploded.minaturer.utils.afterTextChanged
+import com.imploded.minaturer.utils.app
 import com.imploded.minaturer.utils.hideKeyboard
 import com.imploded.minaturer.utils.inputMethodManager
 import com.imploded.minaturer.viewmodel.FindStopsViewModel
 import com.imploded.minaturer.viewmodel.FindStopsViewModelInterface
+import com.imploded.minaturer.viewmodel.LandingViewModelInterface
 import org.jetbrains.anko.support.v4.alert
+import javax.inject.Inject
 import kotlin.concurrent.fixedRateTimer
 
 class FindStopFragment : Fragment() {
 
+    /*
     private val appSettings: SettingsInterface by lazy {
         MinaTurerApp.prefs
-    }
+    }*/
+    @Inject lateinit var viewModel: FindStopsViewModelInterface
+    @Inject lateinit var appSettings: SettingsInterface
 
-    private val viewModel: FindStopsViewModelInterface = FindStopsViewModel(appSettings)
+    //private val viewModel: FindStopsViewModelInterface = FindStopsViewModel(appSettings)
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: StopsAdapter
     private var mListener: OnFragmentInteractionListener? = null
@@ -41,6 +47,9 @@ class FindStopFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar!!.title = getString(R.string.find_stop)
         (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         val view = inflater!!.inflate(R.layout.fragment_find_stop, container, false)
+
+        activity.app.appComponent.inject(this)
+
         searchEditText = view.findViewById(R.id.editTextSearch)
         searchEditText.afterTextChanged {
             fixedRateTimer("timer", false, 0, 750, {
