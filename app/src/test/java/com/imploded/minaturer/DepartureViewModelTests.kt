@@ -35,7 +35,8 @@ class DepartureViewModelTests {
         `when`(webservice.getDepartures(ArgumentMatchers.anyString())).thenReturn(departures)
 
         mockSettings = Mockito.mock(SettingsInterface::class.java)
-        viewModel = DeparturesViewModel(stopId, mockSettings, webservice)
+        viewModel = DeparturesViewModel(webservice, mockSettings)
+        viewModel.setStopId(stopId)
     }
 
     @Test
