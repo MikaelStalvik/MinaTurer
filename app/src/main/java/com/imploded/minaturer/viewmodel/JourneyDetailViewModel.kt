@@ -11,12 +11,21 @@ import org.jetbrains.anko.coroutines.experimental.bg
 
 interface JourneyDetailViewModelInterface {
     var stops: List<Stop>
+    fun setInputParameters(sourceRef: String, sourceStopId: String)
     fun getJourneyDetails(updateFun: (() -> Unit)) : Deferred<Unit>
 }
 
-class JourneyDetailViewModel(private val sourceRef: String, private val sourceStopId: String) : JourneyDetailViewModelInterface {
+//class JourneyDetailViewModel(private val sourceRef: String, private val sourceStopId: String) : JourneyDetailViewModelInterface {
+class JourneyDetailViewModel(private val webservice: WebServiceInterface) : JourneyDetailViewModelInterface {
 
-    private val webservice: WebServiceInterface = WebServiceRepository()
+    //private val webservice: WebServiceInterface = WebServiceRepository()
+
+    private lateinit var sourceRef: String
+    private lateinit var sourceStopId: String
+    override fun setInputParameters(sourceRef: String, sourceStopId: String) {
+        this.sourceRef = sourceRef
+        this.sourceStopId = sourceStopId
+    }
 
     override var stops: List<Stop> = listOf()
 

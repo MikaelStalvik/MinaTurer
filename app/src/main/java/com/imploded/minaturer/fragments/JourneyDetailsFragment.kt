@@ -16,16 +16,21 @@ import com.imploded.minaturer.R
 import com.imploded.minaturer.adapters.JourneyDetailsAdapter
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
 import com.imploded.minaturer.model.UiDeparture
+import com.imploded.minaturer.utils.app
 import com.imploded.minaturer.utils.fromJson
 import com.imploded.minaturer.utils.toColor
 import com.imploded.minaturer.viewmodel.JourneyDetailViewModel
 import com.imploded.minaturer.viewmodel.JourneyDetailViewModelInterface
+import javax.inject.Inject
 
 class JourneyDetailsFragment : Fragment() {
 
+    /*
     private val viewModel: JourneyDetailViewModelInterface by lazy {
         JourneyDetailViewModel(sourceRef, sourceStopId)
-    }
+    }*/
+    @Inject lateinit var viewModel: JourneyDetailViewModelInterface
+
     private lateinit var sourceRef: String
     private lateinit var sourceStopId: String
     private lateinit var departure: UiDeparture
@@ -70,7 +75,8 @@ class JourneyDetailsFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar!!.title = getString(R.string.journey_details)
         (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         val view =  inflater!!.inflate(R.layout.fragment_journey_details, container, false)
-
+        activity.app.appComponent.inject(this)
+        viewModel.setInputParameters(sourceRef, sourceStopId)
         setHeader(view)
 
         adapter = createAdapter()
