@@ -14,33 +14,21 @@ import android.view.View
 import android.view.ViewGroup
 import com.imploded.minaturer.R
 import com.imploded.minaturer.adapters.LandingPageAdapter
+import com.imploded.minaturer.interfaces.LandingViewModelInterface
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
 import com.imploded.minaturer.interfaces.SettingsInterface
-import com.imploded.minaturer.application.MinaTurerApp
 import com.imploded.minaturer.utils.app
-import com.imploded.minaturer.viewmodel.LandingViewModel
-import com.imploded.minaturer.viewmodel.LandingViewModelInterface
 import org.jetbrains.anko.support.v4.alert
 import javax.inject.Inject
 
 
 class LandingPageFragment : Fragment() {
 
-    /*
-    private val appSettings: SettingsInterface by lazy {
-        MinaTurerApp.prefs
-    }
-    */
-
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: LandingPageAdapter
-
     @Inject lateinit var viewModel: LandingViewModelInterface
     @Inject lateinit var appSettings: SettingsInterface
 
-    //lateinit var viewModel: LandingViewModelInterface
-    //lateinit var appSettings: SettingsInterface
-    //private val viewModel: LandingViewModelInterface = LandingViewModel(appSettings)
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: LandingPageAdapter
 
     private var mListener: OnFragmentInteractionListener? = null
 
@@ -54,11 +42,7 @@ class LandingPageFragment : Fragment() {
                 mListener!!.onFindStopsSelected(ArgChangeToFindStopsView)
             }
         }
-
         activity.app.appComponent.inject(this)
-
-        //viewModel = activity.app.appComponent.landingViewModel()
-        //appSettings = activity.app.appComponent.settings()
 
         adapter = createAdapter()
         recyclerView = view.findViewById(R.id.recyclerViewStops)
@@ -81,8 +65,6 @@ class LandingPageFragment : Fragment() {
                     ItemTouchHelper.LEFT -> {
                         viewModel.removeStop(position)
                         adapter.removeItem(position)
-                        //adapter.removeItem(position)
-                        //viewModel.removeStop()
                     }
                 }
             }

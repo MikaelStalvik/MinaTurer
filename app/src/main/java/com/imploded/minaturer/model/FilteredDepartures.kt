@@ -39,7 +39,7 @@ object FilteredDepartures {
         }
     }
 
-    fun filterlistForStop(stopId: String) : List<FilteredDeparture> {
+    fun filterListForStop(stopId: String) : List<FilteredDeparture> {
         return if (filteredMap.containsKey(stopId))
         {
             filteredMap[stopId] as List<FilteredDeparture>

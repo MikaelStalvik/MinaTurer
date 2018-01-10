@@ -12,20 +12,17 @@ import android.view.*
 import android.widget.Button
 import com.imploded.minaturer.R
 import com.imploded.minaturer.adapters.DeparturesAdapter
+import com.imploded.minaturer.application.MinaTurerApp
+import com.imploded.minaturer.interfaces.DeparturesViewModelInterface
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
 import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.model.FilteredDepartures
 import com.imploded.minaturer.model.UiDeparture
 import com.imploded.minaturer.model.UiStop
-import com.imploded.minaturer.repository.WebServiceRepository
 import com.imploded.minaturer.ui.ChooseFilterTypeDialog
 import com.imploded.minaturer.ui.OnDialogInteraction
-import com.imploded.minaturer.application.MinaTurerApp
 import com.imploded.minaturer.utils.app
 import com.imploded.minaturer.utils.tintMenuIcon
-import com.imploded.minaturer.viewmodel.DeparturesViewModel
-import com.imploded.minaturer.viewmodel.DeparturesViewModelInterface
-import com.imploded.minaturer.viewmodel.FindStopsViewModelInterface
 import org.jetbrains.anko.support.v4.alert
 import javax.inject.Inject
 
@@ -35,15 +32,6 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
     @Inject lateinit var viewModel: DeparturesViewModelInterface
     @Inject lateinit var appSettings: SettingsInterface
 
-    /*
-    private val appSettings: SettingsInterface by lazy {
-        MinaTurerApp.prefs
-    }*/
-
-    /*
-    private val viewModel: DeparturesViewModelInterface by lazy {
-        DeparturesViewModel(appSettings, WebServiceRepository()).setStopId(stopId)
-    }*/
     private var mListener: OnFragmentInteractionListener? = null
 
     private lateinit var selectedItem: UiDeparture

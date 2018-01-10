@@ -1,5 +1,6 @@
 package com.imploded.minaturer.viewmodel
 
+import com.imploded.minaturer.interfaces.DeparturesViewModelInterface
 import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.interfaces.WebServiceInterface
 import com.imploded.minaturer.model.*
@@ -8,20 +9,6 @@ import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
-
-interface DeparturesViewModelInterface {
-    var uiDepartures: List<UiDeparture>
-    val filterActive: Boolean
-    fun setStopId(stopId: String)
-    fun toggleFilterMode()
-    fun generateFilteredDepartures(departures: DepartureContainer)
-    fun getDepartures(stopId: String, updateFun: (() -> Unit)): Deferred<Unit>
-    fun selectAll()
-    fun selectNone()
-    fun filtersActive(): Boolean
-    fun resetFilterForStop()
-    fun applyFilters()
-}
 
 class DeparturesViewModel(private val webservice: WebServiceInterface, private val settings: SettingsInterface) : DeparturesViewModelInterface {
 
@@ -46,7 +33,7 @@ class DeparturesViewModel(private val webservice: WebServiceInterface, private v
 
     override fun generateFilteredDepartures(departures: DepartureContainer) {
         val uniqueDepartures = departures.departureBoard.departures.distinctBy { Pair(it.sname, it.direction) }
-        val filtered = FilteredDepartures.filterlistForStop(stopId)
+        val filtered = FilteredDepartures.filterListForStop(stopId)
         uiDepartures = if (filtered.count() > 0) {
             uniqueDepartures
                     .filter { d -> !itemIsFiltered(d, filtered) }

@@ -1,6 +1,7 @@
 package com.imploded.minaturer.viewmodel
 
 import com.google.gson.Gson
+import com.imploded.minaturer.interfaces.FindStopsViewModelInterface
 import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.interfaces.WebServiceInterface
 import com.imploded.minaturer.model.LocationContainer
@@ -16,18 +17,8 @@ import org.jetbrains.anko.coroutines.experimental.bg
 import java.util.ArrayList
 import javax.inject.Inject
 
-interface FindStopsViewModelInterface {
-    var isSearching: Boolean
-    var locations: LocationContainer
-    fun updateFiltering(data: String): Boolean
-    fun getStops(updateFun: (() -> Unit)) : Deferred<Unit>
-    fun addStop(stop: StopLocation)
-}
-
-//class FindStopsViewModel(val settings: SettingsInterface) : FindStopsViewModelInterface {
 class FindStopsViewModel @Inject constructor(private val webservice: WebServiceInterface, private val settings: SettingsInterface) : FindStopsViewModelInterface {
 
-    //private val webservice: WebServiceInterface = WebServiceRepository()
     private var filterString = ""
 
     override var isSearching = false

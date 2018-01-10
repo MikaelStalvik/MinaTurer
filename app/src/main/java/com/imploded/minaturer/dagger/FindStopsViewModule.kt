@@ -1,9 +1,9 @@
 package com.imploded.minaturer.dagger
 
+import com.imploded.minaturer.interfaces.FindStopsViewModelInterface
 import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.interfaces.WebServiceInterface
 import com.imploded.minaturer.viewmodel.FindStopsViewModel
-import com.imploded.minaturer.viewmodel.FindStopsViewModelInterface
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

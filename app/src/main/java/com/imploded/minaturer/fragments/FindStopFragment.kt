@@ -13,30 +13,22 @@ import android.view.ViewGroup
 import android.widget.EditText
 import com.imploded.minaturer.R
 import com.imploded.minaturer.adapters.StopsAdapter
+import com.imploded.minaturer.interfaces.FindStopsViewModelInterface
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
 import com.imploded.minaturer.interfaces.SettingsInterface
-import com.imploded.minaturer.application.MinaTurerApp
 import com.imploded.minaturer.utils.afterTextChanged
 import com.imploded.minaturer.utils.app
 import com.imploded.minaturer.utils.hideKeyboard
 import com.imploded.minaturer.utils.inputMethodManager
-import com.imploded.minaturer.viewmodel.FindStopsViewModel
-import com.imploded.minaturer.viewmodel.FindStopsViewModelInterface
-import com.imploded.minaturer.viewmodel.LandingViewModelInterface
 import org.jetbrains.anko.support.v4.alert
 import javax.inject.Inject
 import kotlin.concurrent.fixedRateTimer
 
 class FindStopFragment : Fragment() {
 
-    /*
-    private val appSettings: SettingsInterface by lazy {
-        MinaTurerApp.prefs
-    }*/
     @Inject lateinit var viewModel: FindStopsViewModelInterface
     @Inject lateinit var appSettings: SettingsInterface
 
-    //private val viewModel: FindStopsViewModelInterface = FindStopsViewModel(appSettings)
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: StopsAdapter
     private var mListener: OnFragmentInteractionListener? = null

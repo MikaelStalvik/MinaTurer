@@ -14,21 +14,16 @@ import android.widget.TextView
 import com.google.gson.Gson
 import com.imploded.minaturer.R
 import com.imploded.minaturer.adapters.JourneyDetailsAdapter
+import com.imploded.minaturer.interfaces.JourneyDetailViewModelInterface
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
 import com.imploded.minaturer.model.UiDeparture
 import com.imploded.minaturer.utils.app
 import com.imploded.minaturer.utils.fromJson
 import com.imploded.minaturer.utils.toColor
-import com.imploded.minaturer.viewmodel.JourneyDetailViewModel
-import com.imploded.minaturer.viewmodel.JourneyDetailViewModelInterface
 import javax.inject.Inject
 
 class JourneyDetailsFragment : Fragment() {
 
-    /*
-    private val viewModel: JourneyDetailViewModelInterface by lazy {
-        JourneyDetailViewModel(sourceRef, sourceStopId)
-    }*/
     @Inject lateinit var viewModel: JourneyDetailViewModelInterface
 
     private lateinit var sourceRef: String
