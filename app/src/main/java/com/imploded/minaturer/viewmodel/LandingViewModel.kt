@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.model.UiStop
 import com.imploded.minaturer.utils.fromJson
+import javax.inject.Inject
 
 interface LandingViewModelInterface {
     var selectedStops: ArrayList<UiStop>
@@ -11,7 +12,7 @@ interface LandingViewModelInterface {
     fun removeStop(position: Int)
 }
 
-class LandingViewModel(val settings: SettingsInterface) : LandingViewModelInterface {
+class LandingViewModel @Inject constructor(private val settings: SettingsInterface) : LandingViewModelInterface {
 
     override var selectedStops: ArrayList<UiStop> = arrayListOf()
 
