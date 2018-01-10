@@ -21,21 +21,29 @@ import com.imploded.minaturer.repository.WebServiceRepository
 import com.imploded.minaturer.ui.ChooseFilterTypeDialog
 import com.imploded.minaturer.ui.OnDialogInteraction
 import com.imploded.minaturer.application.MinaTurerApp
+import com.imploded.minaturer.utils.app
 import com.imploded.minaturer.utils.tintMenuIcon
 import com.imploded.minaturer.viewmodel.DeparturesViewModel
 import com.imploded.minaturer.viewmodel.DeparturesViewModelInterface
+import com.imploded.minaturer.viewmodel.FindStopsViewModelInterface
 import org.jetbrains.anko.support.v4.alert
+import javax.inject.Inject
 
 
 class DeparturesFragment : Fragment(), OnDialogInteraction {
 
+    @Inject lateinit var viewModel: DeparturesViewModelInterface
+    @Inject lateinit var appSettings: SettingsInterface
+
+    /*
     private val appSettings: SettingsInterface by lazy {
         MinaTurerApp.prefs
-    }
+    }*/
 
+    /*
     private val viewModel: DeparturesViewModelInterface by lazy {
-        DeparturesViewModel(stopId, appSettings, WebServiceRepository())
-    }
+        DeparturesViewModel(appSettings, WebServiceRepository()).setStopId(stopId)
+    }*/
     private var mListener: OnFragmentInteractionListener? = null
 
     private lateinit var selectedItem: UiDeparture
@@ -96,6 +104,8 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_departures, container, false)
+        activity.app.appComponent.inject(this)
+        viewModel.setStopId(stopId)
 
         (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 

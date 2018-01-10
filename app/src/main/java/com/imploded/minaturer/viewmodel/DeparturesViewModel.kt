@@ -12,6 +12,7 @@ import org.jetbrains.anko.coroutines.experimental.bg
 interface DeparturesViewModelInterface {
     var uiDepartures: List<UiDeparture>
     val filterActive: Boolean
+    fun setStopId(stopId: String)
     fun toggleFilterMode()
     fun generateFilteredDepartures(departures: DepartureContainer)
     fun getDepartures(stopId: String, updateFun: (() -> Unit)): Deferred<Unit>
@@ -22,7 +23,12 @@ interface DeparturesViewModelInterface {
     fun applyFilters()
 }
 
-class DeparturesViewModel(private val stopId: String, val settings: SettingsInterface, private val webservice: WebServiceInterface) : DeparturesViewModelInterface {
+class DeparturesViewModel(private val webservice: WebServiceInterface, private val settings: SettingsInterface) : DeparturesViewModelInterface {
+
+    override fun setStopId(stopId: String) {
+        this.stopId = stopId
+    }
+    private var stopId: String = ""
 
     private var filterMode = false
     private fun itemIsFiltered(departure: Departure, filterList: List<FilteredDeparture>) : Boolean {
