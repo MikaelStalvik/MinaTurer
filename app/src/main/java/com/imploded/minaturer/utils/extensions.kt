@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.imploded.minaturer.application.MinaTurerApp
 import java.text.SimpleDateFormat
 
 inline fun <reified T> Gson.fromJson(json: String) = this.fromJson<T>(json, object: TypeToken<T>() {}.type)
@@ -67,3 +68,6 @@ fun timeDifference(sourceDate: String, sourceTime: String, destDate: String, des
         0
     }
 }
+
+val Activity.app: MinaTurerApp
+    get() = application as MinaTurerApp

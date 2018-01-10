@@ -1,22 +1,22 @@
 package com.imploded.minaturer.viewmodel
 
+import com.imploded.minaturer.interfaces.JourneyDetailViewModelInterface
 import com.imploded.minaturer.interfaces.WebServiceInterface
 import com.imploded.minaturer.model.Stop
-import com.imploded.minaturer.repository.WebServiceRepository
 import com.imploded.minaturer.utils.timeDifference
-import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
 
-interface JourneyDetailViewModelInterface {
-    var stops: List<Stop>
-    fun getJourneyDetails(updateFun: (() -> Unit)) : Deferred<Unit>
-}
+class JourneyDetailViewModel(private val webservice: WebServiceInterface) : JourneyDetailViewModelInterface {
 
-class JourneyDetailViewModel(private val sourceRef: String, private val sourceStopId: String) : JourneyDetailViewModelInterface {
+    private lateinit var sourceRef: String
+    private lateinit var sourceStopId: String
 
-    private val webservice: WebServiceInterface = WebServiceRepository()
+    override fun setInputParameters(sourceRef: String, sourceStopId: String) {
+        this.sourceRef = sourceRef
+        this.sourceStopId = sourceStopId
+    }
 
     override var stops: List<Stop> = listOf()
 

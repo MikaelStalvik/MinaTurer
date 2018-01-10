@@ -1,6 +1,5 @@
 package com.imploded.minaturer.repository
 
-import android.util.Log
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.result.Result
@@ -36,7 +35,6 @@ class WebServiceRepository : WebServiceInterface{
         }
     }
     override fun getLocationsByName(expr: String): LocationContainer {
-        Log.d("WS", "TOKEN: " + accessToken.accessToken + " " + expr)
         val endPoint = locationsByNameUrl(expr)
         val (_, _, result) = endPoint
                 .httpGet()
@@ -45,7 +43,6 @@ class WebServiceRepository : WebServiceInterface{
         return when(result)
         {
             is Result.Success -> {
-                Log.d("HEJ", result.value)
                 Gson().fromJson<LocationContainer>(result.value)
             }
             is Result.Failure -> {
@@ -55,7 +52,6 @@ class WebServiceRepository : WebServiceInterface{
     }
 
     override fun getDepartures(id: String): DepartureContainer {
-        //Log.d("WS", "TOKEN: " + accessToken.accessToken + " " + id)
         val calender = Calendar.getInstance()
 
         val date = SimpleDateFormat("yyyyMMdd").format(Date())
@@ -64,7 +60,6 @@ class WebServiceRepository : WebServiceInterface{
         val timeString = dateFormat.format(calender.time)
         val time = URLEncoder.encode(timeString, "UTF-8")
         val endPoint = departuresById(id, date, time)
-        Log.d("WS", "Departures: " + endPoint)
         val (_, _, result) = endPoint
                 .httpGet()
                 .header(Pair("Authorization", "$tokenType ${accessToken.accessToken}"))
@@ -72,7 +67,6 @@ class WebServiceRepository : WebServiceInterface{
         return when(result)
         {
             is Result.Success -> {
-                Log.d("HEJ", result.value)
                 val res =  Gson().fromJson<DepartureContainer>(result.value)
                 res
             }
@@ -90,12 +84,10 @@ class WebServiceRepository : WebServiceInterface{
         return when(result)
         {
             is Result.Success -> {
-                Log.d("JDET", result.value)
                 val res =  Gson().fromJson<JourneyDetailsContainer>(result.value)
                 res
             }
             is Result.Failure -> {
-                Log.d("JDET", "FAIL!!!")
                 JourneyDetailsContainer(JourneyDetail())
             }
         }

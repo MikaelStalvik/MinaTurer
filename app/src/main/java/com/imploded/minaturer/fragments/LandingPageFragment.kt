@@ -14,23 +14,21 @@ import android.view.View
 import android.view.ViewGroup
 import com.imploded.minaturer.R
 import com.imploded.minaturer.adapters.LandingPageAdapter
+import com.imploded.minaturer.interfaces.LandingViewModelInterface
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
 import com.imploded.minaturer.interfaces.SettingsInterface
-import com.imploded.minaturer.application.MinaTurerApp
-import com.imploded.minaturer.viewmodel.LandingViewModel
-import com.imploded.minaturer.viewmodel.LandingViewModelInterface
+import com.imploded.minaturer.utils.app
 import org.jetbrains.anko.support.v4.alert
+import javax.inject.Inject
 
 
 class LandingPageFragment : Fragment() {
 
-    private val appSettings: SettingsInterface by lazy {
-        MinaTurerApp.prefs
-    }
+    @Inject lateinit var viewModel: LandingViewModelInterface
+    @Inject lateinit var appSettings: SettingsInterface
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: LandingPageAdapter
-    private val viewModel: LandingViewModelInterface = LandingViewModel(appSettings)
 
     private var mListener: OnFragmentInteractionListener? = null
 
@@ -39,12 +37,12 @@ class LandingPageFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar!!.title = getString(R.string.my_stops)
         (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
         val view = inflater!!.inflate(R.layout.fragment_landing_page, container, false)
-
         view.findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
             if (mListener != null) {
                 mListener!!.onFindStopsSelected(ArgChangeToFindStopsView)
             }
         }
+        activity.app.appComponent.inject(this)
 
         adapter = createAdapter()
         recyclerView = view.findViewById(R.id.recyclerViewStops)
@@ -67,8 +65,6 @@ class LandingPageFragment : Fragment() {
                     ItemTouchHelper.LEFT -> {
                         viewModel.removeStop(position)
                         adapter.removeItem(position)
-                        //adapter.removeItem(position)
-                        //viewModel.removeStop()
                     }
                 }
             }
@@ -129,7 +125,7 @@ class LandingPageFragment : Fragment() {
     }
 
     private fun showHint() {
-        val settings = appSettings.loadSettings()
+        val settings =  appSettings.loadSettings()
         if (settings.LandingHintPageShown) return
         alert(getString(R.string.landing_page_hint), getString(R.string.tip)) {
             positiveButton(getString(R.string.got_it)) {
