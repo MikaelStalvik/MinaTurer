@@ -5,7 +5,6 @@ import android.graphics.Canvas
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -17,7 +16,9 @@ import com.imploded.minaturer.adapters.LandingPageAdapter
 import com.imploded.minaturer.interfaces.LandingViewModelInterface
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
 import com.imploded.minaturer.interfaces.SettingsInterface
-import com.imploded.minaturer.utils.app
+import com.imploded.minaturer.utils.hideBackNavigation
+import com.imploded.minaturer.utils.inject
+import com.imploded.minaturer.utils.title
 import org.jetbrains.anko.support.v4.alert
 import javax.inject.Inject
 
@@ -34,15 +35,15 @@ class LandingPageFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        (activity as AppCompatActivity).supportActionBar!!.title = getString(R.string.my_stops)
-        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+        this.title(getString(R.string.my_stops))
+        this.hideBackNavigation()
         val view = inflater.inflate(R.layout.fragment_landing_page, container, false)
+        this.inject()
         view.findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
             if (mListener != null) {
                 mListener!!.onFindStopsSelected(ArgChangeToFindStopsView)
             }
         }
-        activity?.app?.appComponent?.inject(this)
 
         adapter = createAdapter()
         recyclerView = view.findViewById(R.id.recyclerViewStops)
@@ -54,6 +55,20 @@ class LandingPageFragment : Fragment() {
         showHint()
 
         return view
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context is OnFragmentInteractionListener) {
+            mListener = context
+        } else {
+            throw RuntimeException(context!!.toString() + " must implement OnFragmentInteractionListener")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        mListener = null
     }
 
     private fun initSwipe() {
@@ -74,8 +89,8 @@ class LandingPageFragment : Fragment() {
             }
 
             override fun onChildDrawOver(c: Canvas, recyclerView: RecyclerView,
-                                viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float,
-                                actionState: Int, isCurrentlyActive: Boolean) {
+                                         viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float,
+                                         actionState: Int, isCurrentlyActive: Boolean) {
                 val foregroundView = (viewHolder as LandingPageAdapter.UiStopHolder).viewForeground()
                 getDefaultUIUtil().onDrawOver(c, recyclerView, foregroundView, dX, dY,
                         actionState, isCurrentlyActive)
@@ -86,8 +101,8 @@ class LandingPageFragment : Fragment() {
                 getDefaultUIUtil().clearView(foregroundView)
             }
             override fun onChildDraw(c: Canvas, recyclerView: RecyclerView,
-                            viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float,
-                            actionState: Int, isCurrentlyActive: Boolean) {
+                                     viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float,
+                                     actionState: Int, isCurrentlyActive: Boolean) {
                 val foregroundView = (viewHolder as LandingPageAdapter.UiStopHolder).viewForeground()
 
                 getDefaultUIUtil().onDraw(c, recyclerView, foregroundView, dX, dY,
@@ -104,24 +119,9 @@ class LandingPageFragment : Fragment() {
         recyclerView.scrollToPosition(0)
     }
 
-
     private fun createAdapter(): LandingPageAdapter {
         viewModel.getStops()
         return LandingPageAdapter({ mListener?.onStopSelected(it)})
-    }
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            mListener = context
-        } else {
-            throw RuntimeException(context!!.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        mListener = null
     }
 
     private fun showHint() {

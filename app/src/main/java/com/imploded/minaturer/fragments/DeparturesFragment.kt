@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
@@ -17,8 +16,7 @@ import com.imploded.minaturer.interfaces.DeparturesViewModelInterface
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
 import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.model.UiStop
-import com.imploded.minaturer.utils.app
-import com.imploded.minaturer.utils.tintMenuIcon
+import com.imploded.minaturer.utils.*
 import org.jetbrains.anko.support.v4.alert
 import javax.inject.Inject
 
@@ -50,9 +48,9 @@ class DeparturesFragment : Fragment() {
         adapter.notifyDataSetChanged()
         recyclerView.scrollToPosition(0)
         if (viewModel.filtersActive()) {
-            (activity as AppCompatActivity).supportActionBar?.title = stopName + " (" + getString(R.string.filtered) + ")"
+            this.title("$stopName (${getString(R.string.filtered)})")
         } else {
-            (activity as AppCompatActivity).supportActionBar?.title = stopName
+            this.title(stopName)
         }
     }
 
@@ -91,7 +89,7 @@ class DeparturesFragment : Fragment() {
             viewModel.applyFilters()
 
             viewModel.toggleFilterMode()
-            //##TransitionManager.beginDelayedTransition(rootLayout)
+            //TransitionManager.beginDelayedTransition(rootLayout)
             if (viewModel.filterActive) bottomToolbar.visibility = android.view.View.VISIBLE else bottomToolbar.visibility = android.view.View.GONE
             adapter.showFilter = viewModel.filterActive
             viewModel.getDepartures(stopId, ::updateAdapter, ::initFetch)
@@ -101,22 +99,11 @@ class DeparturesFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_departures, container, false)
-        activity?.app?.appComponent?.inject(this)
+        this.inject()
+        this.displayBackNavigation()
         viewModel.setStopId(stopId)
 
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        swipeRefresh = view.findViewById(R.id.simpleSwipeRefreshLayout)
-        swipeRefresh.setOnRefreshListener {
-            progress.visibility = View.VISIBLE
-            viewModel.getDepartures(stopId, ::updateAdapter, ::initFetch)
-            swipeRefresh.isRefreshing = false
-        }
-        rootLayout = view.findViewById(R.id.rootLayout)
-        bottomToolbar = view.findViewById(R.id.bottomToolbarLayout)
-        bottomToolbar.visibility = View.GONE
-
-        setupButtons(view)
+        setupUi(view)
 
         adapter = createAdapter()
         recyclerView = view.findViewById(R.id.departuresList)
@@ -147,9 +134,9 @@ class DeparturesFragment : Fragment() {
             R.id.action_filter_mode -> {
                 viewModel.toggleFilterMode()
                 adapter.showFilter = viewModel.filterActive
-                //##TransitionManager.beginDelayedTransition(rootLayout)
-                if (viewModel.filterActive) bottomToolbar.visibility = View.VISIBLE else bottomToolbar.visibility = View.GONE
                 adapter.notifyDataSetChanged()
+                //TransitionManager.beginDelayedTransition(rootLayout)
+                if (viewModel.filterActive) bottomToolbar.visibility = View.VISIBLE else bottomToolbar.visibility = View.GONE
                 false
             }
             android.R.id.home -> {
@@ -183,6 +170,20 @@ class DeparturesFragment : Fragment() {
                 appSettings.saveSettings(settings)
             }
         }.show()
+    }
+
+    private fun setupUi(view: View) {
+        swipeRefresh = view.findViewById(R.id.simpleSwipeRefreshLayout)
+        swipeRefresh.setOnRefreshListener {
+            progress.visibility = View.VISIBLE
+            viewModel.getDepartures(stopId, ::updateAdapter, ::initFetch)
+            swipeRefresh.isRefreshing = false
+        }
+        rootLayout = view.findViewById(R.id.rootLayout)
+        bottomToolbar = view.findViewById(R.id.bottomToolbarLayout)
+        bottomToolbar.visibility = View.GONE
+
+        setupButtons(view)
     }
 
     companion object {

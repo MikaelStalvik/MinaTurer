@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
         if (savedInstanceState == null) {
             supportFragmentManager
                     .beginTransaction()
-                    .add(R.id.root_layout, LandingPageFragment.newInstance(), "rageComicList")
+                    .add(R.id.root_layout, LandingPageFragment.newInstance(), "landingPageFragment")
                     .commit()
         }
     }

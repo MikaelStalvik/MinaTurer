@@ -4,7 +4,10 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.support.annotation.ColorRes
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import android.support.v4.graphics.drawable.DrawableCompat
+import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
@@ -14,6 +17,7 @@ import android.widget.EditText
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.imploded.minaturer.application.MinaTurerApp
+import com.imploded.minaturer.fragments.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -59,14 +63,33 @@ fun View.hideKeyboard(inputMethodManager: InputMethodManager) {
 
 fun timeDifference(sourceDate: String, sourceTime: String, destDate: String, destTime: String) : Int {
     return try {
-        val sourceDateTime = sourceDate + " " + sourceTime + ":00"
-        val destDatetime = destDate + " " + destTime + ":00"
+        val sourceDateTime = "$sourceDate $sourceTime:00"// sourceDate + " " + sourceTime + ":00"
+        val destDatetime = "$destDate $destTime:00"// destDate + " " + destTime + ":00"
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         val parsedSource = dateFormat.parse(sourceDateTime)
         val parsedDest = dateFormat.parse(destDatetime)
         (parsedDest.time - parsedSource.time).toInt() / 1000
     } catch(e: Exception) {
         0
+    }
+}
+
+fun Fragment.title(title: String) {
+    (activity as AppCompatActivity).supportActionBar?.title = title
+}
+fun Fragment.displayBackNavigation() {
+    (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+}
+fun Fragment.hideBackNavigation() {
+    (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+}
+
+fun Fragment.inject() {
+    when(this) {
+        is LandingPageFragment -> activity?.app?.appComponent?.inject(this)
+        is FindStopFragment -> activity?.app?.appComponent?.inject(this)
+        is DeparturesFragment -> activity?.app?.appComponent?.inject(this)
+        is JourneyDetailsFragment -> activity?.app?.appComponent?.inject(this)
     }
 }
 

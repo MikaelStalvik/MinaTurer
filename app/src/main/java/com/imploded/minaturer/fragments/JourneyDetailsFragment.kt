@@ -3,7 +3,6 @@ package com.imploded.minaturer.fragments
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -18,9 +17,7 @@ import com.imploded.minaturer.adapters.JourneyDetailsAdapter
 import com.imploded.minaturer.interfaces.JourneyDetailViewModelInterface
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
 import com.imploded.minaturer.model.UiDeparture
-import com.imploded.minaturer.utils.app
-import com.imploded.minaturer.utils.fromJson
-import com.imploded.minaturer.utils.toColor
+import com.imploded.minaturer.utils.*
 import javax.inject.Inject
 
 class JourneyDetailsFragment : Fragment() {
@@ -43,6 +40,52 @@ class JourneyDetailsFragment : Fragment() {
         sourceStopId = arguments!!.getString(ARG_PARAM2)
         val json = arguments!!.getString(ARG_PARAM3)
         departure = Gson().fromJson<UiDeparture>(json)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+
+        this.title(getString(R.string.journey_details))
+        this.displayBackNavigation()
+        val view =  inflater.inflate(R.layout.fragment_journey_details, container, false)
+        this.inject()
+        viewModel.setInputParameters(sourceRef, sourceStopId)
+        progress = view.findViewById(R.id.progress_bar)
+        setHeader(view)
+
+        adapter = createAdapter()
+        recyclerView = view.findViewById(R.id.journeyRecycleView)
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
+        recyclerView.adapter = adapter
+        viewModel.getJourneyDetails(::updateAdapter, ::initFetch)
+        setHasOptionsMenu(true)
+
+        return view
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context is OnFragmentInteractionListener) {
+            mListener = context
+        } else {
+            throw RuntimeException(context!!.toString() + " must implement OnFragmentInteractionListener")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        mListener = null
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item == null) return super.onOptionsItemSelected(item)
+        return when(item.itemId) {
+            android.R.id.home -> {
+                activity?.supportFragmentManager?.popBackStack()
+                false
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun initFetch() {
@@ -70,52 +113,6 @@ class JourneyDetailsFragment : Fragment() {
     }
     private fun createAdapter(): JourneyDetailsAdapter {
         return JourneyDetailsAdapter(getString(R.string.track), getString(R.string.travel_time))
-    }
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-
-        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.journey_details)
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val view =  inflater.inflate(R.layout.fragment_journey_details, container, false)
-        activity?.app?.appComponent?.inject(this)
-        viewModel.setInputParameters(sourceRef, sourceStopId)
-        progress = view.findViewById(R.id.progress_bar)
-        setHeader(view)
-
-        adapter = createAdapter()
-        recyclerView = view.findViewById(R.id.journeyRecycleView)
-        recyclerView.layoutManager = LinearLayoutManager(this.context)
-        recyclerView.adapter = adapter
-        viewModel.getJourneyDetails(::updateAdapter, ::initFetch)
-        setHasOptionsMenu(true)
-
-        return view
-    }
-
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            mListener = context
-        } else {
-            throw RuntimeException(context!!.toString() + " must implement OnFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        mListener = null
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item == null) return super.onOptionsItemSelected(item)
-        return when(item.itemId) {
-            android.R.id.home -> {
-                activity?.supportFragmentManager?.popBackStack()
-                false
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     companion object {
