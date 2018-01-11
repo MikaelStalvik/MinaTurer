@@ -40,13 +40,14 @@ class DepartureViewModelTests {
     }
 
     @Test
-    fun givenFetchingDeparturesWhenNoFiltersAreAppliedThenThreeDeparturesShallBeReturned(){
+    fun `When fetching departures with no active filters then three departures shall be returned`(){
+        FilteredDepartures.setTestData(hashMapOf())
         viewModel.generateFilteredDepartures(departures)
         assertTrue(viewModel.uiDepartures.size == 3)
     }
 
     @Test
-    fun givenFetchingDeparturesWhenFiltersAreAppliedThenOneDepartureShallBeReturned(){
+    fun `When fetching departures and a filter is applies then only one departure shall be returned`(){
         // Cannot mock a final class properly therefore use test method
         val filterData: HashMap<String, ArrayList<FilteredDeparture>> = hashMapOf(
                 "12345" to arrayListOf(
@@ -58,5 +59,25 @@ class DepartureViewModelTests {
 
         viewModel.generateFilteredDepartures(departures)
         assertTrue(viewModel.uiDepartures.size == 1)
+    }
+
+    @Test
+    fun `When selecting all items ensure that three items are selected`() {
+        FilteredDepartures.setTestData(hashMapOf())
+        viewModel.generateFilteredDepartures(departures)
+        viewModel.selectNone()
+        viewModel.selectAll()
+        val count = viewModel.uiDepartures.count { d -> d.checked }
+        assertTrue(count == 3)
+    }
+
+    @Test
+    fun `When having all items selected and selecting no items ensure that no items are selected`() {
+        FilteredDepartures.setTestData(hashMapOf())
+        viewModel.generateFilteredDepartures(departures)
+        viewModel.selectAll()
+        viewModel.selectNone()
+        val count = viewModel.uiDepartures.count { d -> d.checked }
+        assertTrue(count == 0)
     }
 }
