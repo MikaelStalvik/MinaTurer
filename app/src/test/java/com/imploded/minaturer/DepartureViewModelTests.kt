@@ -37,11 +37,11 @@ class DepartureViewModelTests {
         mockSettings = Mockito.mock(SettingsInterface::class.java)
         viewModel = DeparturesViewModel(webservice, mockSettings)
         viewModel.setStopId(stopId)
+        FilteredDepartures.setTestData(hashMapOf())
     }
 
     @Test
     fun `When fetching departures with no active filters then three departures shall be returned`(){
-        FilteredDepartures.setTestData(hashMapOf())
         viewModel.generateFilteredDepartures(departures)
         assertTrue(viewModel.uiDepartures.size == 3)
     }
@@ -63,7 +63,6 @@ class DepartureViewModelTests {
 
     @Test
     fun `When selecting all items ensure that three items are selected`() {
-        FilteredDepartures.setTestData(hashMapOf())
         viewModel.generateFilteredDepartures(departures)
         viewModel.selectNone()
         viewModel.selectAll()
@@ -73,7 +72,6 @@ class DepartureViewModelTests {
 
     @Test
     fun `When having all items selected and selecting no items ensure that no items are selected`() {
-        FilteredDepartures.setTestData(hashMapOf())
         viewModel.generateFilteredDepartures(departures)
         viewModel.selectAll()
         viewModel.selectNone()
