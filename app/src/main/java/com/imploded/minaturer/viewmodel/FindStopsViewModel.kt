@@ -8,13 +8,11 @@ import com.imploded.minaturer.model.LocationContainer
 import com.imploded.minaturer.model.LocationList
 import com.imploded.minaturer.model.StopLocation
 import com.imploded.minaturer.model.UiStop
-import com.imploded.minaturer.repository.WebServiceRepository
 import com.imploded.minaturer.utils.fromJson
-import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
-import java.util.ArrayList
+import java.util.*
 import javax.inject.Inject
 
 class FindStopsViewModel @Inject constructor(private val webservice: WebServiceInterface, private val settings: SettingsInterface) : FindStopsViewModelInterface {

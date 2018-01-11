@@ -13,29 +13,22 @@ import android.widget.Button
 import android.widget.ProgressBar
 import com.imploded.minaturer.R
 import com.imploded.minaturer.adapters.DeparturesAdapter
-import com.imploded.minaturer.application.MinaTurerApp
 import com.imploded.minaturer.interfaces.DeparturesViewModelInterface
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
 import com.imploded.minaturer.interfaces.SettingsInterface
-import com.imploded.minaturer.model.FilteredDepartures
-import com.imploded.minaturer.model.UiDeparture
 import com.imploded.minaturer.model.UiStop
-import com.imploded.minaturer.ui.ChooseFilterTypeDialog
-import com.imploded.minaturer.ui.OnDialogInteraction
 import com.imploded.minaturer.utils.app
 import com.imploded.minaturer.utils.tintMenuIcon
 import org.jetbrains.anko.support.v4.alert
 import javax.inject.Inject
 
-// TODO remove OnDialogInteraction
-class DeparturesFragment : Fragment(), OnDialogInteraction {
+class DeparturesFragment : Fragment() {
 
     @Inject lateinit var viewModel: DeparturesViewModelInterface
     @Inject lateinit var appSettings: SettingsInterface
 
     private var mListener: OnFragmentInteractionListener? = null
 
-    private lateinit var selectedItem: UiDeparture
     private lateinit var stopId: String
     private lateinit var stopName: String
 
@@ -45,23 +38,6 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
     private lateinit var bottomToolbar: ConstraintLayout
     private lateinit var rootLayout: ConstraintLayout
     private lateinit var progress: ProgressBar
-
-
-    override fun onPositiveClick(selectedIndex: Int) {
-        when(selectedIndex) {
-            ChooseFilterTypeDialog.FilterByLine -> {
-                viewModel.getDepartures(stopId, ::updateAdapter, ::initFetch)
-            }
-            ChooseFilterTypeDialog.FilterByLineAndDirection -> {
-                FilteredDepartures.addFilteredTrip(stopId, selectedItem.shortName, selectedItem.direction)
-                FilteredDepartures.saveData(MinaTurerApp.prefs)
-                viewModel.getDepartures(stopId, ::updateAdapter, ::initFetch)
-            }
-        }
-    }
-
-    override fun onNegativeClick() {
-    }
 
     private fun initFetch() {
         progress.visibility = View.VISIBLE
@@ -74,9 +50,9 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
         adapter.notifyDataSetChanged()
         recyclerView.scrollToPosition(0)
         if (viewModel.filtersActive()) {
-            (activity as AppCompatActivity).supportActionBar!!.title = stopName + " (" + getString(R.string.filtered) + ")"
+            (activity as AppCompatActivity).supportActionBar?.title = stopName + " (" + getString(R.string.filtered) + ")"
         } else {
-            (activity as AppCompatActivity).supportActionBar!!.title = stopName
+            (activity as AppCompatActivity).supportActionBar?.title = stopName
         }
     }
 
@@ -93,8 +69,8 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        stopId = arguments.getString(ARG_PARAM1)
-        stopName = arguments.getString(ARG_PARAM2)
+        stopId = arguments!!.getString(ARG_PARAM1)
+        stopName = arguments!!.getString(ARG_PARAM2)
     }
 
     private fun setupButtons(view: View) {
@@ -121,13 +97,14 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
             viewModel.getDepartures(stopId, ::updateAdapter, ::initFetch)
         }
     }
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_departures, container, false)
-        activity.app.appComponent.inject(this)
+        val view = inflater.inflate(R.layout.fragment_departures, container, false)
+        activity?.app?.appComponent?.inject(this)
         viewModel.setStopId(stopId)
 
-        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         swipeRefresh = view.findViewById(R.id.simpleSwipeRefreshLayout)
         swipeRefresh.setOnRefreshListener {
@@ -156,7 +133,7 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.departure_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
-        menu?.findItem(R.id.action_filter_mode)?.tintMenuIcon(context, android.R.color.white)
+        menu?.findItem(R.id.action_filter_mode)?.tintMenuIcon(context!!, android.R.color.white)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -176,7 +153,7 @@ class DeparturesFragment : Fragment(), OnDialogInteraction {
                 false
             }
             android.R.id.home -> {
-                activity.supportFragmentManager.popBackStack()
+                activity?.supportFragmentManager?.popBackStack()
                 false
             }
             else -> super.onOptionsItemSelected(item)

@@ -15,6 +15,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.imploded.minaturer.application.MinaTurerApp
 import java.text.SimpleDateFormat
+import java.util.*
 
 inline fun <reified T> Gson.fromJson(json: String) = this.fromJson<T>(json, object: TypeToken<T>() {}.type)
 
@@ -60,7 +61,7 @@ fun timeDifference(sourceDate: String, sourceTime: String, destDate: String, des
     return try {
         val sourceDateTime = sourceDate + " " + sourceTime + ":00"
         val destDatetime = destDate + " " + destTime + ":00"
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         val parsedSource = dateFormat.parse(sourceDateTime)
         val parsedDest = dateFormat.parse(destDatetime)
         (parsedDest.time - parsedSource.time).toInt() / 1000

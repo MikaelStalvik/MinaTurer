@@ -9,5 +9,5 @@ interface WebServiceInterface {
     fun getToken(): Token
     fun getLocationsByName(expr: String) : LocationContainer
     fun getDepartures(id: String) : DepartureContainer
-    fun getJourneyDetails(ref: String) : JourneyDetailsContainer
+    fun getJourneyDetails(endpoint: String) : JourneyDetailsContainer
 }

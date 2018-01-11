@@ -54,9 +54,9 @@ class WebServiceRepository : WebServiceInterface{
     override fun getDepartures(id: String): DepartureContainer {
         val calender = Calendar.getInstance()
 
-        val date = SimpleDateFormat("yyyyMMdd").format(Date())
+        val date = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(Date())
 
-        val dateFormat = SimpleDateFormat("HH:mm")
+        val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
         val timeString = dateFormat.format(calender.time)
         val time = URLEncoder.encode(timeString, "UTF-8")
         val endPoint = departuresById(id, date, time)

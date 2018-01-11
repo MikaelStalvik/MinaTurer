@@ -8,11 +8,10 @@
         android:orderInCategory="100"
         compat:showAsAction="always"
         android:textColorPrimary ="#ffffff"
-        android:iconTint="#ffffff"
         android:tint="#ffffff"
         android:icon="@drawable/ic_filter_list_black_24dp">
-
     </item>
+    <!-- android:iconTint="#ffffff"-->
     <item
         android:id="@+id/action_reset"
         android:title="@string/reset">

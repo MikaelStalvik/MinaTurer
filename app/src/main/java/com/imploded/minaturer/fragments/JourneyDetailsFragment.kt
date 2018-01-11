@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import com.google.gson.Gson
 import com.imploded.minaturer.R
@@ -32,20 +33,26 @@ class JourneyDetailsFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: JourneyDetailsAdapter
+    private lateinit var progress: ProgressBar
 
     private var mListener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (arguments != null) {
-            sourceRef = arguments.getString(ARG_PARAM1)
-            sourceStopId = arguments.getString(ARG_PARAM2)
-            val json = arguments.getString(ARG_PARAM3)
-            departure = Gson().fromJson<UiDeparture>(json)
-        }
+        sourceRef = arguments!!.getString(ARG_PARAM1)
+        sourceStopId = arguments!!.getString(ARG_PARAM2)
+        val json = arguments!!.getString(ARG_PARAM3)
+        departure = Gson().fromJson<UiDeparture>(json)
+    }
+
+    private fun initFetch() {
+        progress.visibility = View.VISIBLE
+        recyclerView.visibility = View.GONE
     }
 
     private fun updateAdapter() {
+        progress.visibility = View.GONE
+        recyclerView.visibility = View.VISIBLE
         adapter.updateItems { viewModel.stops }
         adapter.notifyDataSetChanged()
         recyclerView.scrollToPosition(0)
@@ -64,21 +71,22 @@ class JourneyDetailsFragment : Fragment() {
     private fun createAdapter(): JourneyDetailsAdapter {
         return JourneyDetailsAdapter(getString(R.string.track), getString(R.string.travel_time))
     }
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        (activity as AppCompatActivity).supportActionBar!!.title = getString(R.string.journey_details)
-        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        val view =  inflater!!.inflate(R.layout.fragment_journey_details, container, false)
-        activity.app.appComponent.inject(this)
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.journey_details)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        val view =  inflater.inflate(R.layout.fragment_journey_details, container, false)
+        activity?.app?.appComponent?.inject(this)
         viewModel.setInputParameters(sourceRef, sourceStopId)
+        progress = view.findViewById(R.id.progress_bar)
         setHeader(view)
 
         adapter = createAdapter()
         recyclerView = view.findViewById(R.id.journeyRecycleView)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.adapter = adapter
-        viewModel.getJourneyDetails(::updateAdapter)
+        viewModel.getJourneyDetails(::updateAdapter, ::initFetch)
         setHasOptionsMenu(true)
 
         return view
@@ -103,7 +111,7 @@ class JourneyDetailsFragment : Fragment() {
         if (item == null) return super.onOptionsItemSelected(item)
         return when(item.itemId) {
             android.R.id.home -> {
-                activity.supportFragmentManager.popBackStack()
+                activity?.supportFragmentManager?.popBackStack()
                 false
             }
             else -> super.onOptionsItemSelected(item)

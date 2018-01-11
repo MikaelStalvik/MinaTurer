@@ -20,7 +20,7 @@ class DepartureViewModelTests {
     private val stopId = "12345"
 
     @Before
-    fun InitTests() {
+    fun initTests() {
         departures = DepartureContainer(DepartureBoard(
                 "",
                 "",
@@ -48,7 +48,7 @@ class DepartureViewModelTests {
     @Test
     fun givenFetchingDeparturesWhenFiltersAreAppliedThenOneDepartureShallBeReturned(){
         // Cannot mock a final class properly therefore use test method
-        var filterData: HashMap<String, ArrayList<FilteredDeparture>> = hashMapOf(
+        val filterData: HashMap<String, ArrayList<FilteredDeparture>> = hashMapOf(
                 "12345" to arrayListOf(
                 FilteredDeparture("ROSA", "Gerrebacka"),
                 FilteredDeparture("ROSA", "Billdal")

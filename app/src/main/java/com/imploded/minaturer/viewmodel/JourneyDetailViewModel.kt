@@ -20,7 +20,8 @@ class JourneyDetailViewModel(private val webservice: WebServiceInterface) : Jour
 
     override var stops: List<Stop> = listOf()
 
-    override fun getJourneyDetails(updateFun: (() -> Unit)) = async(UI) {
+    override fun getJourneyDetails(updateFun: (() -> Unit), initFetchFun: (() -> Unit)) = async(UI) {
+        initFetchFun()
         val tokenTask = bg { webservice.getToken() }
         tokenTask.await()
         val searchTask = bg { webservice.getJourneyDetails(sourceRef) }
