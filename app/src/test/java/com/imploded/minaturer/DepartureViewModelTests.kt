@@ -78,4 +78,17 @@ class DepartureViewModelTests {
         val count = viewModel.uiDepartures.count { d -> d.checked }
         assertTrue(count == 0)
     }
+
+    @Test
+    fun `When applying filters to a list with three items ensure that only one is returned and filters are saved`() {
+        viewModel.generateFilteredDepartures(departures)
+        viewModel.uiDepartures[0].checked = true
+        viewModel.uiDepartures[1].checked = false
+        viewModel.uiDepartures[2].checked = false
+        viewModel.applyFilters()
+        val filterList = FilteredDepartures.filterListForStop(stopId)
+        assertTrue(filterList.count() == 2)
+        assertTrue((filterList[0].direction == "Billdal"))
+        assertTrue((filterList[1].direction == "Eriksberg"))
+    }
 }
