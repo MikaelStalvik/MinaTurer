@@ -49,7 +49,8 @@ class DeparturesViewModel(private val webservice: WebServiceInterface, private v
         for((index, departure) in uiDepartures.withIndex()) departure.index = index
     }
 
-    override fun getDepartures(stopId: String, updateFun: (() -> Unit)) = async(UI) {
+    override fun getDepartures(stopId: String, updateFun: (() -> Unit), initFetchFun: (() -> Unit)) = async(UI) {
+        initFetchFun()
         val tokenTask = bg { webservice.getToken() }
         tokenTask.await()
         val searchTask = bg { webservice.getDepartures(stopId) }

@@ -10,7 +10,7 @@ interface DeparturesViewModelInterface {
     fun setStopId(stopId: String)
     fun toggleFilterMode()
     fun generateFilteredDepartures(departures: DepartureContainer)
-    fun getDepartures(stopId: String, updateFun: (() -> Unit)): Deferred<Unit>
+    fun getDepartures(stopId: String, updateFun: (() -> Unit), initFetchFun: (() -> Unit)): Deferred<Unit>
     fun selectAll()
     fun selectNone()
     fun filtersActive(): Boolean
