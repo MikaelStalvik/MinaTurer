@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Color
 import android.support.annotation.ColorRes
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
