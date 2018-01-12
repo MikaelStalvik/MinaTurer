@@ -1,6 +1,7 @@
 # Mina Turer
 
 Find the next departure for a bus, tram or train within the Västra Götalands regions public transportation.
+
 The full application can be downloaded from:
 https://play.google.com/store/apps/details?id=com.imploded.minaturer
 
