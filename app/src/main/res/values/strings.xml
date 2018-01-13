@@ -2,15 +2,11 @@
     <string name="app_name">Mina Turer</string>
 
     <string name="find_stop">Find stop</string>
-    <string name="type_to_filter">Type to filter...</string>
+    <string name="type_to_filter">Type to filter…</string>
     <string name="my_stops">My stops</string>
     <string name="delete">DELETE</string>
     <string name="stop_added">Stop added:</string>
     <string name="line">Line</string>
-    <string name="line_direction">Line + direction</string>
-    <string name="select_filtering">Select filtering</string>
-    <string name="ok">OK</string>
-    <string name="cancel">Cancel</string>
     <string name="filtered">Filtered</string>
     <string name="reset">Reset</string>
     <string name="tip">Tip</string>

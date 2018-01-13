@@ -18,7 +18,7 @@ object FilteredDepartures {
     fun saveData(settings: SettingsInterface) {
         val activeSettings = settings.loadSettings()
         val json = Gson().toJson(filteredMap)
-        activeSettings?.FilteredTripsByStopId = json
+        activeSettings.FilteredTripsByStopId = json
         settings.saveSettings(activeSettings)
     }
 

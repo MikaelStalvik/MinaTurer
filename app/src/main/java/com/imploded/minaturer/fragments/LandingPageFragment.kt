@@ -16,6 +16,7 @@ import com.imploded.minaturer.adapters.LandingPageAdapter
 import com.imploded.minaturer.interfaces.LandingViewModelInterface
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
 import com.imploded.minaturer.interfaces.SettingsInterface
+import com.imploded.minaturer.utils.FirebaseConstants
 import com.imploded.minaturer.utils.hideBackNavigation
 import com.imploded.minaturer.utils.inject
 import com.imploded.minaturer.utils.title
@@ -78,6 +79,7 @@ class LandingPageFragment : Fragment() {
                 val position = viewHolder.adapterPosition
                 when(direction) {
                     ItemTouchHelper.LEFT -> {
+                        mListener?.sendFirebaseEvent(FirebaseConstants.StopRemoved)
                         viewModel.removeStop(position)
                         adapter.removeItem(position)
                     }
