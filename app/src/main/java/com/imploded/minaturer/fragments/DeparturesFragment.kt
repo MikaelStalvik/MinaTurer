@@ -74,18 +74,21 @@ class DeparturesFragment : Fragment() {
     private fun setupButtons(view: View) {
         val allButton = view.findViewById<Button>(R.id.buttonAll)
         allButton.setOnClickListener {
+            mListener?.sendFirebaseEvent(FirebaseConstants.SelectAll)
             viewModel.selectAll()
             adapter.updateItems { viewModel.uiDepartures }
             adapter.notifyDataSetChanged()
         }
         val noneButton = view.findViewById<Button>(R.id.buttonNone)
         noneButton.setOnClickListener{
+            mListener?.sendFirebaseEvent(FirebaseConstants.SelectNone)
             viewModel.selectNone()
             adapter.updateItems { viewModel.uiDepartures }
             adapter.notifyDataSetChanged()
         }
         val applyButton = view.findViewById<Button>(R.id.buttonApply)
         applyButton.setOnClickListener{
+            mListener?.sendFirebaseEvent(FirebaseConstants.ApplyFilter)
             viewModel.applyFilters()
 
             viewModel.toggleFilterMode()
@@ -133,6 +136,7 @@ class DeparturesFragment : Fragment() {
             }
             R.id.action_filter_mode -> {
                 viewModel.toggleFilterMode()
+                mListener?.sendFirebaseEvent(FirebaseConstants.ToggleFilter, if (viewModel.filterActive) FirebaseConstants.FilterOn else FirebaseConstants.FilterOff )
                 adapter.showFilter = viewModel.filterActive
                 adapter.notifyDataSetChanged()
                 //TransitionManager.beginDelayedTransition(rootLayout)

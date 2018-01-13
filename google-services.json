@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "845021817551",
+    "firebase_url": "https://mina-turer.firebaseio.com",
+    "project_id": "mina-turer",
+    "storage_bucket": "mina-turer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:845021817551:android:d23ff99ed892e43a",
+        "android_client_info": {
+          "package_name": "com.imploded.minaturer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "845021817551-89ct38a6g15mbbj916fqq13h51equac5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.imploded.minaturer",
+            "certificate_hash": "40e9cf6220d7fb73dcf6bc1f00c6bfc39e8a5d31"
+          }
+        },
+        {
+          "client_id": "845021817551-2jm86qoi5j5cs7scri0vs1uvasju9d3f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkG8KEevkerXkNU1KYpwPb4Knx2aIjG6A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "845021817551-2jm86qoi5j5cs7scri0vs1uvasju9d3f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

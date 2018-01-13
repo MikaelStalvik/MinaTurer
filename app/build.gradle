@@ -12,8 +12,8 @@ android {
         applicationId "com.imploded.minaturer"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 7
-        versionName "0.16"
+        versionCode 8
+        versionName "0.17"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -38,6 +38,8 @@ dependencies {
     implementation "org.jetbrains.anko:anko-common:$anko_version"
     implementation "org.jetbrains.anko:anko-coroutines:$anko_version"
 
+    compile 'com.google.firebase:firebase-core:11.8.0'
+
     compile "org.jetbrains.anko:anko-sdk15-coroutines:$anko_version"
     compile "org.jetbrains.anko:anko-appcompat-v7-coroutines:$anko_version"
     compile "org.jetbrains.anko:anko-design-coroutines:$anko_version"
@@ -52,3 +54,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }
+
+apply plugin: 'com.google.gms.google-services'
