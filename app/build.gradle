@@ -12,8 +12,8 @@ android {
         applicationId "com.imploded.minaturer"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 8
-        versionName "0.17"
+        versionCode 9
+        versionName "0.18"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
