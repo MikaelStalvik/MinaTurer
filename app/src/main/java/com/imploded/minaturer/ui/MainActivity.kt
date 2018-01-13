@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
 
     override fun onStopAdded(name: String) {
         sendFirebaseEvent(FirebaseConstants.AddedStop, name)
-        val snack = Snackbar.make(root_layout, getString(R.string.stop_added) + name, Snackbar.LENGTH_SHORT)
+        val snack = Snackbar.make(root_layout, getString(R.string.stop_added) + " " + name, Snackbar.LENGTH_SHORT)
         snack.show()
     }
 
