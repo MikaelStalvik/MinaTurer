@@ -98,6 +98,7 @@ class JourneyDetailsFragment : Fragment() {
         recyclerView.visibility = View.VISIBLE
         adapter.updateItems { viewModel.stops }
         adapter.notifyDataSetChanged()
+        recyclerView.applyAnimation()
         recyclerView.scrollToPosition(0)
     }
 

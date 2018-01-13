@@ -41,11 +41,14 @@ class DeparturesFragment : Fragment() {
         progress.visibility = View.VISIBLE
         recyclerView.visibility = View.GONE
     }
+
     private fun updateAdapter() {
         progress.visibility = View.GONE
         recyclerView.visibility = View.VISIBLE
         adapter.updateItems { viewModel.uiDepartures }
         adapter.notifyDataSetChanged()
+        recyclerView.applyAnimation()
+        //runLayoutAnimation(recyclerView)
         recyclerView.scrollToPosition(0)
         if (viewModel.filtersActive()) {
             this.title("$stopName (${getString(R.string.filtered)})")

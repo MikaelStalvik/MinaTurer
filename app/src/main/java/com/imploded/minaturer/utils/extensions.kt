@@ -7,14 +7,17 @@ import android.support.annotation.ColorRes
 import android.support.v4.app.Fragment
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.imploded.minaturer.R
 import com.imploded.minaturer.application.MinaTurerApp
 import com.imploded.minaturer.fragments.*
 import java.text.SimpleDateFormat
@@ -50,7 +53,7 @@ fun MenuItem.tintMenuIcon(context: Context, @ColorRes color: Int) {
 
 fun String.etaTime(originalTime: String) : String {
     if (this.equals(originalTime, true)) return ""
-    return if (this.isEmpty()) "" else "eta: $this"
+    return if (this.isEmpty()) "" else this
 }
 
 fun Activity.inputMethodManager() : InputMethodManager {
@@ -90,6 +93,14 @@ fun Fragment.inject() {
         is DeparturesFragment -> activity?.app?.appComponent?.inject(this)
         is JourneyDetailsFragment -> activity?.app?.appComponent?.inject(this)
     }
+}
+
+fun RecyclerView.applyAnimation() {
+    val context = this.context
+    val controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
+    this.layoutAnimation = controller
+    this.adapter.notifyDataSetChanged()
+    this.scheduleLayoutAnimation()
 }
 
 val Activity.app: MinaTurerApp

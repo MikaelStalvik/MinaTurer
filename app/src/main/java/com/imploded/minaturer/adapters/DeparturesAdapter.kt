@@ -1,5 +1,6 @@
 package com.imploded.minaturer.adapters
 
+import android.graphics.Paint
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -31,16 +32,6 @@ class DeparturesAdapter(private val itemChecked: (UiDeparture, Int) -> Unit, pri
         departureItems = f()
     }
 
-    /*
-    fun selectAll() {
-        for(item in departureItems) item.checked = true
-        notifyDataSetChanged()
-    }
-    fun selectNone() {
-        for(item in departureItems) item.checked = false
-        notifyDataSetChanged()
-    }*/
-
     class DepartureHolder(view: View, private val itemChecked: (UiDeparture, Int) -> Unit, private val itemClicked: (UiDeparture, Int) -> Unit) : RecyclerView.ViewHolder(view) {
 
         fun bindDeparture(departureItem: UiDeparture, showFilter: Boolean) {
@@ -55,9 +46,16 @@ class DeparturesAdapter(private val itemChecked: (UiDeparture, Int) -> Unit, pri
                 itemView.textViewLineNumber.setBackgroundColor(departureItem.fgColor.toColor())
                 itemView.textViewLineNumber.setTextColor(departureItem.bgColor.toColor())
 
-                itemView.textViewDepTime.text = departureItem.time
-                itemView.textViewDepTimeEta.text = departureItem.rtTime
-                if (departureItem.rtTime.isNullOrEmpty()) itemView.textViewDepTimeEta.visibility = View.GONE else itemView.textViewDepTimeEta.visibility = View.VISIBLE
+                if (departureItem.rtTime.isNullOrEmpty()) {
+                    itemView.textViewDepTime.text = departureItem.time
+                    itemView.textViewDepTimeEta.visibility = View.GONE
+                }
+                else {
+                    itemView.textViewDepTime.text = departureItem.rtTime
+                    itemView.textViewDepTimeEta.text = departureItem.time
+                    itemView.textViewDepTimeEta.paintFlags = itemView.textViewDepTime.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                    itemView.textViewDepTimeEta.visibility = View.VISIBLE
+                }
                 itemView.textViewDirection.text = departureItem.direction
 
                 itemView.setOnClickListener{itemClicked(this, adapterPosition)}
