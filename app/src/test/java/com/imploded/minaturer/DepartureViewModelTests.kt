@@ -11,6 +11,7 @@ import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 
+@Suppress("IllegalIdentifier")
 class DepartureViewModelTests {
 
     private lateinit var viewModel: DeparturesViewModel

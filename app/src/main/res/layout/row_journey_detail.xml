@@ -33,26 +33,30 @@
         android:id="@+id/textViewStopName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        tools:text="TextView"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintEnd_toStartOf="@+id/textViewTrack"
         app:layout_constraintStart_toEndOf="@+id/textViewDepTime"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="TextView" />
 
     <TextView
         android:id="@+id/textViewInfo"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        tools:text="TextView"
         android:textColor="@color/text_dim"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textViewTrack"
         app:layout_constraintStart_toEndOf="@+id/textViewDepTimeRt"
-        app:layout_constraintTop_toBottomOf="@+id/textViewStopName" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewStopName"
+        tools:text="TextView" />
 
     <TextView
         android:id="@+id/textViewTrack"

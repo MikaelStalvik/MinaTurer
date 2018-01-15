@@ -12,6 +12,7 @@ import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 
+@Suppress("IllegalIdentifier")
 class LandingViewModelTests {
 
     private lateinit var viewModel: LandingViewModel
