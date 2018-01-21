@@ -109,21 +109,43 @@ val Activity.app: MinaTurerApp
 
 const val defaultBgColor = "#00a5dc"
 const val defaultFgColor = "#ffffff"
+const val OperatorVasttrafik = "279"
+const val OperatorSl = "275"
 
 fun TlDeparture.bgColor(): String {
-    if (this.product.operatorCode != "279") {
-        return defaultBgColor
-    }
-    when(this.product.num.toUpperCase())
+    when(this.product.operatorCode)
     {
-        "ROSA" -> return "#e89dc0"
-        "GRÖN" -> return "#008228"
-        "GUL" -> return "#ffdd00"
-        "SVAR" -> return "#000000"
-        "RÖD" -> return "#cd1432"
-        "LILA" -> return "#692869"
-        "BLÅ" -> return "#336699"
-        "1" -> return "#ffffff"
+        OperatorVasttrafik -> {
+            when(this.product.num.toUpperCase())
+            {
+                "ROSA" -> return "#e89dc0"
+                "GRÖN" -> return "#008228"
+                "GUL" -> return "#ffdd00"
+                "SVAR" -> return "#000000"
+                "RÖD" -> return "#cd1432"
+                "LILA" -> return "#692869"
+                "BLÅ" -> return "#336699"
+                "1" -> return "#ffffff"
+                "2" -> return "#fff014"
+                "3" -> return "#004b85"
+                "4" -> return "#14823c"
+                "5" -> return "#eb1923"
+                "6" -> return "#fa8719"
+                "7" -> return "#7d4313"
+                "8" -> return "#872387"
+                "9" -> return "#b9e2f8"
+                "10" -> return "#b4e16e"
+                "11" -> return "#000000"
+                "13" -> return "#fee6c2"
+            }
+            return defaultBgColor
+        }
+        OperatorSl -> {
+            when(this.product.num.toUpperCase()) {
+                "17","18","19" -> return "#179d4d"
+            }
+            return defaultBgColor
+        }
     }
     return defaultBgColor
 }
@@ -136,6 +158,11 @@ fun TlDeparture.fgColor(): String {
         "GUL" -> return "#00394d"
         "SVAR" -> return "#ffffff"
         "1" -> return "#00394d"
+        "2" -> return "#00394d"
+        "6" -> return "#00394d"
+        "9" -> return  "#00394d"
+        "10" -> return "#0e629b"
+        "13" -> return "#00394d"
     }
     return defaultFgColor
 }
