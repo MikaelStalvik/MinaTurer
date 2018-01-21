@@ -10,7 +10,7 @@ class MainViewModel(private val settings: SettingsInterface) {
     }
     fun increaseStartCount() {
         val activeSettings = settings.loadSettings()
-        activeSettings.StartCount = activeSettings.StartCount++
+        activeSettings.StartCount = activeSettings.StartCount + 1
         settings.saveSettings(activeSettings)
     }
 

@@ -14,6 +14,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class WebServiceRepository : WebServiceInterface{
+    /*
     private var accessToken: Token = Token()
 
     override fun getToken(): Token {
@@ -93,7 +94,7 @@ class WebServiceRepository : WebServiceInterface{
             }
         }
     }
-
+    */
     override fun getLocationsByNameTl(expr: String): LocationContainer {
         val endPoint = locationsByNameTlUrl(expr)
         val (_, _, result) = endPoint
@@ -176,15 +177,16 @@ class WebServiceRepository : WebServiceInterface{
 
 
     companion object {
+        /*
+        private const val tokenType = "Bearer"
         private const val tokenUrl = "https://api.vasttrafik.se:443/token"
         private fun locationsByNameUrl(arg: String) = "https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=$arg&format=json"
         private fun departuresById(id: String, date: String, time: String) = "https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard?id=$id&date=$date&time=$time&format=json"
-
+*/
         private const val maxJournies = 20
         private fun locationsByNameTlUrl(arg: String) = "https://api.resrobot.se/v2/location.name?key=${WebApiKeys.reserobotKey}&input=$arg&format=json"
         private fun departuresByIdTlUrl(id: String, date: String, time: String) = "https://api.resrobot.se/v2/departureBoard?key=${WebApiKeys.reserobotDepartureBoardKey}&id=$id&maxJourneys=$maxJournies&date=$date&time=$time&format=json"
 
-        private const val tokenType = "Bearer"
     }
 
 }

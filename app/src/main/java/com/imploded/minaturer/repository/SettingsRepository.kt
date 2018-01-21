@@ -33,9 +33,9 @@ class SettingsRepository(context: Context) : SettingsInterface {
     }
 
     companion object {
-        const val attrStops = "stops"
-        const val attrFilteredStops = "filteredStops"
-        const val attrFilteredLines = "filteredLines"
+        const val attrStops = "stops2"
+        const val attrFilteredStops = "filteredStops2"
+        const val attrFilteredLines = "filteredLines2"
         const val attrLandingPageHintShown = "attrLandingPageHintShown"
         const val attrFindStopHintShown = "attrFindStopHintShown"
         const val attrDeparturesHintShown = "attrDeparturesHintShown"
