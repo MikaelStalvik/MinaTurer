@@ -21,6 +21,7 @@ You can register your account at:
 https://www.trafiklab.se
 
 After this step is performed you will need to subsribe to the following APIs:
+
 -ResRobot - Reseplanerare
 -ResRobot - Stolptidtabeller 2
 
