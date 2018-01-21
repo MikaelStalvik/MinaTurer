@@ -1,16 +1,16 @@
 package com.imploded.minaturer.utils
 
 object FirebaseConstants {
-    val ApplicationStarted = "ApplicationStarted"
-    val StopRemoved = "StopRemoved"
-    val AddedStop = "AddedStop"
-    val ClickedFindStop = "ClickedFindStop"
-    val DepartureSelected = "DepartureSelected"
-    val JourneyDetailsSelected = "JourneyDetailsSelected"
-    val ToggleFilter = "ToggleFilter"
-    val FilterOn = "FilterOn"
-    val FilterOff = "FilterOff"
-    val SelectAll = "SelectAll"
-    val SelectNone = "SelectNone"
-    val ApplyFilter = "ApplyFilter"
+    const val ApplicationStarted = "ApplicationStarted"
+    const val StopRemoved = "StopRemoved"
+    const val AddedStop = "AddedStop"
+    const val ClickedFindStop = "ClickedFindStop"
+    const val DepartureSelected = "DepartureSelected"
+    const val JourneyDetailsSelected = "JourneyDetailsSelected"
+    const val ToggleFilter = "ToggleFilter"
+    const val FilterOn = "FilterOn"
+    const val FilterOff = "FilterOff"
+    const val SelectAll = "SelectAll"
+    const val SelectNone = "SelectNone"
+    const val ApplyFilter = "ApplyFilter"
 }

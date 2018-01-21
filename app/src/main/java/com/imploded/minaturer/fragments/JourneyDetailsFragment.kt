@@ -24,7 +24,6 @@ class JourneyDetailsFragment : Fragment() {
 
     @Inject lateinit var viewModel: JourneyDetailViewModelInterface
 
-    private lateinit var sourceRef: String
     private lateinit var sourceStopId: String
     private lateinit var departure: UiDeparture
 
@@ -36,7 +35,6 @@ class JourneyDetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sourceRef = arguments!!.getString(ARG_PARAM1)
         sourceStopId = arguments!!.getString(ARG_PARAM2)
         val json = arguments!!.getString(ARG_PARAM3)
         departure = Gson().fromJson<UiDeparture>(json)
@@ -49,7 +47,7 @@ class JourneyDetailsFragment : Fragment() {
         this.displayBackNavigation()
         val view =  inflater.inflate(R.layout.fragment_journey_details, container, false)
         this.inject()
-        viewModel.setInputParameters(sourceRef, sourceStopId)
+        viewModel.setInputParameters(sourceStopId, departure)
         progress = view.findViewById(R.id.progress_bar)
         setHeader(view)
 
@@ -105,8 +103,8 @@ class JourneyDetailsFragment : Fragment() {
     private fun setHeader(view: View) {
         val textView = view.findViewById<TextView>(R.id.textViewLineNumber)
         textView.text = departure.shortName
-        textView.setBackgroundColor(departure.fgColor.toColor())
-        textView.setTextColor(departure.bgColor.toColor())
+        textView.setBackgroundColor(departure.bgColor.toColor())
+        textView.setTextColor(departure.fgColor.toColor())
         view.findViewById<TextView>(R.id.textViewFrom).text = departure.stop
         view.findViewById<TextView>(R.id.textViewTo).text = departure.direction
         val timeTextView = view.findViewById<TextView>(R.id.textViewDepTime)
@@ -117,14 +115,12 @@ class JourneyDetailsFragment : Fragment() {
     }
 
     companion object {
-        private val ARG_PARAM1 = "ref"
-        private val ARG_PARAM2 = "stopid"
-        private val ARG_PARAM3 = "departure"
+        private const val ARG_PARAM2 = "stopid"
+        private const val ARG_PARAM3 = "departure"
 
-        fun newInstance(ref: String, stopId: String, departure: UiDeparture): JourneyDetailsFragment {
+        fun newInstance(stopId: String, departure: UiDeparture): JourneyDetailsFragment {
             val fragment = JourneyDetailsFragment()
             val args = Bundle()
-            args.putString(ARG_PARAM1, ref)
             args.putString(ARG_PARAM2, stopId)
             val json = Gson().toJson(departure)
             args.putString(ARG_PARAM3, json)

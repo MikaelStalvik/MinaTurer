@@ -1,7 +1,7 @@
 package com.imploded.minaturer.utils
 
 object AppConstants {
-    val settingsFilename: String = "settings.json"
-    val oddRowColor = "#efefef"
-    val fragmentBgColor = "#fafafa"
+    const val settingsFilename: String = "settings.json"
+    const val oddRowColor = "#efefef"
+    const val fragmentBgColor = "#fafafa"
 }

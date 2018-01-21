@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#ff4081</color>
+    -->
+    <color name="colorPrimary">#2196f3</color>
+    <color name="colorPrimaryDark">#0069c0</color>
     <color name="colorAccent">#ff4081</color>
 
     <!--
@@ -17,4 +22,12 @@
     <color name="button_bg">#819ca9</color>-->
     <color name="text_dim">#9a9a9a</color>
     <!--<color name="odd_row_color">#44dedede</color>-->
+
+    <!--
+    <color name="stop_circle">#00a5dc</color>
+    <color name="stop_circle_border">#0083bc</color>
+    -->
+    <color name="stop_circle">#2196f3</color>
+    <color name="stop_circle_border">#0069c0</color>
+
 </resources>

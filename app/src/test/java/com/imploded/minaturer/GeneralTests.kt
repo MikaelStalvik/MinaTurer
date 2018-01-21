@@ -1,7 +1,10 @@
 package com.imploded.minaturer
 
 
-import com.imploded.minaturer.utils.timeDifference
+import com.imploded.minaturer.model.TlDeparture
+import com.imploded.minaturer.model.TlProduct
+import com.imploded.minaturer.utils.*
+import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertTrue
 import org.junit.Test
 
@@ -26,5 +29,33 @@ class GeneralTests {
         val destTime = "01:00"
         val diff = timeDifference(sourceDate, sourceTime, destDate, destTime)
         assertTrue(diff == 7200)
+    }
+
+    @Test
+    fun `When a productName contains Spårväg isTram should be true`() {
+        val productName = "Länstrafik - Spårväg 1"
+        assertTrue(productName.isTram())
+    }
+
+    @Test
+    fun `When a product is a tram and from Västtrafik, ensure that bgColor is the expected color`() {
+        val departure = TlDeparture(
+                product = TlProduct("Länstrafik - Spårväg 1", "1", OperatorVasttrafik)
+        )
+        assertEquals("#ffffff", departure.bgColor())
+    }
+    @Test
+    fun `When a product is a tram and not from Västtrafik, ensure that bgColor is the expected color`() {
+        val departure = TlDeparture(
+                product = TlProduct("Länstrafik - Spårväg 1", "1", OperatorSl)
+        )
+        assertEquals("#0089ca", departure.bgColor())
+    }
+    @Test
+    fun `When a product is a bus from Västtrafik, ensure that bgColor is the expected color`() {
+        val departure = TlDeparture(
+                product = TlProduct("Länstrafik - Buss 1", "1", OperatorVasttrafik)
+        )
+        assertEquals(defaultBgColor, departure.bgColor())
     }
 }

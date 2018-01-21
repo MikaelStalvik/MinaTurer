@@ -89,5 +89,6 @@
         android:background="#ababab"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTo" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewTo"
+        tools:ignore="ContentDescription" />
 </android.support.constraint.ConstraintLayout>

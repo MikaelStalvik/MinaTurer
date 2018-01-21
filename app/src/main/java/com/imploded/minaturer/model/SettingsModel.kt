@@ -6,7 +6,9 @@ data class SettingsModel(
     var FilteredLinesByStopId: String,
     var LandingHintPageShown: Boolean,
     var FindStopHintShown: Boolean,
-    var DeparturesHintShown: Boolean
+    var DeparturesHintShown: Boolean,
+    var IsRated: Boolean,
+    var StartCount: Int
 )
 
 data class FilteredDeparture(

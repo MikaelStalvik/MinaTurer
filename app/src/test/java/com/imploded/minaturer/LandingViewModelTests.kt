@@ -29,7 +29,7 @@ class LandingViewModelTests {
         val json = Gson().toJson(stops)
         mockSettings = Mockito.mock(SettingsInterface::class.java)
         `when`(mockSettings.loadSettings()).thenReturn(
-                SettingsModel(json, "", "", false, false, false)
+                SettingsModel(json, "", "", false, false, false, false, 0)
         )
         viewModel = LandingViewModel(mockSettings)
     }

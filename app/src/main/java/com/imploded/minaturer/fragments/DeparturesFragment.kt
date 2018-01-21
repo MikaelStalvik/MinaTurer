@@ -62,8 +62,7 @@ class DeparturesFragment : Fragment() {
         return DeparturesAdapter({ _, position ->
             viewModel.uiDepartures[position].checked = !viewModel.uiDepartures[position].checked
             adapter.notifyDataSetChanged()
-        }, {item, _ ->
-            mListener!!.onJourneyDetailsSelected(item.journeyRefIds.ref, item.stopId, item)
+        }, {item, _ -> if (!viewModel.filterActive) mListener!!.onJourneyDetailsSelected(item.stopId, item)
         })
     }
 
@@ -72,6 +71,16 @@ class DeparturesFragment : Fragment() {
         super.onCreate(savedInstanceState)
         stopId = arguments!!.getString(ARG_PARAM1)
         stopName = arguments!!.getString(ARG_PARAM2)
+    }
+
+    private fun updateFilterMode() {
+        if (viewModel.filterActive) {
+            bottomToolbar.visibility = View.VISIBLE
+            swipeRefresh.isEnabled = false
+        } else {
+            bottomToolbar.visibility = View.GONE
+            swipeRefresh.isEnabled = false
+        }
     }
 
     private fun setupButtons(view: View) {
@@ -96,7 +105,7 @@ class DeparturesFragment : Fragment() {
 
             viewModel.toggleFilterMode()
             //TransitionManager.beginDelayedTransition(rootLayout)
-            if (viewModel.filterActive) bottomToolbar.visibility = android.view.View.VISIBLE else bottomToolbar.visibility = android.view.View.GONE
+            updateFilterMode()
             adapter.showFilter = viewModel.filterActive
             viewModel.getDepartures(stopId, ::updateAdapter, ::initFetch)
         }
@@ -143,7 +152,7 @@ class DeparturesFragment : Fragment() {
                 adapter.showFilter = viewModel.filterActive
                 adapter.notifyDataSetChanged()
                 //TransitionManager.beginDelayedTransition(rootLayout)
-                if (viewModel.filterActive) bottomToolbar.visibility = View.VISIBLE else bottomToolbar.visibility = View.GONE
+                updateFilterMode()
                 false
             }
             android.R.id.home -> {
@@ -182,9 +191,14 @@ class DeparturesFragment : Fragment() {
     private fun setupUi(view: View) {
         swipeRefresh = view.findViewById(R.id.simpleSwipeRefreshLayout)
         swipeRefresh.setOnRefreshListener {
-            progress.visibility = View.VISIBLE
-            viewModel.getDepartures(stopId, ::updateAdapter, ::initFetch)
-            swipeRefresh.isRefreshing = false
+            if (!viewModel.filterActive) {
+                progress.visibility = View.VISIBLE
+                viewModel.getDepartures(stopId, ::updateAdapter, ::initFetch)
+                swipeRefresh.isRefreshing = false
+            }
+            else {
+                swipeRefresh.isRefreshing = false
+            }
         }
         rootLayout = view.findViewById(R.id.rootLayout)
         bottomToolbar = view.findViewById(R.id.bottomToolbarLayout)
@@ -194,8 +208,8 @@ class DeparturesFragment : Fragment() {
     }
 
     companion object {
-        private val ARG_PARAM1 = "stopId"
-        private val ARG_PARAM2 = "stopName"
+        private const val ARG_PARAM1 = "stopId"
+        private const val ARG_PARAM2 = "stopName"
 
         fun newInstance(stop: UiStop): DeparturesFragment {
             val fragment = DeparturesFragment()
