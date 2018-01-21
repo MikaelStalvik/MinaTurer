@@ -105,8 +105,8 @@ class JourneyDetailsFragment : Fragment() {
     private fun setHeader(view: View) {
         val textView = view.findViewById<TextView>(R.id.textViewLineNumber)
         textView.text = departure.shortName
-        textView.setBackgroundColor(departure.fgColor.toColor())
-        textView.setTextColor(departure.bgColor.toColor())
+        textView.setBackgroundColor(departure.bgColor.toColor())
+        textView.setTextColor(departure.fgColor.toColor())
         view.findViewById<TextView>(R.id.textViewFrom).text = departure.stop
         view.findViewById<TextView>(R.id.textViewTo).text = departure.direction
         val timeTextView = view.findViewById<TextView>(R.id.textViewDepTime)

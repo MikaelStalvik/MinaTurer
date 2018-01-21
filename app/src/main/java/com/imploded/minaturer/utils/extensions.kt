@@ -20,6 +20,7 @@ import com.google.gson.reflect.TypeToken
 import com.imploded.minaturer.R
 import com.imploded.minaturer.application.MinaTurerApp
 import com.imploded.minaturer.fragments.*
+import com.imploded.minaturer.model.TlDeparture
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -105,3 +106,40 @@ fun RecyclerView.applyAnimation() {
 
 val Activity.app: MinaTurerApp
     get() = application as MinaTurerApp
+
+const val defaultBgColor = "#00a5dc"
+const val defaultFgColor = "#ffffff"
+
+fun TlDeparture.bgColor(): String {
+    if (this.product.operatorCode != "279") {
+        return defaultBgColor
+    }
+    when(this.product.num.toUpperCase())
+    {
+        "ROSA" -> return "#e89dc0"
+        "GRÖN" -> return "#008228"
+        "GUL" -> return "#ffdd00"
+        "SVAR" -> return "#000000"
+        "RÖD" -> return "#cd1432"
+        "LILA" -> return "#692869"
+        "BLÅ" -> return "#336699"
+        "1" -> return "#ffffff"
+    }
+    return defaultBgColor
+}
+fun TlDeparture.fgColor(): String {
+    if (this.product.operatorCode != "279") {
+        return defaultFgColor
+    }
+    when(this.product.num.toUpperCase())
+    {
+        "GUL" -> return "#00394d"
+        "SVAR" -> return "#ffffff"
+        "1" -> return "#00394d"
+    }
+    return defaultFgColor
+}
+
+fun String.fixTime() : String {
+    return if (this.length == 8) this.substring(0, 5) else this
+}

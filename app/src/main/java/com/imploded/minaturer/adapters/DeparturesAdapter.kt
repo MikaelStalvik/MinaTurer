@@ -43,8 +43,8 @@ class DeparturesAdapter(private val itemChecked: (UiDeparture, Int) -> Unit, pri
                 itemView.checkBox.setOnClickListener{itemChecked(this, adapterPosition)}
 
                 itemView.textViewLineNumber.text = departureItem.shortName
-                itemView.textViewLineNumber.setBackgroundColor(departureItem.fgColor.toColor())
-                itemView.textViewLineNumber.setTextColor(departureItem.bgColor.toColor())
+                itemView.textViewLineNumber.setBackgroundColor(departureItem.bgColor.toColor())
+                itemView.textViewLineNumber.setTextColor(departureItem.fgColor.toColor())
 
                 if (departureItem.rtTime.isNullOrEmpty()) {
                     itemView.textViewDepTime.text = departureItem.time
