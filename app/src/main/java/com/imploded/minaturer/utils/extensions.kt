@@ -112,11 +112,31 @@ const val defaultFgColor = "#ffffff"
 const val OperatorVasttrafik = "279"
 const val OperatorSl = "275"
 
+fun String.isTram() : Boolean = this.contains("Spårväg", true)
+
 fun TlDeparture.bgColor(): String {
     when(this.product.operatorCode)
     {
         OperatorVasttrafik -> {
-            when(this.product.num.toUpperCase())
+            val productName = this.product.num.toUpperCase()
+            if (this.product.name.isTram()) {
+                when(productName) {
+                    "1" -> return "#ffffff"
+                    "2" -> return "#fff014"
+                    "3" -> return "#004b85"
+                    "4" -> return "#14823c"
+                    "5" -> return "#eb1923"
+                    "6" -> return "#fa8719"
+                    "7" -> return "#7d4313"
+                    "8" -> return "#872387"
+                    "9" -> return "#b9e2f8"
+                    "10" -> return "#b4e16e"
+                    "11" -> return "#000000"
+                    "13" -> return "#fee6c2"
+                }
+            }
+
+            when(productName)
             {
                 "ROSA" -> return "#e89dc0"
                 "GRÖN" -> return "#008228"
@@ -125,24 +145,24 @@ fun TlDeparture.bgColor(): String {
                 "RÖD" -> return "#cd1432"
                 "LILA" -> return "#692869"
                 "BLÅ" -> return "#336699"
-                "1" -> return "#ffffff"
-                "2" -> return "#fff014"
-                "3" -> return "#004b85"
-                "4" -> return "#14823c"
-                "5" -> return "#eb1923"
-                "6" -> return "#fa8719"
-                "7" -> return "#7d4313"
-                "8" -> return "#872387"
-                "9" -> return "#b9e2f8"
-                "10" -> return "#b4e16e"
-                "11" -> return "#000000"
-                "13" -> return "#fee6c2"
             }
             return defaultBgColor
         }
         OperatorSl -> {
             when(this.product.num.toUpperCase()) {
-                "17","18","19" -> return "#179d4d"
+                "10", "11" -> return "#0089ca"
+                "12" -> return "#778da7"
+                "13", "14" -> return "#d71d24"
+                "17", "18", "19" -> return "#179d4d"
+                "21" -> return "#b76020"
+                "22" -> return "#985141"
+
+                "25", "26" -> return "#008f93"
+                "25B" -> return "#d71d24"
+
+                "27", "28", "29" -> return "#9f599a"
+
+                "40", "41", "41X", "42", "42X", "43", "43X", "44", "48" -> return "#ec619f"
             }
             return defaultBgColor
         }
@@ -153,20 +173,40 @@ fun TlDeparture.fgColor(): String {
     if (this.product.operatorCode != "279") {
         return defaultFgColor
     }
-    when(this.product.num.toUpperCase())
+    val productName = this.product.num.toUpperCase()
+    if (this.product.name.isTram()) {
+        when(productName)
+        {
+            "1" -> return "#00394d"
+            "2" -> return "#00394d"
+            "6" -> return "#00394d"
+            "9" -> return  "#00394d"
+            "10" -> return "#0e629b"
+            "13" -> return "#00394d"
+        }
+    }
+
+    when(productName)
     {
         "GUL" -> return "#00394d"
         "SVAR" -> return "#ffffff"
-        "1" -> return "#00394d"
-        "2" -> return "#00394d"
-        "6" -> return "#00394d"
-        "9" -> return  "#00394d"
-        "10" -> return "#0e629b"
-        "13" -> return "#00394d"
     }
     return defaultFgColor
 }
 
 fun String.fixTime() : String {
     return if (this.length == 8) this.substring(0, 5) else this
+}
+
+fun TlDeparture.actualTrack() : String {
+    if (!this.rtDepTrack.isNullOrEmpty()) {
+        return this.rtDepTrack
+    }
+    else {
+        if (this.rtTrack.isNullOrEmpty()) return "" else return this.rtTrack
+    }
+}
+
+fun String?.ensureString() : String {
+    if (this.isNullOrEmpty()) return "" else return this.toString()
 }

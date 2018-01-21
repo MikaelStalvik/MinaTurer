@@ -32,7 +32,8 @@ data class Departure (
         val stroke: String = "",
         val accessibility: String = "",
         @SerializedName("JourneyDetailRef")
-        val journeyRefIds: JourneyRef
+        val journeyRefIds: JourneyRef,
+        val stops: List<Stop> = listOf()
 )
 
 data class UiDeparture(
@@ -48,5 +49,6 @@ data class UiDeparture(
         val stopId: String = "",
         var checked: Boolean = false,
         val journeyRefIds: JourneyRef,
-        var index : Int = 0
+        var index : Int = 0,
+        val stops: List<Stop> = listOf()
 )

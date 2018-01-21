@@ -49,7 +49,7 @@ class JourneyDetailsFragment : Fragment() {
         this.displayBackNavigation()
         val view =  inflater.inflate(R.layout.fragment_journey_details, container, false)
         this.inject()
-        viewModel.setInputParameters(sourceRef, sourceStopId)
+        viewModel.setInputParameters(sourceRef, sourceStopId, departure)
         progress = view.findViewById(R.id.progress_bar)
         setHeader(view)
 

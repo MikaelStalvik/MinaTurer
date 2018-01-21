@@ -43,6 +43,7 @@ class FindStopsViewModel @Inject constructor(private val webservice: WebServiceI
         //val tokenTask = bg { webservice.getToken() }
         //tokenTask.await()
         val searchTask = bg { webservice.getLocationsByNameTl(filterString) }
+        //val searchTask = bg { webservice.getLocationsByName(filterString) }
         locations = searchTask.await()
         updateFun()
     }

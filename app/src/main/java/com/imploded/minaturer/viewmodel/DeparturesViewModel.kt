@@ -37,12 +37,43 @@ class DeparturesViewModel(private val webservice: WebServiceInterface, private v
             uniqueDepartures
                     .filter { d -> !itemIsFiltered(d, filtered) }
                     .map { d ->
-                        UiDeparture(d.name, d.sname, d.time, d.date, d.fgColor, d.bgColor, d.stop, d.rtTime?.etaTime(d.time), d.direction, d.stopid, true, JourneyRef(d.journeyRefIds.ref))
+                        UiDeparture(
+                                d.name,
+                                d.sname,
+                                d.time,
+                                d.date,
+                                d.fgColor,
+                                d.bgColor,
+                                d.stop,
+                                d.rtTime?.etaTime(d.time),
+                                d.direction,
+                                d.stopid,
+                                true,
+                                JourneyRef(d.journeyRefIds.ref),
+                                0,
+                                d.stops
+                        )
                     }
         } else {
+
             uniqueDepartures
                     .map { d ->
-                        UiDeparture(d.name, d.sname, d.time, d.date, d.fgColor, d.bgColor, d.stop, d.rtTime?.etaTime(d.time), d.direction, d.stopid, true, JourneyRef(d.journeyRefIds.ref))
+                        UiDeparture(
+                                d.name,
+                                d.sname,
+                                d.time,
+                                d.date,
+                                d.fgColor,
+                                d.bgColor,
+                                d.stop,
+                                d.rtTime?.etaTime(d.time),
+                                d.direction,
+                                d.stopid,
+                                true,
+                                JourneyRef(d.journeyRefIds.ref),
+                                0,
+                                d.stops
+                        )
                     }
         }
         for((index, departure) in uiDepartures.withIndex()) departure.index = index
@@ -50,8 +81,8 @@ class DeparturesViewModel(private val webservice: WebServiceInterface, private v
 
     override fun getDepartures(stopId: String, updateFun: (() -> Unit), initFetchFun: (() -> Unit)) = async(UI) {
         initFetchFun()
-        val tokenTask = bg { webservice.getToken() }
-        tokenTask.await()
+        //val tokenTask = bg { webservice.getToken() }
+        //tokenTask.await()
         val searchTask = bg { webservice.getDeparturesTl(stopId) }
         val departures = searchTask.await()
 

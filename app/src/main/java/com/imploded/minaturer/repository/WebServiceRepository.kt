@@ -117,15 +117,16 @@ class WebServiceRepository : WebServiceInterface{
     override fun getDeparturesTl(id: String): DepartureContainer {
         val calender = Calendar.getInstance()
 
-        val date = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(Date())
+        val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
 
         val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
         val timeString = dateFormat.format(calender.time)
         val time = URLEncoder.encode(timeString, "UTF-8")
         val endPoint = departuresByIdTlUrl(id, date, time)
+        Log.d("ENDPOINT", endPoint)
         val (_, _, result) = endPoint
                 .httpGet()
-                .header(Pair("Authorization", "$tokenType ${accessToken.accessToken}"))
+                //.header(Pair("Authorization", "$tokenType ${accessToken.accessToken}"))
                 .responseString()
         return when(result)
         {
@@ -134,29 +135,38 @@ class WebServiceRepository : WebServiceInterface{
                 val res =  Gson().fromJson<TlDepartureContainer>(result.value)
                 var departures: ArrayList<Departure> = arrayListOf()
                 for(item in res.departures) {
-                    try {
-                        departures.add(Departure(
-                                name = item.name,
-                                sname = item.product.num,
-                                stop = item.stop,
-                                stopid = item.stopid,
-                                time = item.time.fixTime(),
-                                date = item.date,
-                                rtTime = if (item.rtTime.isNullOrBlank()) "" else item.rtTime.fixTime(),
-                                rtDate = if (item.rtDate.isNullOrBlank()) "" else item.rtDate,
-                                track = if (item.rtTrack.isNullOrBlank()) "" else item.rtTrack,
-                                direction = item.direction,
-                                bgColor = item.bgColor(),
-                                fgColor = item.fgColor(),
-                                journeyRefIds = JourneyRef()
-                        ))
+                    var stopList: ArrayList<Stop> = ArrayList()
+                    item.stopContainer.stops.mapTo(stopList) {
+                        Stop(
+                                name = it.name,
+                                id = it.id,
+                                routeIdx = it.routeIdx.toString(),
+                                depDate = it.depDate.ensureString(),
+                                depTime = it.depTime.ensureString().fixTime(),
+                                arrDate = it.arrDate.ensureString(),
+                                arrTime = it.arrTime.ensureString().fixTime(),
+                                track = item.actualTrack()
+                        )
                     }
-                    catch(ex: Exception) {
-                        val kk = 123
-                    }
+
+                    departures.add(Departure(
+                            name = item.name,
+                            sname = item.product.num,
+                            stop = item.stop,
+                            stopid = item.stopid,
+                            date = item.date,
+                            time = item.time.fixTime(),
+                            rtDate = item.rtDate.ensureString(),
+                            rtTime = item.rtTime.ensureString().fixTime(),
+                            track = item.rtTrack.ensureString(),
+                            direction = item.direction,
+                            bgColor = item.bgColor(),
+                            fgColor = item.fgColor(),
+                            journeyRefIds = JourneyRef(),
+                            stops = stopList
+                    ))
                 }
-                val dc = DepartureContainer(DepartureBoard("", "", departures))
-                dc
+                DepartureContainer(DepartureBoard("", "", departures))
             }
             is Result.Failure -> {
                 DepartureContainer(DepartureBoard())
@@ -170,8 +180,8 @@ class WebServiceRepository : WebServiceInterface{
         private fun locationsByNameUrl(arg: String) = "https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=$arg&format=json"
         private fun departuresById(id: String, date: String, time: String) = "https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard?id=$id&date=$date&time=$time&format=json"
 
-        private fun locationsByNameTlUrl(arg: String) = "https://api.resrobot.se/v2/location.name?key=d6fd4f44-113c-45d1-b542-caad22888095&input=$arg&format=json"
-        private fun departuresByIdTlUrl(id: String, date: String, time: String) = "https://api.resrobot.se/v2/departureBoard?key=27da7f92-ed37-4e87-8ecc-2ae07032acdf&id=$id&maxJourneys=15&format=json"
+        private fun locationsByNameTlUrl(arg: String) = "https://api.resrobot.se/v2/location.name?key=${WebApiKeys.reserobotKey}&input=$arg&format=json"
+        private fun departuresByIdTlUrl(id: String, date: String, time: String) = "https://api.resrobot.se/v2/departureBoard?key=${WebApiKeys.reserobotDepartureBoardKey}&id=$id&maxJourneys=15&date=$date&time=$time&format=json"
 
         private val tokenType = "Bearer"
     }

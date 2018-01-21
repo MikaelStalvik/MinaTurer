@@ -15,10 +15,12 @@ data class TlDeparture(
         val rtTime: String,
         val rtDate: String,
         val rtTrack: String,
-        @SerializedName("Product") val product: TlProduct
-        //@SerializedName("Stops") val stops: List<TlStop> = listOf()
+        val rtDepTrack: String,
+        @SerializedName("Product") val product: TlProduct,
+        @SerializedName("Stops") val stopContainer: TlStopContainer = TlStopContainer()
 )
 
 data class TlProduct(val name: String, val num: String, val operatorCode: String)
 
-data class TlStop(val name: String, val id: String, val depTime: String, val depDate: String, val arrTime: String, val arrDate: String)
+data class TlStopContainer(@SerializedName("Stop")val stops: List<TlStop> = listOf())
+data class TlStop(val name: String, val id: String, val depTime: String, val depDate: String, val arrTime: String, val arrDate: String, val routeIdx: Int)
