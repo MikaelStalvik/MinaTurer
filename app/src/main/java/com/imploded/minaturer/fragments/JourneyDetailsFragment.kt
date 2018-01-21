@@ -117,9 +117,9 @@ class JourneyDetailsFragment : Fragment() {
     }
 
     companion object {
-        private val ARG_PARAM1 = "ref"
-        private val ARG_PARAM2 = "stopid"
-        private val ARG_PARAM3 = "departure"
+        private const val ARG_PARAM1 = "ref"
+        private const val ARG_PARAM2 = "stopid"
+        private const val ARG_PARAM3 = "departure"
 
         fun newInstance(ref: String, stopId: String, departure: UiDeparture): JourneyDetailsFragment {
             val fragment = JourneyDetailsFragment()

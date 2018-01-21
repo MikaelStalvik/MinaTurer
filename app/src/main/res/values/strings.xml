@@ -20,5 +20,10 @@
     <string name="journey_details">Journey details</string>
     <string name="track">Track</string>
     <string name="travel_time">minutes travel time from start</string>
+    <string name="information">Information</string>
+    <string name="rate_text">Enjoying Mina Turer?\n\nIf so, please rate it with five stars at Google Play so that we can continue to update and improve it!</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="stop_abbr">S</string>
 
 </resources>

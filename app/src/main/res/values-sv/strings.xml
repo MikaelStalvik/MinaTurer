@@ -20,5 +20,10 @@
     <string name="journey_details">Reseinformation</string>
     <string name="track">Läge</string>
     <string name="travel_time">minuters restid från start</string>
+    <string name="information">Information</string>
+    <string name="rate_text">Gillar du Mina Turer? Gör du det, ge det fem stjärnor i betyg på Google Play så vi kan fortsätta att förbättra det!</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nej</string>
+    <string name="stop_abbr">H</string>
 
 </resources>

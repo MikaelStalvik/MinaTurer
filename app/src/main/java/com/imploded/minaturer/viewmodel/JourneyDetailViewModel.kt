@@ -7,7 +7,6 @@ import com.imploded.minaturer.model.UiDeparture
 import com.imploded.minaturer.utils.timeDifference
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
 
 class JourneyDetailViewModel(private val webservice: WebServiceInterface) : JourneyDetailViewModelInterface {
 

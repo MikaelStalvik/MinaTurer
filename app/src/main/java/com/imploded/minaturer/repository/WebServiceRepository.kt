@@ -104,7 +104,7 @@ class WebServiceRepository : WebServiceInterface{
             is Result.Success -> {
                 //Log.d("JSON", result.value)
                 val data = Gson().fromJson<TlStopLocation>(result.value)
-                var stopLocationList: ArrayList<StopLocation> = arrayListOf()
+                val stopLocationList: ArrayList<StopLocation> = arrayListOf()
                 data.stopList.mapTo(stopLocationList) { StopLocation(it.name, 0, it.lon.toString(), it.lat.toString(), it.id) }
                 LocationContainer(LocationList("", "", stopLocationList))
             }
@@ -133,9 +133,9 @@ class WebServiceRepository : WebServiceInterface{
             is Result.Success -> {
                 Log.d("JSON", result.value)
                 val res =  Gson().fromJson<TlDepartureContainer>(result.value)
-                var departures: ArrayList<Departure> = arrayListOf()
+                val departures: ArrayList<Departure> = arrayListOf()
                 for(item in res.departures) {
-                    var stopList: ArrayList<Stop> = ArrayList()
+                    val stopList: ArrayList<Stop> = ArrayList()
                     item.stopContainer.stops.mapTo(stopList) {
                         Stop(
                                 name = it.name,
@@ -176,15 +176,15 @@ class WebServiceRepository : WebServiceInterface{
 
 
     companion object {
-        private val tokenUrl = "https://api.vasttrafik.se:443/token"
+        private const val tokenUrl = "https://api.vasttrafik.se:443/token"
         private fun locationsByNameUrl(arg: String) = "https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=$arg&format=json"
         private fun departuresById(id: String, date: String, time: String) = "https://api.vasttrafik.se/bin/rest.exe/v2/departureBoard?id=$id&date=$date&time=$time&format=json"
 
-        const val maxJournies = 20
+        private const val maxJournies = 20
         private fun locationsByNameTlUrl(arg: String) = "https://api.resrobot.se/v2/location.name?key=${WebApiKeys.reserobotKey}&input=$arg&format=json"
         private fun departuresByIdTlUrl(id: String, date: String, time: String) = "https://api.resrobot.se/v2/departureBoard?key=${WebApiKeys.reserobotDepartureBoardKey}&id=$id&maxJourneys=$maxJournies&date=$date&time=$time&format=json"
 
-        private val tokenType = "Bearer"
+        private const val tokenType = "Bearer"
     }
 
 }

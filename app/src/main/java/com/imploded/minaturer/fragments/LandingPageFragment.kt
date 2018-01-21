@@ -138,7 +138,7 @@ class LandingPageFragment : Fragment() {
     }
 
     companion object {
-        val ArgChangeToFindStopsView = 1
+        const val ArgChangeToFindStopsView = 1
         fun newInstance(): LandingPageFragment {
             return LandingPageFragment()
         }

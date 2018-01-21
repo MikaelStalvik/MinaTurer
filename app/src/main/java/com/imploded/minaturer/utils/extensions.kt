@@ -47,6 +47,7 @@ fun String.toColor(): Int {
 fun MenuItem.tintMenuIcon(context: Context, @ColorRes color: Int) {
     val normalDrawable = this.icon
     val wrapDrawable = DrawableCompat.wrap(normalDrawable)
+    @Suppress("DEPRECATION")
     DrawableCompat.setTint(wrapDrawable, context.resources.getColor(color))
 
     this.icon = wrapDrawable
@@ -151,7 +152,8 @@ fun TlDeparture.bgColor(): String {
         }
         OperatorSl -> {
             when(this.product.num.toUpperCase()) {
-                "1", "4" -> return "#0089ca"
+                "1", "2", "3", "4", "5", "6", "7", "8", "9" -> return "#0089ca"
+
                 "10", "11" -> return "#0089ca"
                 "12" -> return "#778da7"
                 "13", "14" -> return "#d71d24"
@@ -201,14 +203,13 @@ fun String.fixTime() : String {
 }
 
 fun TlDeparture.actualTrack() : String {
-    if (!this.rtDepTrack.isNullOrEmpty()) {
-        return this.rtDepTrack
-    }
-    else {
-        if (this.rtTrack.isNullOrEmpty()) return "" else return this.rtTrack
+    return if (!this.rtDepTrack.isNullOrEmpty()) {
+        this.rtDepTrack
+    } else {
+        if (this.rtTrack.isNullOrEmpty()) "" else this.rtTrack
     }
 }
 
 fun String?.ensureString() : String {
-    if (this.isNullOrEmpty()) return "" else return this.toString()
+    return if (this.isNullOrEmpty()) "" else this.toString()
 }

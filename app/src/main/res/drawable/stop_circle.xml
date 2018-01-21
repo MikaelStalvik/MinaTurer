@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:thicknessRatio="1"
     android:shape="oval">
 
-    <solid
-        android:color="#dedede"/>
-
-    <stroke android:color="#cdcdcd"/>
+    <solid android:color="@color/stop_circle"/>
 
     <size
         android:width="120dp"
         android:height="120dp"/>
+
+    <stroke android:color="@color/stop_circle_border" android:width="0.5dp"/>
+
 </shape>

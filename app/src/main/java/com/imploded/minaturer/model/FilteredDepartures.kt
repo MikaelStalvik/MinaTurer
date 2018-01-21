@@ -18,6 +18,7 @@ object FilteredDepartures {
     fun saveData(settings: SettingsInterface) {
         val activeSettings = settings.loadSettings()
         val json = Gson().toJson(filteredMap)
+        @Suppress("UNNECESSARY_SAFE_CALL") // needs null check for tests
         activeSettings?.FilteredTripsByStopId = json
         settings.saveSettings(activeSettings)
     }
