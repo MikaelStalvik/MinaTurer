@@ -49,7 +49,6 @@ class DeparturesViewModel(private val webservice: WebServiceInterface, private v
                                 d.direction,
                                 d.stopid,
                                 true,
-                                JourneyRef(d.journeyRefIds.ref),
                                 0,
                                 d.stops
                         )
@@ -70,7 +69,6 @@ class DeparturesViewModel(private val webservice: WebServiceInterface, private v
                                 d.direction,
                                 d.stopid,
                                 true,
-                                JourneyRef(d.journeyRefIds.ref),
                                 0,
                                 d.stops
                         )
@@ -81,8 +79,6 @@ class DeparturesViewModel(private val webservice: WebServiceInterface, private v
 
     override fun getDepartures(stopId: String, updateFun: (() -> Unit), initFetchFun: (() -> Unit)) = async(UI) {
         initFetchFun()
-        //val tokenTask = bg { webservice.getToken() }
-        //tokenTask.await()
         val searchTask = bg { webservice.getDeparturesTl(stopId) }
         val departures = searchTask.await()
 

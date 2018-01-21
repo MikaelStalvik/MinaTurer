@@ -49,7 +49,7 @@ class GeneralTests {
         val departure = TlDeparture(
                 product = TlProduct("Länstrafik - Spårväg 1", "1", OperatorSl)
         )
-        assertEquals(defaultBgColor, departure.bgColor())
+        assertEquals("#0089ca", departure.bgColor())
     }
     @Test
     fun `When a product is a bus from Västtrafik, ensure that bgColor is the expected color`() {

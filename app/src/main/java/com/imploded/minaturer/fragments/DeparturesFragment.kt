@@ -62,7 +62,7 @@ class DeparturesFragment : Fragment() {
         return DeparturesAdapter({ _, position ->
             viewModel.uiDepartures[position].checked = !viewModel.uiDepartures[position].checked
             adapter.notifyDataSetChanged()
-        }, {item, _ -> if (!viewModel.filterActive) mListener!!.onJourneyDetailsSelected(item.journeyRefIds.ref, item.stopId, item)
+        }, {item, _ -> if (!viewModel.filterActive) mListener!!.onJourneyDetailsSelected(item.stopId, item)
         })
     }
 

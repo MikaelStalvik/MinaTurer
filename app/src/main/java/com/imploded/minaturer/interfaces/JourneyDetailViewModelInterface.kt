@@ -6,6 +6,6 @@ import kotlinx.coroutines.experimental.Deferred
 
 interface JourneyDetailViewModelInterface {
     var stops: List<Stop>
-    fun setInputParameters(sourceRef: String, sourceStopId: String, departure: UiDeparture)
+    fun setInputParameters(sourceStopId: String, departure: UiDeparture)
     fun getJourneyDetails(updateFun: (() -> Unit), initFetchFun: (() -> Unit)) : Deferred<Unit>
 }

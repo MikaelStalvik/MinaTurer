@@ -26,14 +26,61 @@ class DepartureViewModelTests {
                 "",
                 "",
                 listOf(
-                        Departure("Rosa express", "ROSA", "bus", "Nordstan", "12345", "17:00", "2018-01-07", "23456", "Gerrebacka", "D", "", "", "#e89dc0", "#ffffff", "solid", "wheelChair", JourneyRef("https://api.vasttrafik.se/bin/rest.exe")),
-                        Departure("Rosa express", "ROSA", "bus", "Nordstan", "12345", "17:05", "2018-01-07", "23456", "Billdal", "B", "", "", "#e89dc0", "#ffffff", "solid", "wheelChair", JourneyRef("https://api.vasttrafik.se/bin/rest.exe")),
-                        Departure("Buss 58", "58", "bus", "Nordstan", "12345", "17:32", "2018-01-07", "23456", "Eriksberg", "C", "", "", "#00A5DC", "#ffffff", "solid", "", JourneyRef("https://api.vasttrafik.se/bin/rest.exe"))
+                        Departure(
+                                "Rosa express",
+                                "ROSA",
+                                "bus",
+                                "Nordstan",
+                                "12345",
+                                "17:00",
+                                "2018-01-07",
+                                "23456",
+                                "Gerrebacka",
+                                "D",
+                                "",
+                                "",
+                                "#e89dc0",
+                                "#ffffff",
+                                "wheelChair"
+                        ),
+                        Departure(
+                                "Rosa express",
+                                "ROSA",
+                                "bus",
+                                "Nordstan",
+                                "12345",
+                                "17:05",
+                                "2018-01-07",
+                                "23456",
+                                "Billdal",
+                                "B",
+                                "",
+                                "",
+                                "#e89dc0",
+                                "#ffffff",
+                                "wheelChair"
+                        ),
+                        Departure(
+                                "Buss 58",
+                                "58",
+                                "bus",
+                                "Nordstan",
+                                "12345",
+                                "17:32",
+                                "2018-01-07",
+                                "23456",
+                                "Eriksberg",
+                                "C",
+                                "",
+                                "",
+                                "#00A5DC",
+                                "#ffffff",
+                                "wheelChair"
+                        )
                 )
         ))
         webservice = Mockito.mock(WebServiceInterface::class.java)
-        `when`(webservice.getToken()).thenReturn(Token("scope", "bearer", "3600", "abcdef1234"))
-        `when`(webservice.getDepartures(ArgumentMatchers.anyString())).thenReturn(departures)
+        `when`(webservice.getDeparturesTl(ArgumentMatchers.anyString())).thenReturn(departures)
 
         mockSettings = Mockito.mock(SettingsInterface::class.java)
         viewModel = DeparturesViewModel(webservice, mockSettings)

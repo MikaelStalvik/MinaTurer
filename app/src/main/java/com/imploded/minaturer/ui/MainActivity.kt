@@ -47,9 +47,9 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
         if (viewModel.shouldAskForRating()) askForRating()
     }
 
-    override fun onJourneyDetailsSelected(ref: String, stopId: String, departure: UiDeparture) {
+    override fun onJourneyDetailsSelected(stopId: String, departure: UiDeparture) {
         sendFirebaseEvent(FirebaseConstants.JourneyDetailsSelected, departure.name)
-        val journeyDetailsFragment = JourneyDetailsFragment.newInstance(ref, stopId, departure)
+        val journeyDetailsFragment = JourneyDetailsFragment.newInstance(stopId, departure)
         supportFragmentManager.beginTransaction()
                 .replace(R.id.root_layout, journeyDetailsFragment, "journeyDetailsFragment")
                 .addToBackStack(null)
