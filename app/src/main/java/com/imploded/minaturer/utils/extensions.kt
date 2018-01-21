@@ -108,6 +108,7 @@ val Activity.app: MinaTurerApp
     get() = application as MinaTurerApp
 
 const val defaultBgColor = "#00a5dc"
+const val defaultBgColorSl = "#d71d24"
 const val defaultFgColor = "#ffffff"
 const val OperatorVasttrafik = "279"
 const val OperatorSl = "275"
@@ -150,6 +151,7 @@ fun TlDeparture.bgColor(): String {
         }
         OperatorSl -> {
             when(this.product.num.toUpperCase()) {
+                "1", "4" -> return "#0089ca"
                 "10", "11" -> return "#0089ca"
                 "12" -> return "#778da7"
                 "13", "14" -> return "#d71d24"
@@ -164,7 +166,7 @@ fun TlDeparture.bgColor(): String {
 
                 "40", "41", "41X", "42", "42X", "43", "43X", "44", "48" -> return "#ec619f"
             }
-            return defaultBgColor
+            return defaultBgColorSl
         }
     }
     return defaultBgColor
