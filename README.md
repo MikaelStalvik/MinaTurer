@@ -1,6 +1,6 @@
 # Mina Turer
 
-Find the next departure for a bus, tram or train within the Västra Götalands regions public transportation.
+Find the next departure for a bus, tram or train within Swedens public transportation system.
 
 The full application can be downloaded from:
 https://play.google.com/store/apps/details?id=com.imploded.minaturer
@@ -22,8 +22,8 @@ https://www.trafiklab.se
 
 After this step is performed you will need to subsribe to the following APIs:
 
--ResRobot - Reseplanerare
--ResRobot - Stolptidtabeller 2
+* [ResRobot - Reseplanerare](https://www.trafiklab.se/api/resrobot-reseplanerare/beskrivning)
+* [ResRobot - Stolptidtabeller 2](https://www.trafiklab.se/api/resrobot-stolptidtabeller-2/beskrivning)
 
 The class should look this:
 ```
