@@ -25,5 +25,14 @@
     <string name="yes">Ja</string>
     <string name="no">Nej</string>
     <string name="stop_abbr">H</string>
+    <string name="settings">Inställningar</string>
+    <string name="regional_train">Regionaltåg, InterCity tåg</string>
+    <string name="express_train">Snabbtåg, Expresståg, Arlanda Express</string>
+    <string name="express_bus">Expressbuss, Flygbussar</string>
+    <string name="local_train">Lokaltåg, Pågatåg, Öresundståg</string>
+    <string name="subway">Tunnelbana</string>
+    <string name="tram">Spårvagn</string>
+    <string name="bus">Buss</string>
+    <string name="ferry">Färja, Utrikes Färja</string>
 
 </resources>

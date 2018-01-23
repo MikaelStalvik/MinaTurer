@@ -8,18 +8,13 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.imploded.minaturer.R
 import com.imploded.minaturer.adapters.LandingPageAdapter
 import com.imploded.minaturer.interfaces.LandingViewModelInterface
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
 import com.imploded.minaturer.interfaces.SettingsInterface
-import com.imploded.minaturer.utils.FirebaseConstants
-import com.imploded.minaturer.utils.hideBackNavigation
-import com.imploded.minaturer.utils.inject
-import com.imploded.minaturer.utils.title
+import com.imploded.minaturer.utils.*
 import org.jetbrains.anko.support.v4.alert
 import javax.inject.Inject
 
@@ -54,6 +49,7 @@ class LandingPageFragment : Fragment() {
         updateAdapter()
 
         showHint()
+        setHasOptionsMenu(true)
 
         return view
     }
@@ -71,6 +67,24 @@ class LandingPageFragment : Fragment() {
         super.onDetach()
         mListener = null
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.landing_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+        menu?.findItem(R.id.action_settings_mode)?.tintMenuIcon(context!!, android.R.color.white)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item == null) return super.onOptionsItemSelected(item)
+        return when(item.itemId) {
+            R.id.action_settings_mode -> {
+                mListener?.onSettingsSelected()
+                false
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 
     private fun initSwipe() {
         val simpleTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
