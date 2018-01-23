@@ -35,12 +35,14 @@ class WebServiceRepository : WebServiceInterface{
     override fun getDeparturesTl(id: String): DepartureContainer {
         val calender = Calendar.getInstance()
 
+        val products = AppConstants.Bus
+
         val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
 
         val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
         val timeString = dateFormat.format(calender.time)
         val time = URLEncoder.encode(timeString, "UTF-8")
-        val endPoint = departuresByIdTlUrl(id, date, time)
+        val endPoint = departuresByIdTlUrl(id, date, time, products)
         val (_, _, result) = endPoint
                 .httpGet()
                 .responseString()
@@ -90,9 +92,9 @@ class WebServiceRepository : WebServiceInterface{
     }
 
     companion object {
-        private const val maxJournies = 20
+        private const val maxJournies = 50
         private fun locationsByNameTlUrl(arg: String) = "https://api.resrobot.se/v2/location.name?key=${WebApiKeys.reserobotKey}&input=$arg&format=json"
-        private fun departuresByIdTlUrl(id: String, date: String, time: String) = "https://api.resrobot.se/v2/departureBoard?key=${WebApiKeys.reserobotDepartureBoardKey}&id=$id&maxJourneys=$maxJournies&date=$date&time=$time&format=json"
+        private fun departuresByIdTlUrl(id: String, date: String, time: String, products: Int) = "https://api.resrobot.se/v2/departureBoard?key=${WebApiKeys.reserobotDepartureBoardKey}&id=$id&maxJourneys=$maxJournies&date=$date&time=$time&products=$products&format=json"
 
     }
 

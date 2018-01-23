@@ -79,7 +79,7 @@ class DeparturesFragment : Fragment() {
             swipeRefresh.isEnabled = false
         } else {
             bottomToolbar.visibility = View.GONE
-            swipeRefresh.isEnabled = false
+            swipeRefresh.isEnabled = true
         }
     }
 
