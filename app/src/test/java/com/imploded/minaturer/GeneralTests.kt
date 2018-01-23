@@ -58,4 +58,10 @@ class GeneralTests {
         )
         assertEquals(defaultBgColor, departure.bgColor())
     }
+
+    @Test
+    fun `When tram and express train is selected test shall pass`() {
+        val value = AppConstants.ExpressTrain + AppConstants.Tram
+        assert(value.isTram() && value.isExpressTrain())
+    }
 }

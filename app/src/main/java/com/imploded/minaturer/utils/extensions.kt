@@ -213,3 +213,12 @@ fun TlDeparture.actualTrack() : String {
 fun String?.ensureString() : String {
     return if (this.isNullOrEmpty()) "" else this.toString()
 }
+
+fun Int.isExpressTrain() : Boolean = this.rem(AppConstants.ExpressTrain) == 0
+fun Int.isRegionalTrain() : Boolean = this.rem(AppConstants.RegionalTrain) == 0
+fun Int.isExpressBus() : Boolean = this.rem(AppConstants.ExpressBus) == 0
+fun Int.isLocalTrain() : Boolean = this.rem(AppConstants.LocalTrain) == 0
+fun Int.Subway() : Boolean = this.rem(AppConstants.Subway) == 0
+fun Int.isTram() : Boolean = this.rem(AppConstants.Tram) == 0
+fun Int.isBus() : Boolean = this.rem(AppConstants.Bus) == 0
+fun Int.isFerry() : Boolean = this.rem(AppConstants.Ferry) == 0

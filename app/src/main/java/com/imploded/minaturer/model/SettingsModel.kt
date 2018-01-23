@@ -8,7 +8,8 @@ data class SettingsModel(
     var FindStopHintShown: Boolean,
     var DeparturesHintShown: Boolean,
     var IsRated: Boolean,
-    var StartCount: Int
+    var StartCount: Int,
+    var ActiveFilters: Int
 )
 
 data class FilteredDeparture(
