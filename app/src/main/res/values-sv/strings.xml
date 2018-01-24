@@ -34,5 +34,6 @@
     <string name="tram">Spårvagn</string>
     <string name="bus">Buss</string>
     <string name="ferry">Färja, Utrikes Färja</string>
+    <string name="save">Spara</string>
 
 </resources>

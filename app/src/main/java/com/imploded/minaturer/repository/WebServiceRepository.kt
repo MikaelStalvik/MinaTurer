@@ -33,10 +33,8 @@ class WebServiceRepository : WebServiceInterface{
         }
     }
 
-    override fun getDeparturesTl(id: String): DepartureContainer {
+    override fun getDeparturesTl(id: String, products: Int): DepartureContainer {
         val calender = Calendar.getInstance()
-
-        val products = AppConstants.Bus
 
         val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
 

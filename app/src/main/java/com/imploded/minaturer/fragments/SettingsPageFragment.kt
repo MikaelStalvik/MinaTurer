@@ -30,28 +30,10 @@ class SettingsPageFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         this.title(getString(R.string.settings))
-        this.hideBackNavigation()
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
 
         this.inject()
-
-
-        /*
-        view.findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
-            if (mListener != null) {
-                mListener!!.onFindStopsSelected(ArgChangeToFindStopsView)
-            }
-        }
-
-        adapter = createAdapter()
-        recyclerView = view.findViewById(R.id.recyclerViewStops)
-        recyclerView.layoutManager = LinearLayoutManager(this.context)
-        recyclerView.adapter = adapter
-        initSwipe()
-        updateAdapter()
-
-        showHint()
-        */
+        this.displayBackNavigation()
         setHasOptionsMenu(true)
 
         return view
@@ -68,6 +50,16 @@ class SettingsPageFragment : Fragment() {
         switchTram.isChecked = activeFilters.isTram()
         switchBus.isChecked = activeFilters.isBus()
         switchFerry.isChecked = activeFilters.isFerry()
+        buttonSave.setOnClickListener { viewModel.saveFilters(
+                switchExpressTrain.isChecked,
+                switchRegionalTrain.isChecked,
+                switchExpressBus.isChecked,
+                switchLocalTrain.isChecked,
+                switchSubway.isChecked,
+                switchTram.isChecked,
+                switchBus.isChecked,
+                switchFerry.isChecked
+        ) }
     }
 
     override fun onAttach(context: Context?) {
@@ -84,6 +76,16 @@ class SettingsPageFragment : Fragment() {
         mListener = null
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item == null) return super.onOptionsItemSelected(item)
+        return when(item.itemId) {
+            android.R.id.home -> {
+                activity?.supportFragmentManager?.popBackStack()
+                false
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 
     private fun showHint() {
         val settings =  appSettings.loadSettings()
@@ -97,7 +99,6 @@ class SettingsPageFragment : Fragment() {
     }
 
     companion object {
-        const val ArgChangeToFindStopsView = 1
         fun newInstance(): SettingsPageFragment {
             return SettingsPageFragment()
         }

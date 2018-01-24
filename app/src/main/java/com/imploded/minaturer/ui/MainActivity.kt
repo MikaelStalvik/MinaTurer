@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
         val settingsPageFragment = SettingsPageFragment.newInstance()
         supportFragmentManager.beginTransaction()
                 .replace(R.id.root_layout, settingsPageFragment, "settingsPageFragment")
-                //.addToBackStack(null)
+                .addToBackStack(null)
                 .commit()
     }
 
