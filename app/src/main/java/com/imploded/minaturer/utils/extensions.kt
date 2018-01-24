@@ -23,6 +23,7 @@ import com.imploded.minaturer.fragments.*
 import com.imploded.minaturer.model.TlDeparture
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 inline fun <reified T> Gson.fromJson(json: String) = this.fromJson<T>(json, object: TypeToken<T>() {}.type)
 
@@ -94,6 +95,7 @@ fun Fragment.inject() {
         is FindStopFragment -> activity?.app?.appComponent?.inject(this)
         is DeparturesFragment -> activity?.app?.appComponent?.inject(this)
         is JourneyDetailsFragment -> activity?.app?.appComponent?.inject(this)
+        is SettingsPageFragment -> activity?.app?.appComponent?.inject(this)
     }
 }
 
@@ -214,11 +216,30 @@ fun String?.ensureString() : String {
     return if (this.isNullOrEmpty()) "" else this.toString()
 }
 
-fun Int.isExpressTrain() : Boolean = this.rem(AppConstants.ExpressTrain) == 0
-fun Int.isRegionalTrain() : Boolean = this.rem(AppConstants.RegionalTrain) == 0
-fun Int.isExpressBus() : Boolean = this.rem(AppConstants.ExpressBus) == 0
-fun Int.isLocalTrain() : Boolean = this.rem(AppConstants.LocalTrain) == 0
-fun Int.Subway() : Boolean = this.rem(AppConstants.Subway) == 0
-fun Int.isTram() : Boolean = this.rem(AppConstants.Tram) == 0
-fun Int.isBus() : Boolean = this.rem(AppConstants.Bus) == 0
-fun Int.isFerry() : Boolean = this.rem(AppConstants.Ferry) == 0
+private fun findIndexSeries(input: Int, power: Int, numbers: ArrayList<Int>) {
+    if (input == 0) {
+        return
+    }
+    var digit = input.rem(2)
+    if (digit == 1) {
+        val a = Math.pow(2.0, power.toDouble()).toInt()
+        numbers.add(a)
+    }
+    findIndexSeries(input / 2, power + 1, numbers)
+}
+
+private fun seriesContainsNumber(input: Int, number: Int) : Boolean {
+    val numbers: ArrayList<Int> = arrayListOf()
+    findIndexSeries(input, 0, numbers)
+    return numbers.contains(number)
+}
+
+fun Int.isExpressTrain() : Boolean = seriesContainsNumber(this, AppConstants.ExpressTrain)
+fun Int.isRegionalTrain() : Boolean = seriesContainsNumber(this, AppConstants.RegionalTrain)
+fun Int.isExpressBus() : Boolean = seriesContainsNumber(this, AppConstants.ExpressBus)
+fun Int.isLocalTrain() : Boolean = seriesContainsNumber(this, AppConstants.LocalTrain)
+fun Int.isSubway() : Boolean = seriesContainsNumber(this, AppConstants.Subway)
+fun Int.isTram() : Boolean = seriesContainsNumber(this, AppConstants.Tram)
+fun Int.isBus() : Boolean = seriesContainsNumber(this, AppConstants.Bus)
+fun Int.isFerry() : Boolean = seriesContainsNumber(this, AppConstants.Ferry)
+

@@ -1,27 +1,24 @@
 package com.imploded.minaturer.fragments
 
 import android.content.Context
-import android.graphics.Canvas
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.*
 import com.imploded.minaturer.R
 import com.imploded.minaturer.adapters.LandingPageAdapter
-import com.imploded.minaturer.interfaces.LandingViewModelInterface
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
 import com.imploded.minaturer.interfaces.SettingsInterface
+import com.imploded.minaturer.interfaces.SettingsViewModelInterface
 import com.imploded.minaturer.utils.*
 import org.jetbrains.anko.support.v4.alert
+import kotlinx.android.synthetic.main.fragment_settings.*
 import javax.inject.Inject
 
 class SettingsPageFragment : Fragment() {
 
     @Inject
-    lateinit var viewModel: LandingViewModelInterface
+    lateinit var viewModel: SettingsViewModelInterface
     @Inject
     lateinit var appSettings: SettingsInterface
 
@@ -35,8 +32,11 @@ class SettingsPageFragment : Fragment() {
         this.title(getString(R.string.settings))
         this.hideBackNavigation()
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
-        /*
+
         this.inject()
+
+
+        /*
         view.findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
             if (mListener != null) {
                 mListener!!.onFindStopsSelected(ArgChangeToFindStopsView)
@@ -55,6 +55,19 @@ class SettingsPageFragment : Fragment() {
         setHasOptionsMenu(true)
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        var activeFilters = viewModel.activeFilters()
+        switchExpressBus.isChecked = activeFilters.isExpressTrain()
+        switchRegionalTrain.isChecked = activeFilters.isRegionalTrain()
+        switchExpressBus.isChecked = activeFilters.isExpressBus()
+        switchLocalTrain.isChecked = activeFilters.isLocalTrain()
+        switchSubway.isChecked = activeFilters.isSubway()
+        switchTram.isChecked = activeFilters.isTram()
+        switchBus.isChecked = activeFilters.isBus()
+        switchFerry.isChecked = activeFilters.isFerry()
     }
 
     override fun onAttach(context: Context?) {

@@ -4,9 +4,11 @@ import com.google.gson.Gson
 import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.model.SettingsModel
 import com.imploded.minaturer.model.UiStop
+import com.imploded.minaturer.utils.AppConstants
 import com.imploded.minaturer.viewmodel.LandingViewModel
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertTrue
+import org.jetbrains.anko.appcompat.v7.Appcompat
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito

@@ -9,7 +9,7 @@ data class SettingsModel(
     var DeparturesHintShown: Boolean,
     var IsRated: Boolean,
     var StartCount: Int,
-    var ActiveFilters: Int
+    var activeFilters: Int
 )
 
 data class FilteredDeparture(

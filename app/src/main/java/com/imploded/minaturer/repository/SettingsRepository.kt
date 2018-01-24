@@ -8,6 +8,8 @@ import com.imploded.minaturer.utils.AppConstants
 
 class SettingsRepository(context: Context) : SettingsInterface {
 
+    private val defaultFilters = AppConstants.Subway + AppConstants.Tram + AppConstants.Bus
+
     override fun loadSettings(): SettingsModel {
         return SettingsModel(
                 prefs.getString(attrStops, ""),
@@ -18,7 +20,7 @@ class SettingsRepository(context: Context) : SettingsInterface {
                 prefs.getBoolean(attrDeparturesHintShown, false),
                 prefs.getBoolean(attrIsRated, false),
                 prefs.getInt(attrStartCount, 0),
-                prefs.getInt(attrFilters, AppConstants.Bus + AppConstants.Tram + AppConstants.Subway)
+                prefs.getInt(attrFilters, defaultFilters)
         )
     }
 
@@ -31,7 +33,7 @@ class SettingsRepository(context: Context) : SettingsInterface {
         prefs.edit().putBoolean(attrDeparturesHintShown, settings.DeparturesHintShown).apply()
         prefs.edit().putBoolean(attrIsRated, settings.IsRated).apply()
         prefs.edit().putInt(attrStartCount, settings.StartCount).apply()
-        prefs.edit().putInt(attrFilters, settings.ActiveFilters).apply()
+        prefs.edit().putInt(attrFilters, settings.activeFilters).apply()
     }
 
     companion object {

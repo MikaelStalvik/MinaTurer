@@ -60,8 +60,12 @@ class GeneralTests {
     }
 
     @Test
-    fun `When tram and express train is selected test shall pass`() {
-        val value = AppConstants.ExpressTrain + AppConstants.Tram
-        assert(value.isTram() && value.isExpressTrain())
+    fun `When filter is subway, tram and bus then result shall be true`() {
+        val test = AppConstants.Subway + AppConstants.Tram + AppConstants.Bus
+        val isSubway = test.isSubway()
+        val isTram = test.isTram()
+        val isBus = test.isBus()
+        assertTrue(isSubway && isTram && isBus)
     }
+
 }
