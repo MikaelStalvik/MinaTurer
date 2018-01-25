@@ -20,7 +20,7 @@ data class TlDeparture(
         @SerializedName("Stops") val stopContainer: TlStopContainer = TlStopContainer()
 )
 
-data class TlProduct(val name: String = "", val num: String = "", val operatorCode: String = "", val catOutCode: Int = 0)
+data class TlProduct(val name: String = "", val num: String = "", val operatorCode: String = "", val catCode: Int = 0)
 
 data class TlStopContainer(@SerializedName("Stop")val stops: List<TlStop> = listOf())
 data class TlStop(val name: String, val id: String, val depTime: String, val depDate: String, val arrTime: String, val arrDate: String, val routeIdx: Int)

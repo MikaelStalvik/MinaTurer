@@ -26,7 +26,8 @@ data class Departure (
         val fgColor: String = "",
         val bgColor: String = "",
         val accessibility: String = "",
-        val stops: List<Stop> = listOf()
+        val stops: List<Stop> = listOf(),
+        val catOutCode: Int
 )
 
 data class UiDeparture(
@@ -42,5 +43,6 @@ data class UiDeparture(
         val stopId: String = "",
         var checked: Boolean = false,
         var index : Int = 0,
-        val stops: List<Stop> = listOf()
+        val stops: List<Stop> = listOf(),
+        val catOutCode: Int
 )

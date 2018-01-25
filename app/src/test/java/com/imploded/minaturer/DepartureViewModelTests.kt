@@ -3,6 +3,7 @@ package com.imploded.minaturer
 import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.interfaces.WebServiceInterface
 import com.imploded.minaturer.model.*
+import com.imploded.minaturer.utils.AppConstants
 import com.imploded.minaturer.viewmodel.DeparturesViewModel
 import junit.framework.Assert.assertTrue
 import org.junit.Before
@@ -41,7 +42,8 @@ class DepartureViewModelTests {
                                 "",
                                 "#e89dc0",
                                 "#ffffff",
-                                "wheelChair"
+                                "wheelChair",
+                                catOutCode = AppConstants.Bus
                         ),
                         Departure(
                                 "Rosa express",
@@ -58,7 +60,8 @@ class DepartureViewModelTests {
                                 "",
                                 "#e89dc0",
                                 "#ffffff",
-                                "wheelChair"
+                                "wheelChair",
+                                catOutCode = AppConstants.Bus
                         ),
                         Departure(
                                 "Buss 58",
@@ -75,7 +78,8 @@ class DepartureViewModelTests {
                                 "",
                                 "#00A5DC",
                                 "#ffffff",
-                                "wheelChair"
+                                "wheelChair",
+                                catOutCode = AppConstants.Bus
                         )
                 )
         ))

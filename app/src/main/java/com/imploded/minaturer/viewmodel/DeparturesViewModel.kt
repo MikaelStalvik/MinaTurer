@@ -50,7 +50,8 @@ class DeparturesViewModel(private val webservice: WebServiceInterface, private v
                                 d.stopid,
                                 true,
                                 0,
-                                d.stops
+                                d.stops,
+                                d.catOutCode
                         )
                     }
         } else {
@@ -70,7 +71,8 @@ class DeparturesViewModel(private val webservice: WebServiceInterface, private v
                                 d.stopid,
                                 true,
                                 0,
-                                d.stops
+                                d.stops,
+                                d.catOutCode
                         )
                     }
         }

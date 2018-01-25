@@ -48,6 +48,7 @@ class WebServiceRepository : WebServiceInterface{
         return when(result)
         {
             is Result.Success -> {
+                Log.d("JSON", result.value)
                 val res =  Gson().fromJson<TlDepartureContainer>(result.value)
                 val departures: ArrayList<Departure> = arrayListOf()
                 for(item in res.departures) {
@@ -78,10 +79,10 @@ class WebServiceRepository : WebServiceInterface{
                             direction = item.direction,
                             bgColor = item.bgColor(),
                             fgColor = item.fgColor(),
-                            stops = stopList
+                            stops = stopList,
+                            catOutCode = item.product.catCode
                     ))
                 }
-                Log.d("DEPARtUreS", departures.count().toString())
                 DepartureContainer(DepartureBoard("", "", departures))
             }
             is Result.Failure -> {

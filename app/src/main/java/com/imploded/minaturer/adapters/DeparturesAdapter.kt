@@ -46,6 +46,8 @@ class DeparturesAdapter(private val itemChecked: (UiDeparture, Int) -> Unit, pri
                 itemView.textViewLineNumber.setBackgroundColor(departureItem.bgColor.toColor())
                 itemView.textViewLineNumber.setTextColor(departureItem.fgColor.toColor())
 
+                itemView.textViewCatOutCode.text = departureItem.catOutCode.toString()
+
                 if (departureItem.rtTime.isNullOrEmpty()) {
                     itemView.textViewDepTime.text = departureItem.time
                     itemView.textViewDepTimeEta.visibility = View.GONE
