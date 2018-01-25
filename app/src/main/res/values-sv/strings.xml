@@ -34,7 +34,6 @@
     <string name="tram">Spårvagn</string>
     <string name="bus">Buss</string>
     <string name="ferry">Färja, Utrikes Färja</string>
-    <string name="save">Spara</string>
     <string name="select_product_types">Välj vilka transportmedel du vill inkludera i dina avgångar.</string>
 
 </resources>

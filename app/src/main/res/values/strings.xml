@@ -34,7 +34,6 @@
     <string name="tram">Tram</string>
     <string name="bus">Bus</string>
     <string name="ferry">Ferry, Foreign Ferry</string>
-    <string name="save">Save</string>
     <string name="select_product_types">Select which transportation types you would like to include in your departure results.</string>
 
 </resources>

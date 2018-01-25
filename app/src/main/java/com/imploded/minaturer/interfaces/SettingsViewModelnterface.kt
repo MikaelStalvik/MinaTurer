@@ -1,8 +1,5 @@
 package com.imploded.minaturer.interfaces
 
-import com.imploded.minaturer.model.SettingsModel
-
-
 interface SettingsViewModelInterface {
 
     fun activeFilters() : Int

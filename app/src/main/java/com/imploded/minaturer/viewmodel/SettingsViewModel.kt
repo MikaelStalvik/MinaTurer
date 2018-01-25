@@ -29,7 +29,7 @@ class SettingsViewModel @Inject constructor(private val settings: SettingsInterf
         if (tram) res += AppConstants.Tram
         if (bus) res += AppConstants.Bus
         if (ferry) res += AppConstants.Ferry
-        var activeSettings = settings.loadSettings()
+        val activeSettings = settings.loadSettings()
         activeSettings.activeFilters = res
         settings.saveSettings(activeSettings)
     }

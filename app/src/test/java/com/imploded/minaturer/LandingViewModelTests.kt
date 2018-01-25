@@ -8,7 +8,6 @@ import com.imploded.minaturer.utils.AppConstants
 import com.imploded.minaturer.viewmodel.LandingViewModel
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertTrue
-import org.jetbrains.anko.appcompat.v7.Appcompat
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
@@ -31,7 +30,7 @@ class LandingViewModelTests {
         val json = Gson().toJson(stops)
         mockSettings = Mockito.mock(SettingsInterface::class.java)
         `when`(mockSettings.loadSettings()).thenReturn(
-                SettingsModel(json, "", "", false, false, false, false, 0)
+                SettingsModel(json, "", "", false, false, false, false, 0, AppConstants.Bus)
         )
         viewModel = LandingViewModel(mockSettings)
     }
