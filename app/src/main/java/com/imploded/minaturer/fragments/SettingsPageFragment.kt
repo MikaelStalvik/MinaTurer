@@ -3,15 +3,14 @@ package com.imploded.minaturer.fragments
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.RecyclerView
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import com.imploded.minaturer.R
-import com.imploded.minaturer.adapters.LandingPageAdapter
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
-import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.interfaces.SettingsViewModelInterface
 import com.imploded.minaturer.utils.*
-import org.jetbrains.anko.support.v4.alert
 import kotlinx.android.synthetic.main.fragment_settings.*
 import javax.inject.Inject
 
@@ -19,11 +18,6 @@ class SettingsPageFragment : Fragment() {
 
     @Inject
     lateinit var viewModel: SettingsViewModelInterface
-    @Inject
-    lateinit var appSettings: SettingsInterface
-
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: LandingPageAdapter
 
     private var mListener: OnFragmentInteractionListener? = null
 
@@ -41,7 +35,7 @@ class SettingsPageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var activeFilters = viewModel.activeFilters()
+        val activeFilters = viewModel.activeFilters()
         switchExpressBus.isChecked = activeFilters.isExpressTrain()
         switchRegionalTrain.isChecked = activeFilters.isRegionalTrain()
         switchExpressBus.isChecked = activeFilters.isExpressBus()
@@ -50,7 +44,11 @@ class SettingsPageFragment : Fragment() {
         switchTram.isChecked = activeFilters.isTram()
         switchBus.isChecked = activeFilters.isBus()
         switchFerry.isChecked = activeFilters.isFerry()
-        buttonSave.setOnClickListener { viewModel.saveFilters(
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.saveFilters(
                 switchExpressTrain.isChecked,
                 switchRegionalTrain.isChecked,
                 switchExpressBus.isChecked,
@@ -58,8 +56,7 @@ class SettingsPageFragment : Fragment() {
                 switchSubway.isChecked,
                 switchTram.isChecked,
                 switchBus.isChecked,
-                switchFerry.isChecked
-        ) }
+                switchFerry.isChecked)
     }
 
     override fun onAttach(context: Context?) {
@@ -85,17 +82,6 @@ class SettingsPageFragment : Fragment() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun showHint() {
-        val settings =  appSettings.loadSettings()
-        if (settings.LandingHintPageShown) return
-        alert(getString(R.string.landing_page_hint), getString(R.string.tip)) {
-            positiveButton(getString(R.string.got_it)) {
-                settings.LandingHintPageShown = true
-                appSettings.saveSettings(settings)
-            }
-        }.show()
     }
 
     companion object {

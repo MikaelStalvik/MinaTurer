@@ -3,7 +3,6 @@ package com.imploded.minaturer.fragments
 import android.content.Context
 import android.graphics.Canvas
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -16,6 +15,7 @@ import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
 import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.utils.*
 import org.jetbrains.anko.support.v4.alert
+import kotlinx.android.synthetic.main.fragment_landing_page.*
 import javax.inject.Inject
 
 
@@ -35,23 +35,26 @@ class LandingPageFragment : Fragment() {
         this.hideBackNavigation()
         val view = inflater.inflate(R.layout.fragment_landing_page, container, false)
         this.inject()
-        view.findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
+        showHint()
+        setHasOptionsMenu(true)
+
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        fab.setOnClickListener {
             if (mListener != null) {
                 mListener!!.onFindStopsSelected(ArgChangeToFindStopsView)
             }
         }
 
         adapter = createAdapter()
-        recyclerView = view.findViewById(R.id.recyclerViewStops)
+        recyclerView = recyclerViewStops
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.adapter = adapter
         initSwipe()
         updateAdapter()
-
-        showHint()
-        setHasOptionsMenu(true)
-
-        return view
     }
 
     override fun onAttach(context: Context?) {
