@@ -243,3 +243,13 @@ fun Int.isTram() : Boolean = seriesContainsNumber(this, AppConstants.Tram)
 fun Int.isBus() : Boolean = seriesContainsNumber(this, AppConstants.Bus)
 fun Int.isFerry() : Boolean = seriesContainsNumber(this, AppConstants.Ferry)
 
+fun Int.toCatResource(): Int {
+    when(this) {
+        1, 2, 4 -> return R.drawable.ic_train_black_24dp
+        3, 7 -> return R.drawable.ic_directions_bus_black_24dp
+        5 -> return R.drawable.ic_subway_black_24dp
+        6 -> return R.drawable.ic_tram_black_24dp
+        8 -> return R.drawable.ic_directions_boat_black_24dp
+    }
+    return R.drawable.ic_directions_bus_black_24dp
+}

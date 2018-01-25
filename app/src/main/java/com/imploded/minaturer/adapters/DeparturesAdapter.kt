@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.imploded.minaturer.R
 import com.imploded.minaturer.model.UiDeparture
 import com.imploded.minaturer.utils.AppConstants
+import com.imploded.minaturer.utils.toCatResource
 import com.imploded.minaturer.utils.toColor
 import kotlinx.android.synthetic.main.row_departure.view.*
 
@@ -46,7 +47,7 @@ class DeparturesAdapter(private val itemChecked: (UiDeparture, Int) -> Unit, pri
                 itemView.textViewLineNumber.setBackgroundColor(departureItem.bgColor.toColor())
                 itemView.textViewLineNumber.setTextColor(departureItem.fgColor.toColor())
 
-                itemView.textViewCatOutCode.text = departureItem.catOutCode.toString()
+                itemView.imageViewCode.setImageResource(departureItem.catOutCode.toCatResource())
 
                 if (departureItem.rtTime.isNullOrEmpty()) {
                     itemView.textViewDepTime.text = departureItem.time

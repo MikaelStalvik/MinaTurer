@@ -43,7 +43,7 @@ class FindStopFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupUi(view)
+        setupUi()
         adapter = createAdapter()
         recyclerView = view.findViewById(R.id.recyclerViewStops)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
@@ -75,7 +75,7 @@ class FindStopFragment : Fragment() {
         mListener = null
     }
 
-    private fun setupUi(view: View) {
+    private fun setupUi() {
         editTextSearch.afterTextChanged {
             fixedRateTimer("timer", false, 0, 750, {
                 this.cancel()
