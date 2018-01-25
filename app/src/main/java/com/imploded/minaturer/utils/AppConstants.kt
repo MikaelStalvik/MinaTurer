@@ -5,7 +5,7 @@ object AppConstants {
     const val oddRowColor = "#efefef"
     const val fragmentBgColor = "#fafafa"
 
-    const val FastTrain = 2
+    const val ExpressTrain = 2
     const val RegionalTrain = 4
     const val ExpressBus = 8
     const val LocalTrain = 16

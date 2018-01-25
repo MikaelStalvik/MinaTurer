@@ -1,5 +1,6 @@
 package com.imploded.minaturer.repository
 
+import android.util.Log
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
 import com.google.gson.Gson
@@ -32,10 +33,8 @@ class WebServiceRepository : WebServiceInterface{
         }
     }
 
-    override fun getDeparturesTl(id: String): DepartureContainer {
+    override fun getDeparturesTl(id: String, products: Int): DepartureContainer {
         val calender = Calendar.getInstance()
-
-        val products = AppConstants.Bus
 
         val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
 
@@ -79,10 +78,10 @@ class WebServiceRepository : WebServiceInterface{
                             direction = item.direction,
                             bgColor = item.bgColor(),
                             fgColor = item.fgColor(),
-                            //journeyRefIds = JourneyRef(),
                             stops = stopList
                     ))
                 }
+                Log.d("DEPARtUreS", departures.count().toString())
                 DepartureContainer(DepartureBoard("", "", departures))
             }
             is Result.Failure -> {

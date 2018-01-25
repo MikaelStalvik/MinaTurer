@@ -79,7 +79,7 @@ class DeparturesViewModel(private val webservice: WebServiceInterface, private v
 
     override fun getDepartures(stopId: String, updateFun: (() -> Unit), initFetchFun: (() -> Unit)) = async(UI) {
         initFetchFun()
-        val searchTask = bg { webservice.getDeparturesTl(stopId) }
+        val searchTask = bg { webservice.getDeparturesTl(stopId, settings.loadSettings().activeFilters) }
         val departures = searchTask.await()
 
         generateFilteredDepartures(departures)

@@ -23,7 +23,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <Button
+            <android.support.v7.widget.AppCompatButton
                 android:id="@+id/buttonAll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -32,11 +32,12 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/all"
+                app:backgroundTint="@color/toolbar_button_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
+            <android.support.v7.widget.AppCompatButton
                 android:id="@+id/buttonNone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -45,11 +46,12 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/none"
+                app:backgroundTint="@color/toolbar_button_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/buttonAll"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
+            <android.support.v7.widget.AppCompatButton
                 android:id="@+id/buttonApply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,6 +60,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/apply"
+                app:backgroundTint="@color/toolbar_button_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

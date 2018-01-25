@@ -9,4 +9,5 @@ interface OnFragmentInteractionListener {
     fun onStopAdded(name: String)
     fun onJourneyDetailsSelected(stopId: String, departure: UiDeparture)
     fun sendFirebaseEvent(id: String, itemName: String = "")
+    fun onSettingsSelected()
 }

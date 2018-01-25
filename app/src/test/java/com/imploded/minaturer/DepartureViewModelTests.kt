@@ -80,7 +80,7 @@ class DepartureViewModelTests {
                 )
         ))
         webservice = Mockito.mock(WebServiceInterface::class.java)
-        `when`(webservice.getDeparturesTl(ArgumentMatchers.anyString())).thenReturn(departures)
+        `when`(webservice.getDeparturesTl(ArgumentMatchers.anyString(), ArgumentMatchers.anyInt())).thenReturn(departures)
 
         mockSettings = Mockito.mock(SettingsInterface::class.java)
         viewModel = DeparturesViewModel(webservice, mockSettings)

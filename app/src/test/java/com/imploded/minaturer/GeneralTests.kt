@@ -58,4 +58,14 @@ class GeneralTests {
         )
         assertEquals(defaultBgColor, departure.bgColor())
     }
+
+    @Test
+    fun `When filter is subway, tram and bus then result shall be true`() {
+        val test = AppConstants.Subway + AppConstants.Tram + AppConstants.Bus
+        val isSubway = test.isSubway()
+        val isTram = test.isTram()
+        val isBus = test.isBus()
+        assertTrue(isSubway && isTram && isBus)
+    }
+
 }

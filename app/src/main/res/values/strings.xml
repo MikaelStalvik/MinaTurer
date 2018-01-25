@@ -25,5 +25,15 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="stop_abbr">S</string>
+    <string name="settings">Settings</string>
+    <string name="express_train">Express train, Arlanda Express</string>
+    <string name="regional_train">Regional train, InterCity train</string>
+    <string name="express_bus">Express bus, airport buses</string>
+    <string name="local_train">Local train, Pågatåg, Öresundståg</string>
+    <string name="subway">Subway</string>
+    <string name="tram">Tram</string>
+    <string name="bus">Bus</string>
+    <string name="ferry">Ferry, Foreign Ferry</string>
+    <string name="select_product_types">Select which transportation types you would like to include in your departure results.</string>
 
 </resources>

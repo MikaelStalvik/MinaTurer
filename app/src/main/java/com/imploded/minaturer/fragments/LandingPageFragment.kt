@@ -3,24 +3,19 @@ package com.imploded.minaturer.fragments
 import android.content.Context
 import android.graphics.Canvas
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.imploded.minaturer.R
 import com.imploded.minaturer.adapters.LandingPageAdapter
 import com.imploded.minaturer.interfaces.LandingViewModelInterface
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
 import com.imploded.minaturer.interfaces.SettingsInterface
-import com.imploded.minaturer.utils.FirebaseConstants
-import com.imploded.minaturer.utils.hideBackNavigation
-import com.imploded.minaturer.utils.inject
-import com.imploded.minaturer.utils.title
+import com.imploded.minaturer.utils.*
 import org.jetbrains.anko.support.v4.alert
+import kotlinx.android.synthetic.main.fragment_landing_page.*
 import javax.inject.Inject
 
 
@@ -40,22 +35,26 @@ class LandingPageFragment : Fragment() {
         this.hideBackNavigation()
         val view = inflater.inflate(R.layout.fragment_landing_page, container, false)
         this.inject()
-        view.findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
+        showHint()
+        setHasOptionsMenu(true)
+
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        fab.setOnClickListener {
             if (mListener != null) {
                 mListener!!.onFindStopsSelected(ArgChangeToFindStopsView)
             }
         }
 
         adapter = createAdapter()
-        recyclerView = view.findViewById(R.id.recyclerViewStops)
+        recyclerView = recyclerViewStops
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.adapter = adapter
         initSwipe()
         updateAdapter()
-
-        showHint()
-
-        return view
     }
 
     override fun onAttach(context: Context?) {
@@ -71,6 +70,24 @@ class LandingPageFragment : Fragment() {
         super.onDetach()
         mListener = null
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.landing_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+        menu?.findItem(R.id.action_settings_mode)?.tintMenuIcon(context!!, android.R.color.white)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item == null) return super.onOptionsItemSelected(item)
+        return when(item.itemId) {
+            R.id.action_settings_mode -> {
+                mListener?.onSettingsSelected()
+                false
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 
     private fun initSwipe() {
         val simpleTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {

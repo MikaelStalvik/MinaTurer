@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import com.imploded.minaturer.R
 import com.imploded.minaturer.adapters.StopsAdapter
 import com.imploded.minaturer.interfaces.FindStopsViewModelInterface
@@ -19,6 +18,7 @@ import com.imploded.minaturer.utils.*
 import org.jetbrains.anko.support.v4.alert
 import javax.inject.Inject
 import kotlin.concurrent.fixedRateTimer
+import kotlinx.android.synthetic.main.fragment_find_stop.*
 
 class FindStopFragment : Fragment() {
 
@@ -28,7 +28,6 @@ class FindStopFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: StopsAdapter
     private var mListener: OnFragmentInteractionListener? = null
-    private lateinit var searchEditText: EditText
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -36,15 +35,19 @@ class FindStopFragment : Fragment() {
         this.displayBackNavigation()
         val view = inflater.inflate(R.layout.fragment_find_stop, container, false)
         this.inject()
+        showHint()
+        setHasOptionsMenu(true)
+
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setupUi(view)
         adapter = createAdapter()
         recyclerView = view.findViewById(R.id.recyclerViewStops)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         recyclerView.adapter = adapter
-        showHint()
-        setHasOptionsMenu(true)
-
-        return view
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -73,11 +76,10 @@ class FindStopFragment : Fragment() {
     }
 
     private fun setupUi(view: View) {
-        searchEditText = view.findViewById(R.id.editTextSearch)
-        searchEditText.afterTextChanged {
+        editTextSearch.afterTextChanged {
             fixedRateTimer("timer", false, 0, 750, {
                 this.cancel()
-                val filter = searchEditText.text.toString()
+                val filter = editTextSearch.text.toString()
                 if (viewModel.updateFiltering(filter)) {
                     activity?.runOnUiThread{
                         if (!viewModel.isSearching) {
@@ -88,7 +90,7 @@ class FindStopFragment : Fragment() {
                 }
             })
         }
-        searchEditText.setOnFocusChangeListener { _, hasFocus -> if (!hasFocus) searchEditText.hideKeyboard(activity!!.inputMethodManager()) }
+        editTextSearch.setOnFocusChangeListener { _, hasFocus -> if (!hasFocus) editTextSearch.hideKeyboard(activity!!.inputMethodManager()) }
     }
 
     private fun updateAdapter() {
@@ -101,7 +103,7 @@ class FindStopFragment : Fragment() {
 
     private fun createAdapter(): StopsAdapter {
         return StopsAdapter({
-            searchEditText.hideKeyboard(activity!!.inputMethodManager())
+            editTextSearch.hideKeyboard(activity!!.inputMethodManager())
             viewModel.addStop(it)
             mListener?.onStopAdded(it.name)
             activity?.supportFragmentManager?.popBackStack()

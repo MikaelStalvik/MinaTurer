@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.imploded.minaturer.interfaces.SettingsInterface
 import com.imploded.minaturer.model.SettingsModel
 import com.imploded.minaturer.model.UiStop
+import com.imploded.minaturer.utils.AppConstants
 import com.imploded.minaturer.viewmodel.LandingViewModel
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertTrue
@@ -29,7 +30,7 @@ class LandingViewModelTests {
         val json = Gson().toJson(stops)
         mockSettings = Mockito.mock(SettingsInterface::class.java)
         `when`(mockSettings.loadSettings()).thenReturn(
-                SettingsModel(json, "", "", false, false, false, false, 0)
+                SettingsModel(json, "", "", false, false, false, false, 0, AppConstants.Bus)
         )
         viewModel = LandingViewModel(mockSettings)
     }

@@ -13,4 +13,5 @@ object FirebaseConstants {
     const val SelectAll = "SelectAll"
     const val SelectNone = "SelectNone"
     const val ApplyFilter = "ApplyFilter"
+    const val SettingsSelected = "Settings"
 }

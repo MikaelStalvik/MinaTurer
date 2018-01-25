@@ -10,10 +10,7 @@ import android.support.v7.app.AppCompatActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.imploded.minaturer.R
 import com.imploded.minaturer.application.MinaTurerApp
-import com.imploded.minaturer.fragments.DeparturesFragment
-import com.imploded.minaturer.fragments.FindStopFragment
-import com.imploded.minaturer.fragments.JourneyDetailsFragment
-import com.imploded.minaturer.fragments.LandingPageFragment
+import com.imploded.minaturer.fragments.*
 import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
 import com.imploded.minaturer.model.UiDeparture
 import com.imploded.minaturer.model.UiStop
@@ -92,6 +89,15 @@ class MainActivity : AppCompatActivity(), OnFragmentInteractionListener {
             putString(FirebaseAnalytics.Param.CONTENT_TYPE, "text")
         }
         firebase.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+    }
+
+    override fun onSettingsSelected() {
+        sendFirebaseEvent(FirebaseConstants.SettingsSelected, "")
+        val settingsPageFragment = SettingsPageFragment.newInstance()
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.root_layout, settingsPageFragment, "settingsPageFragment")
+                .addToBackStack(null)
+                .commit()
     }
 
     private fun askForRating() {

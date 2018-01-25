@@ -17,6 +17,7 @@
     -->
     <color name="bg_row_background">#fa315b</color>
     <color name="fragment_bg">#fafafa</color>
+    <color name="toolbar_button_color">#90CBF9</color>
 
     <!--<color name="button_tint">#66f1f1f1</color>
     <color name="button_bg">#819ca9</color>-->

@@ -8,7 +8,6 @@ import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
-import android.widget.Button
 import android.widget.ProgressBar
 import com.imploded.minaturer.R
 import com.imploded.minaturer.adapters.DeparturesAdapter
@@ -19,6 +18,7 @@ import com.imploded.minaturer.model.UiStop
 import com.imploded.minaturer.utils.*
 import org.jetbrains.anko.support.v4.alert
 import javax.inject.Inject
+import kotlinx.android.synthetic.main.fragment_departures.*
 
 class DeparturesFragment : Fragment() {
 
@@ -34,7 +34,7 @@ class DeparturesFragment : Fragment() {
     private lateinit var adapter: DeparturesAdapter
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private lateinit var bottomToolbar: ConstraintLayout
-    private lateinit var rootLayout: ConstraintLayout
+    //private lateinit var rootLayout: ConstraintLayout
     private lateinit var progress: ProgressBar
 
     private fun initFetch() {
@@ -83,23 +83,20 @@ class DeparturesFragment : Fragment() {
         }
     }
 
-    private fun setupButtons(view: View) {
-        val allButton = view.findViewById<Button>(R.id.buttonAll)
-        allButton.setOnClickListener {
+    private fun setupButtons() {
+        buttonAll.setOnClickListener {
             mListener?.sendFirebaseEvent(FirebaseConstants.SelectAll)
             viewModel.selectAll()
             adapter.updateItems { viewModel.uiDepartures }
             adapter.notifyDataSetChanged()
         }
-        val noneButton = view.findViewById<Button>(R.id.buttonNone)
-        noneButton.setOnClickListener{
+        buttonNone.setOnClickListener{
             mListener?.sendFirebaseEvent(FirebaseConstants.SelectNone)
             viewModel.selectNone()
             adapter.updateItems { viewModel.uiDepartures }
             adapter.notifyDataSetChanged()
         }
-        val applyButton = view.findViewById<Button>(R.id.buttonApply)
-        applyButton.setOnClickListener{
+        buttonApply.setOnClickListener{
             mListener?.sendFirebaseEvent(FirebaseConstants.ApplyFilter)
             viewModel.applyFilters()
 
@@ -118,7 +115,15 @@ class DeparturesFragment : Fragment() {
         this.displayBackNavigation()
         viewModel.setStopId(stopId)
 
-        setupUi(view)
+        setHasOptionsMenu(true)
+        showHint()
+
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupUi()
 
         adapter = createAdapter()
         recyclerView = view.findViewById(R.id.departuresList)
@@ -126,10 +131,6 @@ class DeparturesFragment : Fragment() {
         recyclerView.adapter = adapter
         progress = view.findViewById(R.id.progress_bar)
         viewModel.getDepartures(stopId, ::updateAdapter, ::initFetch)
-        setHasOptionsMenu(true)
-        showHint()
-
-        return view
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -188,8 +189,8 @@ class DeparturesFragment : Fragment() {
         }.show()
     }
 
-    private fun setupUi(view: View) {
-        swipeRefresh = view.findViewById(R.id.simpleSwipeRefreshLayout)
+    private fun setupUi() {
+        swipeRefresh = simpleSwipeRefreshLayout
         swipeRefresh.setOnRefreshListener {
             if (!viewModel.filterActive) {
                 progress.visibility = View.VISIBLE
@@ -200,11 +201,10 @@ class DeparturesFragment : Fragment() {
                 swipeRefresh.isRefreshing = false
             }
         }
-        rootLayout = view.findViewById(R.id.rootLayout)
-        bottomToolbar = view.findViewById(R.id.bottomToolbarLayout)
+        bottomToolbar = bottomToolbarLayout
         bottomToolbar.visibility = View.GONE
 
-        setupButtons(view)
+        setupButtons()
     }
 
     companion object {

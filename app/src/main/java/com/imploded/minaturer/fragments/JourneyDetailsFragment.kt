@@ -10,7 +10,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.TextView
 import com.google.gson.Gson
 import com.imploded.minaturer.R
 import com.imploded.minaturer.adapters.JourneyDetailsAdapter
@@ -19,6 +18,7 @@ import com.imploded.minaturer.interfaces.OnFragmentInteractionListener
 import com.imploded.minaturer.model.UiDeparture
 import com.imploded.minaturer.utils.*
 import javax.inject.Inject
+import kotlinx.android.synthetic.main.fragment_journey_details.*
 
 class JourneyDetailsFragment : Fragment() {
 
@@ -48,17 +48,21 @@ class JourneyDetailsFragment : Fragment() {
         val view =  inflater.inflate(R.layout.fragment_journey_details, container, false)
         this.inject()
         viewModel.setInputParameters(sourceStopId, departure)
-        progress = view.findViewById(R.id.progress_bar)
-        setHeader(view)
-
-        adapter = createAdapter()
-        recyclerView = view.findViewById(R.id.journeyRecycleView)
-        recyclerView.layoutManager = LinearLayoutManager(this.context)
-        recyclerView.adapter = adapter
-        viewModel.getJourneyDetails(::updateAdapter, ::initFetch)
         setHasOptionsMenu(true)
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        progress = progress_bar
+        setHeader()
+
+        adapter = createAdapter()
+        recyclerView = journeyRecycleView
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
+        recyclerView.adapter = adapter
+        viewModel.getJourneyDetails(::updateAdapter, ::initFetch)
     }
 
     override fun onAttach(context: Context?) {
@@ -100,15 +104,13 @@ class JourneyDetailsFragment : Fragment() {
         recyclerView.scrollToPosition(0)
     }
 
-    private fun setHeader(view: View) {
-        val textView = view.findViewById<TextView>(R.id.textViewLineNumber)
-        textView.text = departure.shortName
-        textView.setBackgroundColor(departure.bgColor.toColor())
-        textView.setTextColor(departure.fgColor.toColor())
-        view.findViewById<TextView>(R.id.textViewFrom).text = departure.stop
-        view.findViewById<TextView>(R.id.textViewTo).text = departure.direction
-        val timeTextView = view.findViewById<TextView>(R.id.textViewDepTime)
-        if (departure.rtTime.isNullOrEmpty()) timeTextView.text = departure.time else timeTextView.text = departure.rtTime
+    private fun setHeader() {
+        textViewLineNumber.text = departure.shortName
+        textViewLineNumber.setBackgroundColor(departure.bgColor.toColor())
+        textViewLineNumber.setTextColor(departure.fgColor.toColor())
+        textViewFrom.text = departure.stop
+        textViewTo.text = departure.direction
+        if (departure.rtTime.isNullOrEmpty()) textViewDepTime.text = departure.time else textViewDepTime.text = departure.rtTime
     }
     private fun createAdapter(): JourneyDetailsAdapter {
         return JourneyDetailsAdapter(getString(R.string.track), getString(R.string.travel_time))
