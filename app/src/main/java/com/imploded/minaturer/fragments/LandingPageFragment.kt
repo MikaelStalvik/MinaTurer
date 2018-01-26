@@ -36,7 +36,7 @@ class LandingPageFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_landing_page, container, false)
         this.inject()
         showHint()
-        setHasOptionsMenu(true)
+        setHasOptionsMenu(false)
 
         return view
     }
@@ -70,24 +70,6 @@ class LandingPageFragment : Fragment() {
         super.onDetach()
         mListener = null
     }
-
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.landing_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-        menu?.findItem(R.id.action_settings_mode)?.tintMenuIcon(context!!, android.R.color.white)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        if (item == null) return super.onOptionsItemSelected(item)
-        return when(item.itemId) {
-            R.id.action_settings_mode -> {
-                mListener?.onSettingsSelected()
-                false
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
 
     private fun initSwipe() {
         val simpleTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {

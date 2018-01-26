@@ -137,6 +137,7 @@ class DeparturesFragment : Fragment() {
         inflater?.inflate(R.menu.departure_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
         menu?.findItem(R.id.action_filter_mode)?.tintMenuIcon(context!!, android.R.color.white)
+        menu?.findItem(R.id.action_settings_mode)?.tintMenuIcon(context!!, android.R.color.white)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -154,6 +155,10 @@ class DeparturesFragment : Fragment() {
                 adapter.notifyDataSetChanged()
                 //TransitionManager.beginDelayedTransition(rootLayout)
                 updateFilterMode()
+                false
+            }
+            R.id.action_settings_mode -> {
+                mListener?.onSettingsSelected()
                 false
             }
             android.R.id.home -> {

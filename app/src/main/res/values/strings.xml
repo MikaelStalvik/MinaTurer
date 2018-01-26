@@ -12,7 +12,7 @@
     <string name="got_it">Got it</string>
     <string name="landing_page_hint">This page will allow you to quickly access all your stored stops.\n\nSwipe left to remove a stop, tap the add button to register a new stop.</string>
     <string name="find_stop_page_hint">Search for a specific stop by typing in its name or a part of its name.\n\nTap the stop you would like to register on the landing page.</string>
-    <string name="departure_page_hint">Click the filter toolbar button to select which departures to show.\n\nPull the list down to perform a refresh of the departures.\n\nTap a departure to see detailed journey information</string>
+    <string name="departure_page_hint">Click the filter toolbar button to select which departures to show.\n\nPull the list down to perform a refresh of the departures.\n\nTap a departure to see detailed journey information.\n\nTap the options button to configure which transport types to include in results.</string>
     <string name="filter">Filter</string>
     <string name="all">All</string>
     <string name="none">None</string>

@@ -12,7 +12,7 @@
     <string name="got_it">Jag fattar</string>
     <string name="landing_page_hint">På denna sida kommer du snabbt åt dina sparade hållplatser.\n\nSwipa vänster för att ta bort en hållplats, tryck på plusknappen för att lägga till en hållplats.</string>
     <string name="find_stop_page_hint">Sök efter en specifik hållplats genom att skriva in en del eller hela namnet på hållplatsen.  Tappa på en hållplats för att lägga till den till listan på startsidan.</string>
-    <string name="departure_page_hint">Klicka på filterknappen för att välja vilka specifika avgångar du vill se.\n\nDra ned listan för att uppdatera.\n\nTappa på en avgång för att få detaljerad reseinformation.</string>
+    <string name="departure_page_hint">Klicka på filterknappen för att välja vilka specifika avgångar du vill se.\n\nDra ned listan för att uppdatera.\n\nTappa på en avgång för att få detaljerad reseinformation.\n\nTappa på inställningar för att välja vilka resmedel som skall inkluderas i resultat.</string>
     <string name="filter">Filter</string>
     <string name="all">Alla</string>
     <string name="none">Ingen</string>

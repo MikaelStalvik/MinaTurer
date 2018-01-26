@@ -6,10 +6,20 @@
         android:title="@string/filter"
         android:visible="true"
         android:orderInCategory="100"
-        compat:showAsAction="always"
+        compat:showAsAction="ifRoom"
         android:textColorPrimary ="#ffffff"
         android:tint="#ffffff"
         android:icon="@drawable/ic_filter_list_black_24dp">
+    </item>
+    <item
+        android:id="@+id/action_settings_mode"
+        android:title="@string/settings"
+        android:visible="true"
+        android:orderInCategory="100"
+        compat:showAsAction="ifRoom"
+        android:textColorPrimary ="#ffffff"
+        android:tint="#ffffff"
+        android:icon="@drawable/ic_settings_black_24dp">
     </item>
     <!-- android:iconTint="#ffffff"-->
     <item
