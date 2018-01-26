@@ -9,11 +9,12 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 27
     defaultConfig {
+        vectorDrawables.useSupportLibrary = true
         applicationId "com.imploded.minaturer"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 11
-        versionName "0.20"
+        versionCode 12
+        versionName "0.21"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

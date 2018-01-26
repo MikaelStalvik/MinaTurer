@@ -4,8 +4,7 @@ package com.imploded.minaturer
 import com.imploded.minaturer.model.TlDeparture
 import com.imploded.minaturer.model.TlProduct
 import com.imploded.minaturer.utils.*
-import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertTrue
+import junit.framework.Assert.*
 import org.junit.Test
 
 @Suppress("IllegalIdentifier")
@@ -40,23 +39,23 @@ class GeneralTests {
     @Test
     fun `When a product is a tram and from Västtrafik, ensure that bgColor is the expected color`() {
         val departure = TlDeparture(
-                product = TlProduct("Länstrafik - Spårväg 1", "1", OperatorVasttrafik)
+                product = TlProduct("Länstrafik - Spårväg 1", "1", OPERATOR_VASTTRAFIK)
         )
         assertEquals("#ffffff", departure.bgColor())
     }
     @Test
     fun `When a product is a tram and not from Västtrafik, ensure that bgColor is the expected color`() {
         val departure = TlDeparture(
-                product = TlProduct("Länstrafik - Spårväg 1", "1", OperatorSl)
+                product = TlProduct("Länstrafik - Spårväg 1", "1", OPERATOR_SL)
         )
         assertEquals("#0089ca", departure.bgColor())
     }
     @Test
     fun `When a product is a bus from Västtrafik, ensure that bgColor is the expected color`() {
         val departure = TlDeparture(
-                product = TlProduct("Länstrafik - Buss 1", "1", OperatorVasttrafik)
+                product = TlProduct("Länstrafik - Buss 1", "1", OPERATOR_VASTTRAFIK)
         )
-        assertEquals(defaultBgColor, departure.bgColor())
+        assertEquals(DEFAULT_BG_COLOR, departure.bgColor())
     }
 
     @Test
@@ -66,6 +65,13 @@ class GeneralTests {
         val isTram = test.isTram()
         val isBus = test.isBus()
         assertTrue(isSubway && isTram && isBus)
+    }
+
+    @Test
+    fun `When filter is subway, tram and bus check that regional train is not included`() {
+        val test = AppConstants.Subway + AppConstants.Tram + AppConstants.Bus
+        val isRegionalTrain = test.isRegionalTrain()
+        assertFalse(isRegionalTrain)
     }
 
 }

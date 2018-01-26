@@ -110,18 +110,18 @@ fun RecyclerView.applyAnimation() {
 val Activity.app: MinaTurerApp
     get() = application as MinaTurerApp
 
-const val defaultBgColor = "#00a5dc"
-const val defaultBgColorSl = "#d71d24"
-const val defaultFgColor = "#ffffff"
-const val OperatorVasttrafik = "279"
-const val OperatorSl = "275"
+const val DEFAULT_BG_COLOR = "#00a5dc"
+const val DEFAULT_BG_COLOR_SL = "#d71d24"
+const val DEFAULT_FG_COLOR = "#ffffff"
+const val OPERATOR_VASTTRAFIK = "279"
+const val OPERATOR_SL = "275"
 
 fun String.isTram() : Boolean = this.contains("Spårväg", true)
 
 fun TlDeparture.bgColor(): String {
     when(this.product.operatorCode)
     {
-        OperatorVasttrafik -> {
+        OPERATOR_VASTTRAFIK -> {
             val productName = this.product.num.toUpperCase()
             if (this.product.name.isTram()) {
                 when(productName) {
@@ -150,9 +150,9 @@ fun TlDeparture.bgColor(): String {
                 "LILA" -> return "#692869"
                 "BLÅ" -> return "#336699"
             }
-            return defaultBgColor
+            return DEFAULT_BG_COLOR
         }
-        OperatorSl -> {
+        OPERATOR_SL -> {
             when(this.product.num.toUpperCase()) {
                 "1", "2", "3", "4", "5", "6", "7", "8", "9" -> return "#0089ca"
 
@@ -170,14 +170,14 @@ fun TlDeparture.bgColor(): String {
 
                 "40", "41", "41X", "42", "42X", "43", "43X", "44", "48" -> return "#ec619f"
             }
-            return defaultBgColorSl
+            return DEFAULT_BG_COLOR_SL
         }
     }
-    return defaultBgColor
+    return DEFAULT_BG_COLOR
 }
 fun TlDeparture.fgColor(): String {
     if (this.product.operatorCode != "279") {
-        return defaultFgColor
+        return DEFAULT_FG_COLOR
     }
     val productName = this.product.num.toUpperCase()
     if (this.product.name.isTram()) {
@@ -197,7 +197,7 @@ fun TlDeparture.fgColor(): String {
         "GUL" -> return "#00394d"
         "SVAR" -> return "#ffffff"
     }
-    return defaultFgColor
+    return DEFAULT_FG_COLOR
 }
 
 fun String.fixTime() : String {
@@ -220,7 +220,7 @@ private fun findIndexSeries(input: Int, power: Int, numbers: ArrayList<Int>) {
     if (input == 0) {
         return
     }
-    var digit = input.rem(2)
+    val digit = input.rem(2)
     if (digit == 1) {
         val a = Math.pow(2.0, power.toDouble()).toInt()
         numbers.add(a)

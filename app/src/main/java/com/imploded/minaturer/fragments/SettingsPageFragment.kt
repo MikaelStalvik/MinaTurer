@@ -44,6 +44,14 @@ class SettingsPageFragment : Fragment() {
         switchTram.isChecked = activeFilters.isTram()
         switchBus.isChecked = activeFilters.isBus()
         switchFerry.isChecked = activeFilters.isFerry()
+        textViewExpressTrain.setOnClickListener { switchExpressTrain.isChecked = !switchExpressTrain.isChecked }
+        textViewRegionalTrain.setOnClickListener { switchRegionalTrain.isChecked = !switchRegionalTrain.isChecked }
+        textViewExpressBus.setOnClickListener { switchExpressBus.isChecked = !switchExpressBus.isChecked }
+        textViewLocalTrain.setOnClickListener { switchLocalTrain.isChecked = !switchLocalTrain.isChecked }
+        textViewSubview.setOnClickListener { switchSubway.isChecked = !switchSubway.isChecked }
+        textViewTram.setOnClickListener { switchTram.isChecked = !switchTram.isChecked }
+        textViewBus.setOnClickListener { switchBus.isChecked = !switchBus.isChecked }
+        textViewFerry.setOnClickListener { switchFerry.isChecked = !switchFerry.isChecked }
     }
 
     override fun onPause() {

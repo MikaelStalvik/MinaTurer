@@ -29,8 +29,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:tint="@android:color/white"
-        android:src="@drawable/ic_add_black_24dp"
         app:layout_constraintBottom_toBottomOf="@+id/recyclerViewStops"
-        app:layout_constraintEnd_toEndOf="@+id/recyclerViewStops" />
+        app:layout_constraintEnd_toEndOf="@+id/recyclerViewStops"
+        app:srcCompat="@drawable/ic_add_black_24dp" />
 
 </android.support.constraint.ConstraintLayout>

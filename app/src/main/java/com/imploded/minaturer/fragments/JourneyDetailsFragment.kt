@@ -110,6 +110,7 @@ class JourneyDetailsFragment : Fragment() {
         textViewLineNumber.setTextColor(departure.fgColor.toColor())
         textViewFrom.text = departure.stop
         textViewTo.text = departure.direction
+        imageViewCatCode.setImageResource(departure.catOutCode.toCatResource())
         if (departure.rtTime.isNullOrEmpty()) textViewDepTime.text = departure.time else textViewDepTime.text = departure.rtTime
     }
     private fun createAdapter(): JourneyDetailsAdapter {
